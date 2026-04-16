@@ -108,7 +108,7 @@ export const Route = createFileRoute("/servicos/$slug")({
 });
 
 function ServiceDetail() {
-  const { service, slug } = Route.useLoaderData();
+  const { service, slug } = Route.useLoaderData() as { service: ServiceData; slug: string };
 
   return (
     <>
