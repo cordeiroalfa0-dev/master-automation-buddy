@@ -75,7 +75,7 @@ const SERVICES: Record<string, ServiceData> = {
 };
 
 export const Route = createFileRoute("/servicos/$slug")({
-  loader: ({ params }) => {
+  loader: ({ params }): { service: ServiceData; slug: string } => {
     const data = SERVICES[params.slug];
     if (!data) throw notFound();
     return { service: data, slug: params.slug };
