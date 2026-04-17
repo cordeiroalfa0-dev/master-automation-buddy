@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 
 export const Route = createFileRoute("/termos")({
-  head: () => ({
-    meta: [
-      { title: "Termos de Uso — Master Elétrica Automatizada" },
-      { name: "description", content: "Termos de uso do site Master Elétrica Automatizada." },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_CONFIG.url}/termos` }],
-  }),
+  head: () =>
+    buildSeo({
+      title: "Termos de Uso — Master Elétrica Automatizada",
+      description: "Termos de uso do site Master Elétrica Automatizada.",
+      path: "/termos",
+    }),
   component: TermsPage,
 });
 

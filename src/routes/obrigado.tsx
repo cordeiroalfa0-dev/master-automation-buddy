@@ -4,16 +4,17 @@ import { CheckCircle2, MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { trackEvent, trackPhone } from "@/lib/analytics";
+import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 
 export const Route = createFileRoute("/obrigado")({
   head: () => ({
-    meta: [
-      { title: "Obrigado! Recebemos seu pedido — Master Elétrica" },
-      { name: "description", content: "Recebemos sua solicitação. Nossa equipe entrará em contato em breve." },
-      // Página de conversão — não indexar
-      { name: "robots", content: "noindex, follow" },
-    ],
+    ...buildSeo({
+      title: "Obrigado! Recebemos seu pedido — Master Elétrica",
+      description: "Recebemos sua solicitação. Nossa equipe entrará em contato em breve.",
+      path: "/obrigado",
+      noindex: true,
+    }),
   }),
   component: ThankYouPage,
 });

@@ -5,6 +5,7 @@ import { LeadForm } from "@/components/LeadForm";
 import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema, serviceSchema, faqSchema } from "@/lib/schema";
+import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone } from "@/lib/analytics";
 import resImg from "@/assets/service-residential.jpg";
@@ -83,18 +84,12 @@ export const Route = createFileRoute("/servicos/$slug")({
   head: ({ loaderData }) => {
     if (!loaderData) return {};
     const { service, slug } = loaderData;
-    const url = `${SITE_CONFIG.url}/servicos/${slug}`;
-    return {
-      meta: [
-        { title: `${service.title} — Master Elétrica` },
-        { name: "description", content: service.longDesc.slice(0, 158) },
-        { property: "og:title", content: service.title },
-        { property: "og:description", content: service.shortDesc },
-        { property: "og:url", content: url },
-        { property: "og:type", content: "website" },
-      ],
-      links: [{ rel: "canonical", href: url }],
-    };
+    return buildSeo({
+      title: `${service.title} — Master Elétrica`,
+      description: service.longDesc.slice(0, 158),
+      path: `/servicos/${slug}`,
+      image: `/og-servico-${slug}.jpg`,
+    });
   },
   component: ServiceDetail,
   notFoundComponent: () => (

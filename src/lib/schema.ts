@@ -91,3 +91,26 @@ export function faqSchema(items: Array<{ question: string; answer: string }>) {
     })),
   };
 }
+
+/**
+ * Schema de avaliação individual (Review) — usado em depoimentos.
+ * Combinado com aggregateRating no LocalBusiness, melhora rich snippets.
+ */
+export function reviewSchema(items: Array<{ author: string; rating: number; text: string; date?: string }>) {
+  return items.map((r) => ({
+    "@context": "https://schema.org",
+    "@type": "Review",
+    itemReviewed: {
+      "@type": "LocalBusiness",
+      name: SITE_CONFIG.name,
+    },
+    author: { "@type": "Person", name: r.author },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: String(r.rating),
+      bestRating: "5",
+    },
+    reviewBody: r.text,
+    ...(r.date ? { datePublished: r.date } : {}),
+  }));
+}

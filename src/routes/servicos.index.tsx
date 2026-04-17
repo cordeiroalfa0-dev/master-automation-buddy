@@ -2,22 +2,21 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Home, Building2, Factory, Shield, ArrowRight } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
-import { SITE_CONFIG } from "@/lib/site-config";
+import { buildSeo } from "@/lib/seo";
 import resImg from "@/assets/service-residential.jpg";
 import comImg from "@/assets/service-commercial.jpg";
 import indImg from "@/assets/service-industrial.jpg";
 import secImg from "@/assets/service-security.jpg";
 
 export const Route = createFileRoute("/servicos/")({
-  head: () => ({
-    meta: [
-      { title: "Serviços de Automação em Curitiba — Master Elétrica" },
-      { name: "description", content: "Serviços de automação residencial, predial, industrial e segurança eletrônica em Curitiba. Orçamento grátis e atendimento técnico especializado." },
-      { property: "og:title", content: "Serviços de Automação — Master Elétrica" },
-      { property: "og:description", content: "Automação residencial, predial, industrial e segurança eletrônica em Curitiba." },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_CONFIG.url}/servicos` }],
-  }),
+  head: () =>
+    buildSeo({
+      title: "Serviços de Automação em Curitiba — Master Elétrica",
+      description:
+        "Serviços de automação residencial, predial, industrial e segurança eletrônica em Curitiba. Orçamento grátis e atendimento técnico especializado.",
+      path: "/servicos",
+      image: "/og-servicos.jpg",
+    }),
   component: ServicesIndex,
 });
 
