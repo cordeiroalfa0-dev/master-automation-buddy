@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 
 export const Route = createFileRoute("/politica-privacidade")({
-  head: () => ({
-    meta: [
-      { title: "Política de Privacidade — Master Elétrica Automatizada" },
-      { name: "description", content: "Política de privacidade e proteção de dados (LGPD) da Master Elétrica Automatizada." },
-      { name: "robots", content: "index, follow" },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_CONFIG.url}/politica-privacidade` }],
-  }),
+  head: () =>
+    buildSeo({
+      title: "Política de Privacidade — Master Elétrica Automatizada",
+      description:
+        "Política de privacidade e proteção de dados (LGPD) da Master Elétrica Automatizada.",
+      path: "/politica-privacidade",
+    }),
   component: PrivacyPage,
 });
 
