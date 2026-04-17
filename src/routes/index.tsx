@@ -9,7 +9,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { LeadForm } from "@/components/LeadForm";
 import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { JsonLd } from "@/components/JsonLd";
-import { breadcrumbSchema, faqSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, reviewSchema } from "@/lib/schema";
+import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackCTA, trackPhone } from "@/lib/analytics";
 import heroImg from "@/assets/hero-automation.jpg";
@@ -19,21 +20,14 @@ import indImg from "@/assets/service-industrial.jpg";
 import secImg from "@/assets/service-security.jpg";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Master Elétrica Automatizada — Automação Residencial, Predial e Industrial em Curitiba" },
-      { name: "description", content: "Especialistas em automação residencial, predial e industrial em Curitiba. +500 projetos entregues. Orçamento grátis em 2h. Atendimento Batel, Ecoville, Champagnat e toda região." },
-      { name: "keywords", content: "automação residencial Curitiba, automação predial, casa inteligente, smart home, CFTV, automação industrial, eletricista Curitiba" },
-      { property: "og:title", content: "Master Elétrica Automatizada — Curitiba" },
-      { property: "og:description", content: "Automação residencial, predial e industrial. +500 projetos entregues em Curitiba e região." },
-      { property: "og:image", content: `${SITE_CONFIG.url}/og-home.jpg` },
-      { property: "og:url", content: SITE_CONFIG.url },
-      { name: "twitter:title", content: "Master Elétrica Automatizada — Curitiba" },
-      { name: "twitter:description", content: "Automação inteligente em Curitiba. +500 projetos." },
-      { name: "twitter:image", content: `${SITE_CONFIG.url}/og-home.jpg` },
-    ],
-    links: [{ rel: "canonical", href: SITE_CONFIG.url }],
-  }),
+  head: () =>
+    buildSeo({
+      title: "Master Elétrica Automatizada — Automação Residencial, Predial e Industrial em Curitiba",
+      description:
+        "Especialistas em automação residencial, predial e industrial em Curitiba. +500 projetos entregues. Orçamento grátis em 2h. Atendimento Batel, Ecoville, Champagnat e toda região.",
+      path: "/",
+      image: "/og-home.jpg",
+    }),
   component: HomePage,
 });
 

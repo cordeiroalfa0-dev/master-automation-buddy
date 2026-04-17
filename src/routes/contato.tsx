@@ -4,19 +4,19 @@ import { LeadForm } from "@/components/LeadForm";
 import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
+import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone } from "@/lib/analytics";
 
 export const Route = createFileRoute("/contato")({
-  head: () => ({
-    meta: [
-      { title: "Contato — Master Elétrica Automatizada Curitiba" },
-      { name: "description", content: "Fale com a Master Elétrica: (41) 99753-9084. Atendimento em Curitiba e região metropolitana. Orçamento gratuito em até 2h." },
-      { property: "og:title", content: "Fale Conosco — Master Elétrica" },
-      { property: "og:description", content: "Tel (41) 99753-9084. Atendemos toda Curitiba." },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_CONFIG.url}/contato` }],
-  }),
+  head: () =>
+    buildSeo({
+      title: "Contato — Master Elétrica Automatizada Curitiba",
+      description:
+        "Fale com a Master Elétrica: (41) 99753-9084. Atendimento em Curitiba e região metropolitana. Orçamento gratuito em até 2h.",
+      path: "/contato",
+      image: "/og-contato.jpg",
+    }),
   component: ContactPage,
 });
 

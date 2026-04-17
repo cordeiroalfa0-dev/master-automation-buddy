@@ -3,18 +3,17 @@ import { MapPin } from "lucide-react";
 import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
-import { SITE_CONFIG } from "@/lib/site-config";
+import { buildSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/projetos")({
-  head: () => ({
-    meta: [
-      { title: "Projetos de Automação em Curitiba — Portfólio Master Elétrica" },
-      { name: "description", content: "Veja nossos projetos entregues em Batel, Ecoville, Champagnat, CIC, Bigorrilho e outros bairros de Curitiba. Automação residencial, predial e industrial." },
-      { property: "og:title", content: "Portfólio — Master Elétrica" },
-      { property: "og:description", content: "Projetos executados nos principais bairros de Curitiba e região." },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_CONFIG.url}/projetos` }],
-  }),
+  head: () =>
+    buildSeo({
+      title: "Projetos de Automação em Curitiba — Portfólio Master Elétrica",
+      description:
+        "Veja nossos projetos entregues em Batel, Ecoville, Champagnat, CIC, Bigorrilho e outros bairros de Curitiba. Automação residencial, predial e industrial.",
+      path: "/projetos",
+      image: "/og-projetos.jpg",
+    }),
   component: ProjectsPage,
 });
 

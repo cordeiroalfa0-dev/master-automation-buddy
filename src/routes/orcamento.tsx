@@ -1,23 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CheckCircle2, Star, Shield, Clock, Award, Phone } from "lucide-react";
-import { LeadForm } from "@/components/LeadForm";
+import { MultiStepLeadForm } from "@/components/MultiStepLeadForm";
 import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
+import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone } from "@/lib/analytics";
 
 export const Route = createFileRoute("/orcamento")({
-  head: () => ({
-    meta: [
-      { title: "Orçamento Grátis de Automação em Curitiba — Master Elétrica" },
-      { name: "description", content: "Solicite seu orçamento gratuito de automação residencial, predial ou industrial em Curitiba. Resposta em 2h. +500 projetos entregues." },
-      { name: "robots", content: "index, follow" },
-      { property: "og:title", content: "Orçamento Grátis — Master Elétrica" },
-      { property: "og:description", content: "Resposta em até 2h. Sem compromisso." },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_CONFIG.url}/orcamento` }],
-  }),
+  head: () =>
+    buildSeo({
+      title: "Orçamento Grátis de Automação em Curitiba — Master Elétrica",
+      description:
+        "Solicite seu orçamento gratuito de automação residencial, predial ou industrial em Curitiba. Resposta em 2h. +500 projetos entregues.",
+      path: "/orcamento",
+      image: "/og-orcamento.jpg",
+    }),
   component: QuotePage,
 });
 
@@ -83,10 +82,10 @@ function QuotePage() {
           <div className="rounded-2xl bg-card p-6 text-foreground shadow-elegant md:p-8">
             <h2 className="font-display text-xl font-bold">Solicite seu orçamento</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Preencha em 30 segundos. Retornamos rapidamente.
+              Em 3 passos rápidos. Retornamos em até 2h.
             </p>
             <div className="mt-5">
-              <LeadForm source="orcamento_landing" />
+              <MultiStepLeadForm source="orcamento_landing" />
             </div>
           </div>
         </div>

@@ -2,18 +2,18 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Award, Target, Eye, Heart, MapPin } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
+import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 
 export const Route = createFileRoute("/sobre")({
-  head: () => ({
-    meta: [
-      { title: "Sobre a Master Elétrica Automatizada — 10+ anos em Curitiba" },
-      { name: "description", content: "Mais de 10 anos transformando ambientes com automação inteligente em Curitiba e região. Conheça nossa história, missão, visão e valores." },
-      { property: "og:title", content: "Sobre a Master Elétrica" },
-      { property: "og:description", content: "Referência em automação inteligente em Curitiba desde 2015." },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_CONFIG.url}/sobre` }],
-  }),
+  head: () =>
+    buildSeo({
+      title: "Sobre a Master Elétrica Automatizada — 10+ anos em Curitiba",
+      description:
+        "Mais de 10 anos transformando ambientes com automação inteligente em Curitiba e região. Conheça nossa história, missão, visão e valores.",
+      path: "/sobre",
+      image: "/og-sobre.jpg",
+    }),
   component: AboutPage,
 });
 
