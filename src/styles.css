@@ -91,14 +91,18 @@
   --ring: oklch(0.42 0.18 252);
 
   /* Gradients & shadows */
-  --gradient-hero: linear-gradient(135deg, oklch(0.18 0.04 252) 0%, oklch(0.32 0.16 252) 60%, oklch(0.45 0.2 250) 100%);
+  --gradient-hero: linear-gradient(135deg, oklch(0.16 0.04 252) 0%, oklch(0.28 0.14 252) 55%, oklch(0.4 0.18 250) 100%);
   --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-glow));
   --gradient-energy: linear-gradient(135deg, oklch(0.82 0.17 85), oklch(0.74 0.19 65));
   --gradient-radial-glow: radial-gradient(circle at 30% 20%, oklch(0.62 0.21 250 / 0.35), transparent 60%);
+  --gradient-mesh: radial-gradient(at 20% 30%, oklch(0.62 0.21 250 / 0.18) 0px, transparent 50%),
+                   radial-gradient(at 80% 0%, oklch(0.82 0.17 85 / 0.12) 0px, transparent 50%),
+                   radial-gradient(at 0% 100%, oklch(0.42 0.18 252 / 0.15) 0px, transparent 50%);
 
   --shadow-elegant: 0 10px 40px -10px oklch(0.42 0.18 252 / 0.25);
   --shadow-glow: 0 0 60px oklch(0.62 0.21 250 / 0.4);
   --shadow-card: 0 4px 24px -8px oklch(0.18 0.03 250 / 0.12);
+  --shadow-card-hover: 0 20px 50px -12px oklch(0.42 0.18 252 / 0.28);
   --shadow-energy: 0 8px 30px -8px oklch(0.82 0.17 85 / 0.5);
 
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -157,11 +161,17 @@
     font-family: var(--font-sans);
     font-feature-settings: "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: oklch(0.62 0.21 250 / 0.25);
+    color: var(--color-foreground);
   }
 }
 
@@ -170,10 +180,12 @@
   .bg-gradient-primary { background: var(--gradient-primary); }
   .bg-gradient-energy { background: var(--gradient-energy); }
   .bg-radial-glow { background: var(--gradient-radial-glow); }
+  .bg-mesh { background: var(--gradient-mesh); }
 
   .shadow-elegant { box-shadow: var(--shadow-elegant); }
   .shadow-glow { box-shadow: var(--shadow-glow); }
   .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-card-hover { box-shadow: var(--shadow-card-hover); }
   .shadow-energy { box-shadow: var(--shadow-energy); }
 
   .transition-smooth { transition: var(--transition-smooth); }
@@ -181,6 +193,15 @@
 
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
+
+  /* Subtle grid pattern overlay for hero sections */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, oklch(1 0 0 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(1 0 0 / 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
 }
 
 @keyframes fade-up {
@@ -193,5 +214,11 @@
   50% { box-shadow: 0 0 40px oklch(0.62 0.21 250 / 0.6); }
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 .animate-fade-up { animation: fade-up 0.6s ease-out backwards; }
 .animate-pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
+.animate-marquee { animation: marquee 30s linear infinite; }
