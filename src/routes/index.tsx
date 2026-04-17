@@ -73,6 +73,11 @@ function HomePage() {
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Início", url: "/" }])} />
       <JsonLd data={faqSchema(FAQ)} />
+      <JsonLd
+        data={reviewSchema(
+          TESTIMONIALS.map((t) => ({ author: t.name, rating: 5, text: t.text })),
+        )}
+      />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-gradient-hero text-white">
