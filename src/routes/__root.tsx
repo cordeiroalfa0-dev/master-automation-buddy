@@ -13,6 +13,7 @@ import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { CookieConsent } from "@/components/CookieConsent";
 import { TrackingScripts } from "@/components/tracking/TrackingScripts";
 import { TrackingProvider } from "@/components/tracking/TrackingProvider";
+import { ScrollDepthTracker } from "@/components/tracking/ScrollDepthTracker";
 import { JsonLd } from "@/components/JsonLd";
 import { localBusinessSchema } from "@/lib/schema";
 import { SITE_CONFIG } from "@/lib/site-config";
@@ -100,6 +101,7 @@ function RootComponent() {
       <WhatsAppFloat />
       <CookieConsent />
       <TrackingScripts />
+      <ScrollDepthTracker />
     </TrackingProvider>
   );
 }
