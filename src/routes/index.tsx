@@ -92,7 +92,7 @@ function HomePage() {
             </span>
             <h1 className="mt-5 font-display text-4xl font-bold leading-[1.05] text-balance md:text-6xl lg:text-7xl">
               Automação que transforma{" "}
-              <span className="bg-gradient-to-r from-energy to-yellow-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-energy bg-clip-text text-transparent">
                 seu espaço
               </span>
             </h1>
