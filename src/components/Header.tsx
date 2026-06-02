@@ -48,7 +48,7 @@ export function Header() {
             <span className="hidden flex-col leading-tight sm:flex">
               <span className="text-base font-bold tracking-tight">Master Automação</span>
               <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
-                Automatizada
+                Curitiba · PR
               </span>
             </span>
           </Link>
