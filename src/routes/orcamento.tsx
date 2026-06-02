@@ -15,7 +15,6 @@ export const Route = createFileRoute("/orcamento")({
       description:
         "Solicite seu orçamento gratuito de automação residencial, predial ou industrial em Curitiba. Resposta em 2h. +500 projetos entregues.",
       path: "/orcamento",
-      image: "/og-orcamento.jpg",
     }),
   component: QuotePage,
 });

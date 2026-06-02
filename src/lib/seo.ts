@@ -1,4 +1,5 @@
 import { SITE_CONFIG } from "./site-config";
+import defaultOgImage from "@/assets/hero-automation.jpg";
 
 interface SeoMetaInput {
   title: string;
@@ -12,7 +13,7 @@ interface SeoMetaInput {
   noindex?: boolean;
 }
 
-const DEFAULT_OG_IMAGE = `${SITE_CONFIG.url}/og-default.jpg`;
+const DEFAULT_OG_IMAGE = defaultOgImage;
 
 /**
  * Gera o array de meta tags + links canônicos para uma rota.

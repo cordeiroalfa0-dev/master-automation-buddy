@@ -20,14 +20,23 @@ import indImg from "@/assets/service-industrial.jpg";
 import secImg from "@/assets/service-security.jpg";
 
 export const Route = createFileRoute("/")({
-  head: () =>
-    buildSeo({
+  head: () => {
+    const seo = buildSeo({
       title: "Master Elétrica Automatizada — Automação Residencial, Predial e Industrial em Curitiba",
       description:
         "Especialistas em automação residencial, predial e industrial em Curitiba. +500 projetos entregues. Orçamento grátis em 2h. Atendimento Batel, Ecoville, Champagnat e toda região.",
       path: "/",
-      image: "/og-home.jpg",
-    }),
+      image: heroImg,
+    });
+    return {
+      ...seo,
+      links: [
+        ...seo.links,
+        // Preload do LCP — hero image
+        { rel: "preload", as: "image", href: heroImg, fetchPriority: "high" },
+      ],
+    };
+  },
   component: HomePage,
 });
 

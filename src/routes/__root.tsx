@@ -15,7 +15,8 @@ import { TrackingScripts } from "@/components/tracking/TrackingScripts";
 import { TrackingProvider } from "@/components/tracking/TrackingProvider";
 import { ScrollDepthTracker } from "@/components/tracking/ScrollDepthTracker";
 import { JsonLd } from "@/components/JsonLd";
-import { localBusinessSchema } from "@/lib/schema";
+import { localBusinessSchema, websiteSchema } from "@/lib/schema";
+import { MobileStickyCTA } from "@/components/MobileStickyCTA";
 import { SITE_CONFIG } from "@/lib/site-config";
 
 function NotFoundComponent() {
@@ -90,15 +91,23 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   return (
     <TrackingProvider>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground focus:shadow-elegant"
+      >
+        Pular para o conteúdo
+      </a>
       <JsonLd data={localBusinessSchema} />
+      <JsonLd data={websiteSchema} />
       <div className="flex min-h-screen flex-col">
         <Header />
-        <main className="flex-1">
+        <main id="main-content" className="flex-1 pb-20 md:pb-0">
           <Outlet />
         </main>
         <Footer />
       </div>
       <WhatsAppFloat />
+      <MobileStickyCTA />
       <CookieConsent />
       <TrackingScripts />
       <ScrollDepthTracker />
