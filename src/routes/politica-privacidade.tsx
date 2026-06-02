@@ -5,9 +5,9 @@ import { SITE_CONFIG } from "@/lib/site-config";
 export const Route = createFileRoute("/politica-privacidade")({
   head: () =>
     buildSeo({
-      title: "Política de Privacidade — Master Elétrica Automatizada",
+      title: "Política de Privacidade — Master Automação",
       description:
-        "Política de privacidade e proteção de dados (LGPD) da Master Elétrica Automatizada.",
+        "Política de privacidade e proteção de dados (LGPD) da Master Automação.",
       path: "/politica-privacidade",
     }),
   component: PrivacyPage,

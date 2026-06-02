@@ -10,7 +10,7 @@ import { SITE_CONFIG } from "@/lib/site-config";
 export const Route = createFileRoute("/obrigado")({
   head: () => ({
     ...buildSeo({
-      title: "Obrigado! Recebemos seu pedido — Master Elétrica",
+      title: "Obrigado! Recebemos seu pedido — Master Automação",
       description: "Recebemos sua solicitação. Nossa equipe entrará em contato em breve.",
       path: "/obrigado",
       noindex: true,

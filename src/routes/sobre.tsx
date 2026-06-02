@@ -8,7 +8,7 @@ import { SITE_CONFIG } from "@/lib/site-config";
 export const Route = createFileRoute("/sobre")({
   head: () =>
     buildSeo({
-      title: "Sobre a Master Elétrica Automatizada — 10+ anos em Curitiba",
+      title: "Sobre a Master Automação — 10+ anos em Curitiba",
       description:
         "Mais de 10 anos transformando ambientes com automação inteligente em Curitiba e região. Conheça nossa história, missão, visão e valores.",
       path: "/sobre",
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/sobre")({
 });
 
 const TIMELINE = [
-  { year: "2015", text: "Fundação da Master Elétrica Automatizada em Curitiba" },
+  { year: "2015", text: "Fundação da Master Automação em Curitiba" },
   { year: "2017", text: "Primeiros grandes projetos de automação predial" },
   { year: "2019", text: "Expansão para automação industrial e parcerias com indústrias" },
   { year: "2021", text: "Marco de 300+ projetos entregues com excelência" },
@@ -38,7 +38,7 @@ function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <span className="text-xs font-semibold uppercase tracking-widest text-energy">Sobre nós</span>
           <h1 className="mt-3 max-w-3xl font-display text-4xl font-bold text-balance md:text-6xl">
-            Master Elétrica Automatizada
+            Master Automação
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-white/80">
             Com vasta experiência em projetos residenciais, prediais e industriais, somos referência em automação inteligente em <strong>Curitiba e região metropolitana</strong>.

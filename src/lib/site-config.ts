@@ -1,10 +1,10 @@
 /**
- * Configurações estáticas do site Master Elétrica Automatizada.
+ * Configurações estáticas do site Master Automação.
  * IDs de tracking dinâmicos vêm de site_settings (DB).
  */
 export const SITE_CONFIG = {
-  name: "Master Elétrica Automatizada",
-  shortName: "Master Elétrica",
+  name: "Master Automação",
+  shortName: "Master Automação",
   tagline: "Automação que transforma seu espaço",
   description:
     "Soluções completas em automação residencial, predial e industrial em Curitiba e região metropolitana. Mais de 500 projetos entregues.",
@@ -16,14 +16,14 @@ export const SITE_CONFIG = {
     phone: "(41) 99753-9084",
     phoneE164: "+5541997539084",
     whatsappNumber: "5541997539084",
-    email: "contato@mastereletrica.com.br",
+    email: "contato@masterautomacao.com.br",
     address: "Curitiba e Região Metropolitana - PR",
     hours: "Seg a Sex: 8h às 18h | Sáb: 8h às 12h",
   },
 
   social: {
-    instagram: "https://instagram.com/mastereletrica",
-    facebook: "https://facebook.com/mastereletrica",
+    instagram: "https://instagram.com/masterautomacao",
+    facebook: "https://facebook.com/masterautomacao",
   },
 
   bairros: [
