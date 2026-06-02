@@ -11,9 +11,9 @@ import { trackPhone } from "@/lib/analytics";
 export const Route = createFileRoute("/contato")({
   head: () =>
     buildSeo({
-      title: "Contato — Master Elétrica Automatizada Curitiba",
+      title: "Contato — Master Automação Curitiba",
       description:
-        "Fale com a Master Elétrica: (41) 99753-9084. Atendimento em Curitiba e região metropolitana. Orçamento gratuito em até 2h.",
+        "Fale com a Master Automação: (41) 99753-9084. Atendimento em Curitiba e região metropolitana. Orçamento gratuito em até 2h.",
       path: "/contato",
       image: "/og-contato.jpg",
     }),

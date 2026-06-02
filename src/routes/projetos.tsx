@@ -8,7 +8,7 @@ import { buildSeo } from "@/lib/seo";
 export const Route = createFileRoute("/projetos")({
   head: () =>
     buildSeo({
-      title: "Projetos de Automação em Curitiba — Portfólio Master Elétrica",
+      title: "Projetos de Automação em Curitiba — Portfólio Master Automação",
       description:
         "Veja nossos projetos entregues em Batel, Ecoville, Champagnat, CIC, Bigorrilho e outros bairros de Curitiba. Automação residencial, predial e industrial.",
       path: "/projetos",
@@ -75,7 +75,7 @@ function ProjectsPage() {
         </div>
 
         <div className="mt-12 flex justify-center">
-          <WhatsAppButton message="Olá! Gostaria de ver mais projetos da Master Elétrica." source="projetos">
+          <WhatsAppButton message="Olá! Gostaria de ver mais projetos da Master Automação." source="projetos">
             Solicitar projeto personalizado
           </WhatsAppButton>
         </div>

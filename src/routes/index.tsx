@@ -22,7 +22,7 @@ import secImg from "@/assets/service-security.jpg";
 export const Route = createFileRoute("/")({
   head: () => {
     const seo = buildSeo({
-      title: "Master Elétrica Automatizada — Automação Residencial, Predial e Industrial em Curitiba",
+      title: "Master Automação — Automação Residencial, Predial e Industrial em Curitiba",
       description:
         "Especialistas em automação residencial, predial e industrial em Curitiba. +500 projetos entregues. Orçamento grátis em 2h. Atendimento Batel, Ecoville, Champagnat e toda região.",
       path: "/",
@@ -361,7 +361,7 @@ function HomePage() {
             </span>
             <h2 className="mt-4 font-display text-3xl font-bold md:text-5xl">O que dizem sobre nós</h2>
             <p className="mt-4 text-muted-foreground">
-              Depoimentos reais de quem confiou na Master Elétrica para transformar seus espaços.
+              Depoimentos reais de quem confiou na Master Automação para transformar seus espaços.
             </p>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
