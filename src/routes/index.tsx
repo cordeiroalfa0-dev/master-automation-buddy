@@ -14,6 +14,7 @@ import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackCTA, trackPhone } from "@/lib/analytics";
 import heroImg from "@/assets/hero-automation.jpg";
+import ogImg from "@/assets/og-default.jpg";
 import resImg from "@/assets/service-residential.jpg";
 import comImg from "@/assets/service-commercial.jpg";
 import indImg from "@/assets/service-industrial.jpg";
@@ -26,7 +27,7 @@ export const Route = createFileRoute("/")({
       description:
         "Especialistas em automação residencial, predial e industrial em Curitiba. +500 projetos entregues. Orçamento grátis em 2h. Atendimento Batel, Ecoville, Champagnat e toda região.",
       path: "/",
-      image: heroImg,
+      image: ogImg,
     });
     return {
       ...seo,
