@@ -15,7 +15,7 @@ export function WhatsAppFloat({ source = "floating" }: Props) {
       rel="noopener noreferrer"
       onClick={() => trackWhatsApp(source)}
       aria-label={`Falar no WhatsApp ${SITE_CONFIG.contact.phone}`}
-      className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-elegant transition-transform hover:scale-110 animate-pulse-glow md:bottom-6 md:right-6"
+      className="fixed bottom-6 right-6 z-40 hidden h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-elegant transition-transform hover:scale-110 animate-pulse-glow md:grid"
     >
       <MessageCircle className="h-7 w-7" fill="currentColor" />
       <span className="sr-only">WhatsApp</span>

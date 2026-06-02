@@ -16,6 +16,23 @@ export const localBusinessSchema = {
     addressRegion: "PR",
     addressCountry: "BR",
   },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: -25.4284,
+    longitude: -49.2733,
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Serviços de Automação",
+    itemListElement: SITE_CONFIG.services.map((s) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: s.title,
+        url: `${SITE_CONFIG.url}/servicos/${s.slug}`,
+      },
+    })),
+  },
   areaServed: [
     { "@type": "City", name: "Curitiba" },
     ...SITE_CONFIG.bairros.map((b) => ({
@@ -42,6 +59,23 @@ export const localBusinessSchema = {
     "@type": "AggregateRating",
     ratingValue: "5.0",
     reviewCount: "127",
+  },
+};
+
+export const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_CONFIG.name,
+  url: SITE_CONFIG.url,
+  inLanguage: "pt-BR",
+  publisher: {
+    "@type": "Organization",
+    name: SITE_CONFIG.name,
+  },
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${SITE_CONFIG.url}/servicos?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
   },
 };
 
