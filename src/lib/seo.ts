@@ -1,5 +1,5 @@
 import { SITE_CONFIG } from "./site-config";
-import defaultOgImage from "@/assets/hero-automation.jpg";
+import defaultOgImage from "@/assets/og-default.jpg";
 
 interface SeoMetaInput {
   title: string;

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Zap, Home, Building2, Factory, Shield, ArrowRight,
   CheckCircle2, Star, Award, Users, Sparkles, Phone,
-  ClipboardList, Pencil, Wrench, HeadphonesIcon,
+  ClipboardList, Pencil, Wrench, HeadphonesIcon, MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -14,6 +14,7 @@ import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackCTA, trackPhone } from "@/lib/analytics";
 import heroImg from "@/assets/hero-automation.jpg";
+import ogImg from "@/assets/og-default.jpg";
 import resImg from "@/assets/service-residential.jpg";
 import comImg from "@/assets/service-commercial.jpg";
 import indImg from "@/assets/service-industrial.jpg";
@@ -26,7 +27,7 @@ export const Route = createFileRoute("/")({
       description:
         "Especialistas em automação residencial, predial e industrial em Curitiba. +500 projetos entregues. Orçamento grátis em 2h. Atendimento Batel, Ecoville, Champagnat e toda região.",
       path: "/",
-      image: heroImg,
+      image: ogImg,
     });
     return {
       ...seo,
@@ -382,6 +383,66 @@ function HomePage() {
                 </figcaption>
               </figure>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      {/* COVERAGE AREA */}
+      <section className="relative overflow-hidden border-y bg-gradient-to-br from-primary/5 via-background to-energy/5 py-16 md:py-20">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <div className="grid items-center gap-10 md:grid-cols-[1fr_1.4fr]">
+            <div>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary">
+                <MapPin className="h-3 w-3" /> Área de cobertura
+              </span>
+              <h2 className="mt-4 font-display text-3xl font-bold text-balance md:text-4xl">
+                Atendimento em <span className="text-primary">Curitiba</span> e Região Metropolitana
+              </h2>
+              <p className="mt-4 text-muted-foreground text-pretty">
+                Equipe técnica própria com cobertura em mais de <strong className="text-foreground">30 bairros</strong> da capital paranaense e cidades vizinhas. Visita técnica gratuita.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2 text-sm">
+                {["São José dos Pinhais", "Pinhais", "Colombo", "Araucária", "Campo Largo"].map((c) => (
+                  <span key={c} className="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-card px-3 py-1 text-xs font-medium text-foreground shadow-sm">
+                    <MapPin className="h-3 w-3 text-primary" /> {c}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="rounded-2xl border bg-card/80 p-6 shadow-card backdrop-blur md:p-8">
+                <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  Bairros que atendemos em Curitiba
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {SITE_CONFIG.bairros.map((b) => (
+                    <span
+                      key={b}
+                      className="inline-flex items-center rounded-md bg-gradient-to-br from-primary/10 to-primary/5 px-3 py-1.5 text-xs font-medium text-foreground ring-1 ring-primary/15 transition-colors hover:from-primary hover:to-primary hover:text-primary-foreground"
+                    >
+                      {b}
+                    </span>
+                  ))}
+                  <span className="inline-flex items-center rounded-md bg-energy/15 px-3 py-1.5 text-xs font-semibold text-foreground ring-1 ring-energy/30">
+                    + outros
+                  </span>
+                </div>
+                <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-sm">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <CheckCircle2 className="h-4 w-4 text-success" />
+                    Visita técnica <strong className="text-foreground">gratuita</strong>
+                  </div>
+                  <Link
+                    to="/orcamento"
+                    onClick={() => trackCTA("orcamento", "coverage")}
+                    className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
+                  >
+                    Verificar atendimento <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
