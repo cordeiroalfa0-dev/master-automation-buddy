@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Zap, Home, Building2, Factory, Shield, ArrowRight,
   CheckCircle2, Star, Award, Users, Sparkles, Phone,
-  ClipboardList, Pencil, Wrench, HeadphonesIcon,
+  ClipboardList, Pencil, Wrench, HeadphonesIcon, MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
