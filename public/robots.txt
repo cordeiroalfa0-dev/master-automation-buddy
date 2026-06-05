@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /obrigado
+Disallow: /admin
+
+Sitemap: https://master-automation-buddy.lovable.app/sitemap.xml
