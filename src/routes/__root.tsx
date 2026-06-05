@@ -4,6 +4,7 @@ import {
   createRootRoute,
   HeadContent,
   Scripts,
+  useRouter,
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
@@ -18,6 +19,9 @@ import { JsonLd } from "@/components/JsonLd";
 import { localBusinessSchema, websiteSchema } from "@/lib/schema";
 import { MobileStickyCTA } from "@/components/MobileStickyCTA";
 import { SITE_CONFIG } from "@/lib/site-config";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { BackToTop } from "@/components/BackToTop";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -34,6 +38,39 @@ function NotFoundComponent() {
         >
           Voltar ao início
         </Link>
+      </div>
+    </div>
+  );
+}
+
+function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+  if (typeof window !== "undefined") console.error(error);
+  const router = useRouter();
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-5xl font-bold text-foreground">Ops!</h1>
+        <h2 className="mt-4 text-xl font-semibold">Algo deu errado</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Tivemos um problema ao carregar esta página. Tente novamente em instantes.
+        </p>
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <button
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          >
+            Tentar novamente
+          </button>
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-md border border-border px-4 py-2 text-sm font-medium hover:bg-accent"
+          >
+            Ir para o início
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -65,6 +102,15 @@ export const Route = createRootRoute({
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico" },
+      { rel: "manifest", href: "/site.webmanifest" },
+      { rel: "apple-touch-icon", href: "/favicon.ico" },
+      { rel: "alternate", hrefLang: "pt-BR", href: SITE_CONFIG.url },
+      { rel: "alternate", hrefLang: "x-default", href: SITE_CONFIG.url },
+      // Performance: warm up critical third-party origins
+      { rel: "dns-prefetch", href: "https://wa.me" },
+      { rel: "dns-prefetch", href: "https://www.googletagmanager.com" },
+      { rel: "dns-prefetch", href: "https://www.google-analytics.com" },
+      { rel: "preconnect", href: "https://wa.me", crossOrigin: "anonymous" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
         rel: "preconnect",
@@ -80,6 +126,7 @@ export const Route = createRootRoute({
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
+  errorComponent: ErrorComponent,
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
@@ -91,6 +138,11 @@ function RootShell({ children }: { children: React.ReactNode }) {
       <body>
         {children}
         <Scripts />
+        <noscript>
+          <div style={{ padding: "12px 16px", textAlign: "center", background: "#1e3a8a", color: "#fff", fontFamily: "system-ui, sans-serif", fontSize: 14 }}>
+            Para a melhor experiência, habilite o JavaScript. Você também pode ligar para {SITE_CONFIG.contact.phone}.
+          </div>
+        </noscript>
       </body>
     </html>
   );
@@ -99,6 +151,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   return (
     <TrackingProvider>
+      <ScrollToTop />
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground focus:shadow-elegant"
@@ -116,9 +169,11 @@ function RootComponent() {
       </div>
       <WhatsAppFloat />
       <MobileStickyCTA />
+      <BackToTop />
       <CookieConsent />
       <TrackingScripts />
       <ScrollDepthTracker />
+      <Toaster richColors position="top-right" />
     </TrackingProvider>
   );
 }
