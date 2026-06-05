@@ -8,7 +8,7 @@ export const SITE_CONFIG = {
   tagline: "Automação que transforma seu espaço",
   description:
     "Soluções completas em automação residencial, predial e industrial em Curitiba e região metropolitana. Mais de 500 projetos entregues.",
-  url: "https://masterautomacao.vercel.app",
+  url: "https://master-automation-buddy.lovable.app",
   locale: "pt-BR",
   region: "Curitiba, PR",
 
