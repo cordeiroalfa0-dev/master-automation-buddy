@@ -15,6 +15,17 @@ import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
 import { buildSeo } from "@/lib/seo";
+import imgCobertura from "@/assets/projetos/cobertura-smart.jpg";
+import imgEdificio from "@/assets/projetos/edificio-residencial.jpg";
+import imgIndustria from "@/assets/projetos/industria-metalurgica.jpg";
+import imgHomeTheater from "@/assets/projetos/home-theater.jpg";
+import imgCftv from "@/assets/projetos/condominio-cftv.jpg";
+import imgCorporativo from "@/assets/projetos/edificio-corporativo.jpg";
+import imgCozinha from "@/assets/projetos/cozinha-inteligente.jpg";
+import imgRestaurante from "@/assets/projetos/restaurante-boutique.jpg";
+import imgResidencia from "@/assets/projetos/residencia-alto-padrao.jpg";
+import imgShopping from "@/assets/projetos/shopping-comercial.jpg";
+import imgGalpao from "@/assets/projetos/galpao-logistico.jpg";
 
 export const Route = createFileRoute("/projetos")({
   head: () =>
@@ -29,17 +40,17 @@ export const Route = createFileRoute("/projetos")({
 });
 
 const PROJECTS = [
-  { tag: "Residencial", local: "Batel, Curitiba", title: "Cobertura Smart Home", desc: "Automação completa: iluminação cênica, áudio multi-room, climatização e cortinas motorizadas controladas por app e voz." },
-  { tag: "Predial", local: "Ecoville, Curitiba", title: "Edifício Residencial Premium", desc: "Iluminação inteligente da fachada, controle de acesso veicular automatizado e gestão de áreas comuns." },
-  { tag: "Industrial", local: "CIC, Curitiba", title: "Indústria Metalúrgica", desc: "Programação de CLPs Siemens, painéis de comando e supervisão SCADA da linha de produção." },
-  { tag: "Residencial", local: "Champagnat, Curitiba", title: "Home Theater Premium", desc: "Sala de cinema com automação total: cortinas blackout, projeção 4K, áudio 7.1 e iluminação cênica programável." },
-  { tag: "Segurança", local: "Água Verde, Curitiba", title: "Condomínio Vertical", desc: "CFTV com 64 câmeras IP, alarme perimetral, controle de acesso biométrico e portaria remota 24h." },
-  { tag: "Predial", local: "Centro Cívico, Curitiba", title: "Edifício Corporativo", desc: "Catracas com biometria facial, iluminação automatizada e integração com sistema de gestão predial." },
-  { tag: "Residencial", local: "Bigorrilho, Curitiba", title: "Cozinha Inteligente", desc: "Iluminação sob bancada, controle por voz, eletrodomésticos integrados e cenas personalizadas." },
-  { tag: "Comercial", local: "Juvevê, Curitiba", title: "Restaurante Boutique", desc: "Cenas de iluminação por horário, controle de climatização e som ambiente integrado." },
-  { tag: "Residencial", local: "Cabral, Curitiba", title: "Residência de Alto Padrão", desc: "Domótica completa com sensores de presença, automação de portões e integração com assistente virtual." },
-  { tag: "Predial", local: "Centro, Curitiba", title: "Shopping Comercial", desc: "Sistema integrado de iluminação, ar-condicionado e segurança eletrônica para múltiplas lojas." },
-  { tag: "Industrial", local: "Boqueirão, Curitiba", title: "Galpão Logístico", desc: "Painéis de força, automação de portões industriais e sistema de monitoramento energético." },
+  { tag: "Residencial", local: "Batel, Curitiba", title: "Cobertura Smart Home", desc: "Automação completa: iluminação cênica, áudio multi-room, climatização e cortinas motorizadas controladas por app e voz.", image: imgCobertura },
+  { tag: "Predial", local: "Ecoville, Curitiba", title: "Edifício Residencial Premium", desc: "Iluminação inteligente da fachada, controle de acesso veicular automatizado e gestão de áreas comuns.", image: imgEdificio },
+  { tag: "Industrial", local: "CIC, Curitiba", title: "Indústria Metalúrgica", desc: "Programação de CLPs Siemens, painéis de comando e supervisão SCADA da linha de produção.", image: imgIndustria },
+  { tag: "Residencial", local: "Champagnat, Curitiba", title: "Home Theater Premium", desc: "Sala de cinema com automação total: cortinas blackout, projeção 4K, áudio 7.1 e iluminação cênica programável.", image: imgHomeTheater },
+  { tag: "Segurança", local: "Água Verde, Curitiba", title: "Condomínio Vertical", desc: "CFTV com 64 câmeras IP, alarme perimetral, controle de acesso biométrico e portaria remota 24h.", image: imgCftv },
+  { tag: "Predial", local: "Centro Cívico, Curitiba", title: "Edifício Corporativo", desc: "Catracas com biometria facial, iluminação automatizada e integração com sistema de gestão predial.", image: imgCorporativo },
+  { tag: "Residencial", local: "Bigorrilho, Curitiba", title: "Cozinha Inteligente", desc: "Iluminação sob bancada, controle por voz, eletrodomésticos integrados e cenas personalizadas.", image: imgCozinha },
+  { tag: "Comercial", local: "Juvevê, Curitiba", title: "Restaurante Boutique", desc: "Cenas de iluminação por horário, controle de climatização e som ambiente integrado.", image: imgRestaurante },
+  { tag: "Residencial", local: "Cabral, Curitiba", title: "Residência de Alto Padrão", desc: "Domótica completa com sensores de presença, automação de portões e integração com assistente virtual.", image: imgResidencia },
+  { tag: "Predial", local: "Centro, Curitiba", title: "Shopping Comercial", desc: "Sistema integrado de iluminação, ar-condicionado e segurança eletrônica para múltiplas lojas.", image: imgShopping },
+  { tag: "Industrial", local: "Boqueirão, Curitiba", title: "Galpão Logístico", desc: "Painéis de força, automação de portões industriais e sistema de monitoramento energético.", image: imgGalpao },
 ] as const;
 
 type Category = (typeof PROJECTS)[number]["tag"];
@@ -165,17 +176,23 @@ function ProjectsPage() {
                 className="group relative flex flex-col overflow-hidden rounded-2xl border bg-card transition-smooth hover:-translate-y-2 hover:border-primary/40 hover:shadow-elegant"
               >
                 {/* Visual */}
-                <div className={`relative aspect-[4/3] overflow-hidden bg-gradient-to-br ${meta.gradient}`}>
-                  <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(135deg,rgba(255,255,255,.25)_25%,transparent_25%,transparent_50%,rgba(255,255,255,.25)_50%,rgba(255,255,255,.25)_75%,transparent_75%)] [background-size:24px_24px]" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  <Icon className="absolute right-6 top-6 h-14 w-14 text-white/30 transition-smooth group-hover:scale-110 group-hover:text-white/50" />
+                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                  <img
+                    src={p.image}
+                    alt={`${p.title} — ${p.local}`}
+                    loading="lazy"
+                    width={1024}
+                    height={768}
+                    className="h-full w-full object-cover transition-smooth duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                   <div className="absolute left-5 top-5">
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-primary shadow-sm">
                       <Icon className="h-3 w-3" /> {p.tag}
                     </span>
                   </div>
                   <div className="absolute bottom-5 left-5 right-5">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-black/40 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
                       <MapPin className="h-3 w-3" /> {p.local}
                     </span>
                   </div>
