@@ -20,6 +20,7 @@ import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicosIndexRouteImport } from './routes/servicos.index'
+import { Route as AtendimentoIndexRouteImport } from './routes/atendimento.index'
 import { Route as ServicosSlugRouteImport } from './routes/servicos.$slug'
 
 const TermosRoute = TermosRouteImport.update({
@@ -77,6 +78,11 @@ const ServicosIndexRoute = ServicosIndexRouteImport.update({
   path: '/servicos/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AtendimentoIndexRoute = AtendimentoIndexRouteImport.update({
+  id: '/atendimento/',
+  path: '/atendimento/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicosSlugRoute = ServicosSlugRouteImport.update({
   id: '/servicos/$slug',
   path: '/servicos/$slug',
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/servicos/$slug': typeof ServicosSlugRoute
+  '/atendimento/': typeof AtendimentoIndexRoute
   '/servicos/': typeof ServicosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/servicos/$slug': typeof ServicosSlugRoute
+  '/atendimento': typeof AtendimentoIndexRoute
   '/servicos': typeof ServicosIndexRoute
 }
 export interface FileRoutesById {
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/servicos/$slug': typeof ServicosSlugRoute
+  '/atendimento/': typeof AtendimentoIndexRoute
   '/servicos/': typeof ServicosIndexRoute
 }
 export interface FileRouteTypes {
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/servicos/$slug'
+    | '/atendimento/'
     | '/servicos/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/servicos/$slug'
+    | '/atendimento'
     | '/servicos'
   id:
     | '__root__'
@@ -168,6 +179,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/servicos/$slug'
+    | '/atendimento/'
     | '/servicos/'
   fileRoutesById: FileRoutesById
 }
@@ -183,6 +195,7 @@ export interface RootRouteChildren {
   SobreRoute: typeof SobreRoute
   TermosRoute: typeof TermosRoute
   ServicosSlugRoute: typeof ServicosSlugRoute
+  AtendimentoIndexRoute: typeof AtendimentoIndexRoute
   ServicosIndexRoute: typeof ServicosIndexRoute
 }
 
@@ -265,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/atendimento/': {
+      id: '/atendimento/'
+      path: '/atendimento'
+      fullPath: '/atendimento/'
+      preLoaderRoute: typeof AtendimentoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/servicos/$slug': {
       id: '/servicos/$slug'
       path: '/servicos/$slug'
@@ -287,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   SobreRoute: SobreRoute,
   TermosRoute: TermosRoute,
   ServicosSlugRoute: ServicosSlugRoute,
+  AtendimentoIndexRoute: AtendimentoIndexRoute,
   ServicosIndexRoute: ServicosIndexRoute,
 }
 export const routeTree = rootRouteImport
