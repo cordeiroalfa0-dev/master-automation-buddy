@@ -13,6 +13,7 @@ import { breadcrumbSchema, faqSchema, reviewSchema } from "@/lib/schema";
 import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackCTA, trackPhone } from "@/lib/analytics";
+import { BAIRROS } from "@/lib/bairros";
 import heroImg from "@/assets/hero-automation.jpg";
 import ogImg from "@/assets/og-default.jpg";
 import resImg from "@/assets/service-residential.jpg";
