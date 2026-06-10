@@ -522,6 +522,40 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Bairros atendidos — internal linking para SEO local */}
+      <section className="border-t bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4 py-16 md:px-6">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                <MapPin className="h-3.5 w-3.5" /> Atendimento local
+              </span>
+              <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
+                Automação em todos os bairros de Curitiba
+              </h2>
+              <p className="mt-2 max-w-2xl text-muted-foreground">
+                Equipe técnica própria em Curitiba e região metropolitana. Clique no seu bairro:
+              </p>
+            </div>
+            <Link to="/atendimento" className="text-sm font-semibold text-primary hover:underline">
+              Ver todas as áreas →
+            </Link>
+          </div>
+          <div className="mt-8 flex flex-wrap gap-2">
+            {BAIRROS.map((b) => (
+              <Link
+                key={b.slug}
+                to="/atendimento/$bairro"
+                params={{ bairro: b.slug }}
+                className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+              >
+                Automação em {b.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }
