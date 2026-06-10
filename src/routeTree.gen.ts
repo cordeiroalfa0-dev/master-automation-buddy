@@ -20,7 +20,9 @@ import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicosIndexRouteImport } from './routes/servicos.index'
+import { Route as AtendimentoIndexRouteImport } from './routes/atendimento.index'
 import { Route as ServicosSlugRouteImport } from './routes/servicos.$slug'
+import { Route as AtendimentoBairroRouteImport } from './routes/atendimento.$bairro'
 
 const TermosRoute = TermosRouteImport.update({
   id: '/termos',
@@ -77,9 +79,19 @@ const ServicosIndexRoute = ServicosIndexRouteImport.update({
   path: '/servicos/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AtendimentoIndexRoute = AtendimentoIndexRouteImport.update({
+  id: '/atendimento/',
+  path: '/atendimento/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicosSlugRoute = ServicosSlugRouteImport.update({
   id: '/servicos/$slug',
   path: '/servicos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtendimentoBairroRoute = AtendimentoBairroRouteImport.update({
+  id: '/atendimento/$bairro',
+  path: '/atendimento/$bairro',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -94,7 +106,9 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/atendimento/$bairro': typeof AtendimentoBairroRoute
   '/servicos/$slug': typeof ServicosSlugRoute
+  '/atendimento/': typeof AtendimentoIndexRoute
   '/servicos/': typeof ServicosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -108,7 +122,9 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/atendimento/$bairro': typeof AtendimentoBairroRoute
   '/servicos/$slug': typeof ServicosSlugRoute
+  '/atendimento': typeof AtendimentoIndexRoute
   '/servicos': typeof ServicosIndexRoute
 }
 export interface FileRoutesById {
@@ -123,7 +139,9 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/atendimento/$bairro': typeof AtendimentoBairroRoute
   '/servicos/$slug': typeof ServicosSlugRoute
+  '/atendimento/': typeof AtendimentoIndexRoute
   '/servicos/': typeof ServicosIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,7 +157,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sobre'
     | '/termos'
+    | '/atendimento/$bairro'
     | '/servicos/$slug'
+    | '/atendimento/'
     | '/servicos/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -153,7 +173,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sobre'
     | '/termos'
+    | '/atendimento/$bairro'
     | '/servicos/$slug'
+    | '/atendimento'
     | '/servicos'
   id:
     | '__root__'
@@ -167,7 +189,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sobre'
     | '/termos'
+    | '/atendimento/$bairro'
     | '/servicos/$slug'
+    | '/atendimento/'
     | '/servicos/'
   fileRoutesById: FileRoutesById
 }
@@ -182,7 +206,9 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
   TermosRoute: typeof TermosRoute
+  AtendimentoBairroRoute: typeof AtendimentoBairroRoute
   ServicosSlugRoute: typeof ServicosSlugRoute
+  AtendimentoIndexRoute: typeof AtendimentoIndexRoute
   ServicosIndexRoute: typeof ServicosIndexRoute
 }
 
@@ -265,11 +291,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/atendimento/': {
+      id: '/atendimento/'
+      path: '/atendimento'
+      fullPath: '/atendimento/'
+      preLoaderRoute: typeof AtendimentoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/servicos/$slug': {
       id: '/servicos/$slug'
       path: '/servicos/$slug'
       fullPath: '/servicos/$slug'
       preLoaderRoute: typeof ServicosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/atendimento/$bairro': {
+      id: '/atendimento/$bairro'
+      path: '/atendimento/$bairro'
+      fullPath: '/atendimento/$bairro'
+      preLoaderRoute: typeof AtendimentoBairroRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -286,7 +326,9 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
   TermosRoute: TermosRoute,
+  AtendimentoBairroRoute: AtendimentoBairroRoute,
   ServicosSlugRoute: ServicosSlugRoute,
+  AtendimentoIndexRoute: AtendimentoIndexRoute,
   ServicosIndexRoute: ServicosIndexRoute,
 }
 export const routeTree = rootRouteImport

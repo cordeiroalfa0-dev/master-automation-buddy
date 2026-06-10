@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SITE_CONFIG } from "@/lib/site-config";
+import { BAIRROS } from "@/lib/bairros";
 
 const STATIC_ROUTES = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
@@ -12,6 +13,7 @@ const STATIC_ROUTES = [
   { path: "/sobre", priority: "0.7", changefreq: "monthly" },
   { path: "/contato", priority: "0.8", changefreq: "monthly" },
   { path: "/orcamento", priority: "0.9", changefreq: "monthly" },
+  { path: "/atendimento", priority: "0.8", changefreq: "monthly" },
   { path: "/politica-privacidade", priority: "0.3", changefreq: "yearly" },
   { path: "/termos", priority: "0.3", changefreq: "yearly" },
 ];
@@ -21,7 +23,15 @@ export const Route = createFileRoute("/sitemap.xml")({
     handlers: {
       GET: async () => {
         const today = new Date().toISOString().split("T")[0];
-        const urls = STATIC_ROUTES.map(
+        const allRoutes = [
+          ...STATIC_ROUTES,
+          ...BAIRROS.map((b) => ({
+            path: `/atendimento/${b.slug}`,
+            priority: "0.7",
+            changefreq: "monthly" as const,
+          })),
+        ];
+        const urls = allRoutes.map(
           (r) => `  <url>
     <loc>${SITE_CONFIG.url}${r.path}</loc>
     <lastmod>${today}</lastmod>
