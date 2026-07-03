@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, Phone, Zap } from "lucide-react";
+import { Menu, X, Phone, Zap, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone, trackCTA } from "@/lib/analytics";
@@ -79,6 +79,14 @@ export function Header() {
               <Phone className="h-4 w-4 text-primary" />
               <span className="hidden lg:inline">{SITE_CONFIG.contact.phone}</span>
             </a>
+            <Link
+              to="/auth"
+              className="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              aria-label="Entrar"
+            >
+              <User className="h-4 w-4" />
+              <span className="hidden lg:inline">Entrar</span>
+            </Link>
             <Button
               asChild
               size="sm"
