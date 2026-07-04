@@ -1,21 +1,3 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { tanstackStart } from "@tanstack/react-start/plugin/vite";
-import { nitro } from "nitro/vite";
-import tsconfigPaths from "vite-tsconfig-paths";
-import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig({
-  plugins: [
-    tanstackStart(),
-    nitro(),
-    react(),
-    tailwindcss(),
-    tsconfigPaths(),
-  ],
-  resolve: {
-    alias: {
-      "@": "/src",
-    },
-  },
-});
+export default defineConfig();
