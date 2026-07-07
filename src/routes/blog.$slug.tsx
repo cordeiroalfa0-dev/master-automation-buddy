@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
 import { buildSeo } from "@/lib/seo";
 import { BLOG_POSTS, findPost } from "@/lib/blog";
+import type { BlogPost } from "@/lib/blog";
 import { JsonLd } from "@/components/JsonLd";
 import { articleSchema, breadcrumbSchema } from "@/lib/schema";
 
@@ -44,7 +45,7 @@ function BlogPostNotFound() {
 }
 
 function BlogPostPage() {
-  const { post } = Route.useLoaderData();
+  const { post } = Route.useLoaderData() as { post: BlogPost };
   const related = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
