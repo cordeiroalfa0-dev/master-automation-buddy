@@ -216,6 +216,24 @@ function HomePage() {
         </div>
       </section>
 
+      {/* CALCULADORA DE INVESTIMENTO */}
+      <section className="mx-auto max-w-4xl px-4 py-14 md:px-6 md:py-16">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary">
+            Calculadora
+          </span>
+          <h2 className="mt-4 font-display text-2xl font-bold text-balance md:text-4xl">
+            Estime o investimento do seu projeto
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Simulação instantânea com base em faixas reais praticadas em Curitiba.
+          </p>
+        </div>
+        <div className="mx-auto mt-8 max-w-2xl">
+          <InvestmentCalculator />
+        </div>
+      </section>
+
       {/* SERVICES */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
         <div className="mx-auto max-w-2xl text-center">
