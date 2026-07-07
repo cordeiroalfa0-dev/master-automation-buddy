@@ -14,6 +14,11 @@ const STATIC_ROUTES = [
   { path: "/contato", priority: "0.8", changefreq: "monthly" },
   { path: "/orcamento", priority: "0.9", changefreq: "monthly" },
   { path: "/atendimento", priority: "0.8", changefreq: "monthly" },
+  { path: "/bairros", priority: "0.7", changefreq: "monthly" },
+  { path: "/blog", priority: "0.8", changefreq: "weekly" },
+  { path: "/blog/quanto-custa-automatizar-uma-casa-em-curitiba", priority: "0.7", changefreq: "monthly" },
+  { path: "/blog/knx-vs-zigbee-qual-escolher", priority: "0.7", changefreq: "monthly" },
+  { path: "/blog/automacao-para-condominios-em-curitiba", priority: "0.7", changefreq: "monthly" },
   { path: "/politica-privacidade", priority: "0.3", changefreq: "yearly" },
   { path: "/termos", priority: "0.3", changefreq: "yearly" },
 ];
