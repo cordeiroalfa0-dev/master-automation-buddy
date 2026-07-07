@@ -109,7 +109,10 @@ export function serviceSchema(opts: {
       name: SITE_CONFIG.name,
       telephone: SITE_CONFIG.contact.phoneE164,
     },
-    areaServed: { "@type": "City", name: "Curitiba" },
+    areaServed: [
+      { "@type": "City", name: "Curitiba" },
+      ...SITE_CONFIG.bairros.map((b) => ({ "@type": "Place", name: `${b}, Curitiba` })),
+    ],
     url: `${SITE_CONFIG.url}/servicos/${opts.slug}`,
   };
 }
@@ -147,4 +150,51 @@ export function reviewSchema(items: Array<{ author: string; rating: number; text
     reviewBody: r.text,
     ...(r.date ? { datePublished: r.date } : {}),
   }));
+}
+
+/** HowTo schema — passos do processo para rich snippets no Google. */
+export function howToSchema(opts: {
+  name: string;
+  description: string;
+  steps: Array<{ name: string; text: string }>;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: opts.name,
+    description: opts.description,
+    step: opts.steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+    })),
+  };
+}
+
+/** Article schema — usado em posts de blog. */
+export function articleSchema(opts: {
+  title: string;
+  description: string;
+  slug: string;
+  datePublished: string;
+  author?: string;
+  image?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: opts.title,
+    description: opts.description,
+    datePublished: opts.datePublished,
+    dateModified: opts.datePublished,
+    author: { "@type": "Organization", name: opts.author || SITE_CONFIG.name },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_CONFIG.name,
+      logo: { "@type": "ImageObject", url: `${SITE_CONFIG.url}/favicon.ico` },
+    },
+    mainEntityOfPage: `${SITE_CONFIG.url}/blog/${opts.slug}`,
+    ...(opts.image ? { image: opts.image } : {}),
+  };
 }
