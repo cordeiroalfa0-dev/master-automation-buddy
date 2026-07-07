@@ -9,11 +9,14 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { LeadForm } from "@/components/LeadForm";
 import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { JsonLd } from "@/components/JsonLd";
-import { breadcrumbSchema, faqSchema, reviewSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, reviewSchema, howToSchema, serviceSchema } from "@/lib/schema";
 import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackCTA, trackPhone } from "@/lib/analytics";
 import { BAIRROS } from "@/lib/bairros";
+import { InvestmentCalculator } from "@/components/InvestmentCalculator";
+import { toast } from "sonner";
+import { Link2 } from "lucide-react";
 import heroImg from "@/assets/hero-automation.jpg";
 import ogImg from "@/assets/og-default.jpg";
 import resImg from "@/assets/service-residential.jpg";
@@ -79,11 +82,23 @@ const FAQ = [
   { question: "Existe garantia nos serviços?", answer: "Sim. Garantia mínima de 12 meses sobre instalação e seguimos as garantias dos fabricantes para os equipamentos. Oferecemos também planos de manutenção preventiva." },
 ];
 
+function slugifyFaq(q: string): string {
+  return q.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
+}
+
 function HomePage() {
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Início", url: "/" }])} />
       <JsonLd data={faqSchema(FAQ)} />
+      <JsonLd data={howToSchema({
+        name: "Como contratamos um projeto de automação",
+        description: "Processo em 4 etapas: diagnóstico, projeto, execução e suporte pós-obra.",
+        steps: PROCESS.map((p) => ({ name: p.title, text: p.desc })),
+      })} />
+      {SERVICES.map((s) => (
+        <JsonLd key={s.slug} data={serviceSchema({ name: s.title, description: s.desc, slug: s.slug })} />
+      ))}
       <JsonLd
         data={reviewSchema(
           TESTIMONIALS.map((t) => ({ author: t.name, rating: 5, text: t.text })),
