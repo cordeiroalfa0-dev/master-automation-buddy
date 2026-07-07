@@ -22,6 +22,8 @@ import { SITE_CONFIG } from "@/lib/site-config";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { BackToTop } from "@/components/BackToTop";
 import { Toaster } from "@/components/ui/sonner";
+import { SocialProofToast } from "@/components/SocialProofToast";
+import { themeInitScript } from "@/components/ThemeToggle";
 
 function NotFoundComponent() {
   return (
@@ -145,6 +147,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <HeadContent />
       </head>
       <body>
@@ -183,6 +186,7 @@ function RootComponent() {
       <MobileStickyCTA />
       <BackToTop />
       <CookieConsent />
+      <SocialProofToast />
       <TrackingScripts />
       <ScrollDepthTracker />
       <Toaster richColors position="top-right" />

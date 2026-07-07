@@ -1,108 +1,31 @@
+Site já está bem polido. Selecionei 20 melhorias práticas de alto impacto, agrupadas por área. Se aprovar, implemento em lote.
 
-O usuário quer que o site seja pensado para **gestão de tráfego** (tráfego pago/orgânico) — ou seja, otimizado para campanhas de marketing digital, SEO, conversão e rastreamento. Vou propor um plano focado em recriar o site da Master Elétrica Automatizada com infraestrutura completa de marketing.
+## Conversão / UX (7)
+1. **Barra de urgência no topo** — "Atendimento hoje: X vagas restantes" (rotativa com prova social).
+2. **Prova social flutuante** — pop-up discreto "Fulano de Batel pediu orçamento há 12min" a cada ~40s.
+3. **Calculadora de investimento estimado** — mini-form no Hero: tipo de imóvel + m² → faixa de preço + CTA.
+4. **Comparativo visual "Antes / Depois"** — slider de imagens em Projetos.
+5. **Vídeo depoimento em destaque** — placeholder de player com poster (troca por vídeo real depois).
+6. **CTA sticky contextual desktop** — botão flutuante lateral "Fale conosco" após 30% de scroll.
+7. **Confirmação pós-form melhorada** — /obrigado com próximos passos, prazo de resposta, WhatsApp e link do Google Maps.
 
-Já tenho contexto suficiente do site original (Master Elétrica Automatizada, em Portugal, serviços elétricos e automação). Vou pular o questionário anterior e focar no que importa para tráfego.
+## SEO / Conteúdo local (5)
+8. **Schema `Service` por serviço** — Automation Residencial/Predial/Industrial/Segurança com `areaServed` = bairros.
+9. **Schema `HowTo`** na seção "Como trabalhamos" (Diagnóstico → Projeto → Execução → Suporte).
+10. **Página `/bairros` (hub)** — grid com todos os bairros linkando para `atendimento/$bairro`.
+11. **Blog inicial** — 3 posts pilar: "Quanto custa automatizar uma casa em Curitiba", "KNX vs Zigbee", "Automação para condomínios".
+12. **FAQ expandida com âncoras** — `#pergunta-slug` para snippets em destaque.
 
-## Plano: Site otimizado para gestão de tráfego
+## Performance / Técnico (4)
+13. **`fetchPriority` no LCP e `loading=eager`** — garantir hero image LCP < 2.5s.
+14. **Fontes self-hosted (woff2)** — remover request ao Google Fonts, eliminar render-blocking.
+15. **Imagens em `<picture>` com AVIF/WebP** — reduzir peso do hero e cards de serviço.
+16. **Prefetch de rota `/orcamento`** ao hover em qualquer CTA.
 
-### 1. Estrutura de Rotas (SEO-friendly)
-Cada serviço/seção como rota própria — essencial para indexação e Google Ads:
-```
-/                    → Home (landing principal)
-/servicos            → Hub de serviços
-/servicos/instalacoes-eletricas
-/servicos/automacao-residencial
-/servicos/quadros-eletricos
-/servicos/manutencao
-/sobre               → Sobre a empresa
-/projetos            → Portfolio/Cases
-/contato             → Formulário + WhatsApp
-/orcamento           → Landing page de conversão (para Ads)
-/obrigado            → Thank-you page (conversão rastreável)
-/blog                → Blog SEO (artigos sobre eletricidade/automação)
-/politica-privacidade
-/termos
-```
+## Acessibilidade / Polimento (4)
+17. **Foco visível reforçado** — anel de foco consistente em botões, links e inputs.
+18. **`prefers-reduced-motion`** — desligar marquee, fade-up e hover-scale para quem preferir.
+19. **Contraste WCAG AA no rodapé e no topbar** — auditar tokens muted/foreground.
+20. **Modo escuro** — toggle no header + tokens já refinados para dark.
 
-### 2. SEO On-Page (por rota)
-- `<head>` único: title, description, og:image, og:title, og:description, twitter card
-- **Schema.org JSON-LD**: LocalBusiness, Service, BreadcrumbList, FAQPage, Review
-- **Sitemap.xml** dinâmico + **robots.txt**
-- URLs limpas, hreflang (pt-PT)
-- Canonical tags
-- Open Graph para WhatsApp/Facebook/LinkedIn
-
-### 3. Rastreamento de Tráfego (Tracking)
-Componente central de tags com IDs configuráveis:
-- **Google Tag Manager (GTM)** — container único que gerencia tudo
-- **Google Analytics 4 (GA4)** — eventos de página e conversão
-- **Meta Pixel (Facebook/Instagram Ads)**
-- **TikTok Pixel** (opcional)
-- **Google Ads Conversion Tag**
-- **Microsoft Clarity** (heatmaps + session recording grátis)
-- Captura de **UTM parameters** (utm_source, utm_medium, utm_campaign) salvos no formulário de contato
-
-### 4. Eventos de Conversão Rastreados
-- `form_submit` (orçamento enviado)
-- `whatsapp_click`
-- `phone_click`
-- `scroll_depth` (25/50/75/100%)
-- `cta_click` (botões principais)
-- `page_view` (com UTMs)
-
-### 5. Landing Pages para Ads
-- `/orcamento` — página dedicada para campanhas pagas, formulário curto, prova social, urgência
-- `/obrigado` — confirmação que dispara conversão no GA4/Meta/Google Ads
-
-### 6. Performance (Core Web Vitals — fator de ranking)
-- Imagens otimizadas (WebP, lazy loading, dimensões definidas)
-- Fonts pré-carregadas
-- CSS crítico inline
-- SSR ativado (TanStack Start já faz)
-- Lighthouse score alvo: 90+
-
-### 7. Conversão (CRO)
-- WhatsApp flutuante fixo
-- Formulário multi-step (mais conversão que single-step)
-- Prova social: depoimentos, logos de clientes, número de projetos
-- CTAs claros em cada seção ("Pedir Orçamento Grátis")
-- Selo de confiança (anos de experiência, certificações)
-- Banner de cookies LGPD/GDPR (necessário para tracking legal na UE)
-
-### 8. Backend (Lovable Cloud)
-Tabelas:
-- `leads` (nome, email, telefone, serviço, mensagem, utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid, fbclid, created_at, página de origem)
-- `blog_posts` (slug, título, conteúdo, meta_description, og_image, publicado_em)
-
-Edge functions:
-- `submit-lead` — salva lead + envia email para a empresa + envia evento server-side para Meta CAPI (Conversion API — bypass de adblockers)
-- `sitemap` — gera sitemap.xml dinâmico
-
-### 9. Painel Admin (mínimo)
-- `/admin/leads` — ver leads recebidos com UTMs (autenticado)
-- `/admin/blog` — criar/editar posts
-
-### 10. Configuração via UI
-Página `/admin/configuracoes` para o cliente colar os IDs sem precisar de dev:
-- GTM ID
-- GA4 Measurement ID
-- Meta Pixel ID
-- Google Ads ID
-- WhatsApp number
-
----
-
-### Detalhes Técnicos
-- **Framework**: TanStack Start (já configurado) + SSR ativo para SEO
-- **Backend**: Lovable Cloud (Postgres + Edge Functions + Auth)
-- **Tracking**: GTM como hub único, scripts injetados via `<script>` no `__root.tsx` head
-- **UTMs**: Hook `useUTMTracking` que lê `window.location.search`, salva em `sessionStorage` e anexa no submit do form
-- **Schema markup**: Componente `<JsonLd>` reutilizável por rota
-- **Cookie consent**: Componente que bloqueia GTM até consentimento (compliance UE)
-
-### Entrega em fases
-**Fase 1 (esta)**: Site público completo — todas as rotas, SEO, tracking GTM/GA4/Meta, formulário com UTMs salvos no banco, WhatsApp flutuante, sitemap, banner de cookies, página /orcamento + /obrigado.
-
-**Fase 2 (depois)**: Painel admin de leads, blog com CMS, Meta CAPI server-side.
-
-Confirma este plano? Se sim, aprovo e começo pela Fase 1.
+Confirma que posso tocar em tudo? Se quiser tirar/priorizar algo, me diz agora.

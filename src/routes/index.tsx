@@ -9,11 +9,14 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { LeadForm } from "@/components/LeadForm";
 import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { JsonLd } from "@/components/JsonLd";
-import { breadcrumbSchema, faqSchema, reviewSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, reviewSchema, howToSchema, serviceSchema } from "@/lib/schema";
 import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackCTA, trackPhone } from "@/lib/analytics";
 import { BAIRROS } from "@/lib/bairros";
+import { InvestmentCalculator } from "@/components/InvestmentCalculator";
+import { toast } from "sonner";
+import { Link2 } from "lucide-react";
 import heroImg from "@/assets/hero-automation.jpg";
 import ogImg from "@/assets/og-default.jpg";
 import resImg from "@/assets/service-residential.jpg";
@@ -79,11 +82,23 @@ const FAQ = [
   { question: "Existe garantia nos serviços?", answer: "Sim. Garantia mínima de 12 meses sobre instalação e seguimos as garantias dos fabricantes para os equipamentos. Oferecemos também planos de manutenção preventiva." },
 ];
 
+function slugifyFaq(q: string): string {
+  return q.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
+}
+
 function HomePage() {
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Início", url: "/" }])} />
       <JsonLd data={faqSchema(FAQ)} />
+      <JsonLd data={howToSchema({
+        name: "Como contratamos um projeto de automação",
+        description: "Processo em 4 etapas: diagnóstico, projeto, execução e suporte pós-obra.",
+        steps: PROCESS.map((p) => ({ name: p.title, text: p.desc })),
+      })} />
+      {SERVICES.map((s) => (
+        <JsonLd key={s.slug} data={serviceSchema({ name: s.title, description: s.desc, slug: s.slug })} />
+      ))}
       <JsonLd
         data={reviewSchema(
           TESTIMONIALS.map((t) => ({ author: t.name, rating: 5, text: t.text })),
@@ -198,6 +213,24 @@ function HomePage() {
               <div className="mt-1.5 text-xs font-medium uppercase tracking-wider text-muted-foreground md:text-sm">{s.label}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* CALCULADORA DE INVESTIMENTO */}
+      <section className="mx-auto max-w-4xl px-4 py-14 md:px-6 md:py-16">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary">
+            Calculadora
+          </span>
+          <h2 className="mt-4 font-display text-2xl font-bold text-balance md:text-4xl">
+            Estime o investimento do seu projeto
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Simulação instantânea com base em faixas reais praticadas em Curitiba.
+          </p>
+        </div>
+        <div className="mx-auto mt-8 max-w-2xl">
+          <InvestmentCalculator />
         </div>
       </section>
 
@@ -462,16 +495,30 @@ function HomePage() {
           </p>
         </div>
         <Accordion type="single" collapsible className="mt-10">
-          {FAQ.map((item, i) => (
-            <AccordionItem key={i} value={`item-${i}`} className="border-b">
-              <AccordionTrigger className="py-5 text-left font-display text-base font-semibold hover:no-underline">
-                {item.question}
-              </AccordionTrigger>
-              <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground">
-                {item.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
+          {FAQ.map((item, i) => {
+            const anchor = slugifyFaq(item.question);
+            return (
+              <AccordionItem key={i} value={`item-${i}`} id={anchor} className="border-b scroll-mt-24">
+                <AccordionTrigger className="py-5 text-left font-display text-base font-semibold hover:no-underline">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground">
+                  <p>{item.answer}</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const url = `${window.location.origin}/#${anchor}`;
+                      navigator.clipboard?.writeText(url);
+                      toast.success("Link da pergunta copiado!");
+                    }}
+                    className="mt-3 inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline"
+                  >
+                    <Link2 className="h-3 w-3" /> Copiar link desta pergunta
+                  </button>
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
         </Accordion>
       </section>
 

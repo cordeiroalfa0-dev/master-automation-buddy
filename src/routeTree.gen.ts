@@ -18,11 +18,15 @@ import { Route as PoliticaPrivacidadeRouteImport } from './routes/politica-priva
 import { Route as OrcamentoRouteImport } from './routes/orcamento'
 import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as BairrosRouteImport } from './routes/bairros'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicosIndexRouteImport } from './routes/servicos.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AtendimentoIndexRouteImport } from './routes/atendimento.index'
 import { Route as ServicosSlugRouteImport } from './routes/servicos.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AtendimentoBairroRouteImport } from './routes/atendimento.$bairro'
 
 const TermosRoute = TermosRouteImport.update({
@@ -70,6 +74,16 @@ const ContatoRoute = ContatoRouteImport.update({
   path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BairrosRoute = BairrosRouteImport.update({
+  id: '/bairros',
+  path: '/bairros',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -85,6 +99,11 @@ const ServicosIndexRoute = ServicosIndexRouteImport.update({
   path: '/servicos/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogRoute,
+} as any)
 const AtendimentoIndexRoute = AtendimentoIndexRouteImport.update({
   id: '/atendimento/',
   path: '/atendimento/',
@@ -95,6 +114,11 @@ const ServicosSlugRoute = ServicosSlugRouteImport.update({
   path: '/servicos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const AtendimentoBairroRoute = AtendimentoBairroRouteImport.update({
   id: '/atendimento/$bairro',
   path: '/atendimento/$bairro',
@@ -104,6 +128,8 @@ const AtendimentoBairroRoute = AtendimentoBairroRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bairros': typeof BairrosRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
   '/obrigado': typeof ObrigadoRoute
   '/orcamento': typeof OrcamentoRoute
@@ -114,13 +140,16 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/atendimento/$bairro': typeof AtendimentoBairroRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/servicos/$slug': typeof ServicosSlugRoute
   '/atendimento/': typeof AtendimentoIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/servicos/': typeof ServicosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bairros': typeof BairrosRoute
   '/contato': typeof ContatoRoute
   '/obrigado': typeof ObrigadoRoute
   '/orcamento': typeof OrcamentoRoute
@@ -131,14 +160,18 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/atendimento/$bairro': typeof AtendimentoBairroRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/servicos/$slug': typeof ServicosSlugRoute
   '/atendimento': typeof AtendimentoIndexRoute
+  '/blog': typeof BlogIndexRoute
   '/servicos': typeof ServicosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bairros': typeof BairrosRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
   '/obrigado': typeof ObrigadoRoute
   '/orcamento': typeof OrcamentoRoute
@@ -149,8 +182,10 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/atendimento/$bairro': typeof AtendimentoBairroRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/servicos/$slug': typeof ServicosSlugRoute
   '/atendimento/': typeof AtendimentoIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/servicos/': typeof ServicosIndexRoute
 }
 export interface FileRouteTypes {
@@ -158,6 +193,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/bairros'
+    | '/blog'
     | '/contato'
     | '/obrigado'
     | '/orcamento'
@@ -168,13 +205,16 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/atendimento/$bairro'
+    | '/blog/$slug'
     | '/servicos/$slug'
     | '/atendimento/'
+    | '/blog/'
     | '/servicos/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/bairros'
     | '/contato'
     | '/obrigado'
     | '/orcamento'
@@ -185,13 +225,17 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/atendimento/$bairro'
+    | '/blog/$slug'
     | '/servicos/$slug'
     | '/atendimento'
+    | '/blog'
     | '/servicos'
   id:
     | '__root__'
     | '/'
     | '/auth'
+    | '/bairros'
+    | '/blog'
     | '/contato'
     | '/obrigado'
     | '/orcamento'
@@ -202,14 +246,18 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/atendimento/$bairro'
+    | '/blog/$slug'
     | '/servicos/$slug'
     | '/atendimento/'
+    | '/blog/'
     | '/servicos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  BairrosRoute: typeof BairrosRoute
+  BlogRoute: typeof BlogRouteWithChildren
   ContatoRoute: typeof ContatoRoute
   ObrigadoRoute: typeof ObrigadoRoute
   OrcamentoRoute: typeof OrcamentoRoute
@@ -290,6 +338,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bairros': {
+      id: '/bairros'
+      path: '/bairros'
+      fullPath: '/bairros'
+      preLoaderRoute: typeof BairrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -311,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/atendimento/': {
       id: '/atendimento/'
       path: '/atendimento'
@@ -325,6 +394,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/atendimento/$bairro': {
       id: '/atendimento/$bairro'
       path: '/atendimento/$bairro'
@@ -335,9 +411,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  BairrosRoute: BairrosRoute,
+  BlogRoute: BlogRouteWithChildren,
   ContatoRoute: ContatoRoute,
   ObrigadoRoute: ObrigadoRoute,
   OrcamentoRoute: OrcamentoRoute,

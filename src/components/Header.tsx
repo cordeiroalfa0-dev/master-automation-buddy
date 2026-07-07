@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone, trackCTA } from "@/lib/analytics";
 import { TopBar } from "@/components/TopBar";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const NAV = [
   { to: "/", label: "Início" },
   { to: "/servicos", label: "Serviços" },
   { to: "/projetos", label: "Projetos" },
+  { to: "/blog", label: "Blog" },
   { to: "/sobre", label: "Sobre" },
   { to: "/contato", label: "Contato" },
 ] as const;
@@ -71,6 +73,7 @@ export function Header() {
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
+            <ThemeToggle />
             <a
               href={`tel:${SITE_CONFIG.contact.phoneE164}`}
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground transition-colors hover:text-primary"
