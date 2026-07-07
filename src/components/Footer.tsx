@@ -98,6 +98,8 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
               <li><Link to="/sobre" className="transition-colors hover:text-primary">Sobre nós</Link></li>
               <li><Link to="/projetos" className="transition-colors hover:text-primary">Projetos</Link></li>
+              <li><Link to="/blog" className="transition-colors hover:text-primary">Blog</Link></li>
+              <li><Link to="/bairros" className="transition-colors hover:text-primary">Bairros atendidos</Link></li>
               <li><Link to="/contato" className="transition-colors hover:text-primary">Contato</Link></li>
               <li><Link to="/orcamento" className="transition-colors hover:text-primary">Orçamento</Link></li>
               <li><Link to="/politica-privacidade" className="transition-colors hover:text-primary">Privacidade</Link></li>
@@ -143,12 +145,14 @@ export function Footer() {
           </h4>
           <div className="mt-3 flex flex-wrap gap-2">
             {SITE_CONFIG.bairros.map((b) => (
-              <span
+              <Link
                 key={b}
-                className="rounded-full border bg-background px-3 py-1 text-xs text-muted-foreground"
+                to="/atendimento/$bairro"
+                params={{ bairro: b.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-") }}
+                className="rounded-full border bg-background px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
                 {b}
-              </span>
+              </Link>
             ))}
           </div>
         </div>
