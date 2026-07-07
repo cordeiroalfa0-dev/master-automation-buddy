@@ -495,16 +495,30 @@ function HomePage() {
           </p>
         </div>
         <Accordion type="single" collapsible className="mt-10">
-          {FAQ.map((item, i) => (
-            <AccordionItem key={i} value={`item-${i}`} className="border-b">
-              <AccordionTrigger className="py-5 text-left font-display text-base font-semibold hover:no-underline">
-                {item.question}
-              </AccordionTrigger>
-              <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground">
-                {item.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
+          {FAQ.map((item, i) => {
+            const anchor = slugifyFaq(item.question);
+            return (
+              <AccordionItem key={i} value={`item-${i}`} id={anchor} className="border-b scroll-mt-24">
+                <AccordionTrigger className="py-5 text-left font-display text-base font-semibold hover:no-underline">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground">
+                  <p>{item.answer}</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const url = `${window.location.origin}/#${anchor}`;
+                      navigator.clipboard?.writeText(url);
+                      toast.success("Link da pergunta copiado!");
+                    }}
+                    className="mt-3 inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline"
+                  >
+                    <Link2 className="h-3 w-3" /> Copiar link desta pergunta
+                  </button>
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
         </Accordion>
       </section>
 
