@@ -24,6 +24,8 @@ import { BackToTop } from "@/components/BackToTop";
 import { Toaster } from "@/components/ui/sonner";
 import { SocialProofToast } from "@/components/SocialProofToast";
 import { themeInitScript } from "@/components/ThemeToggle";
+import { UrgencyBar } from "@/components/UrgencyBar";
+import { DesktopStickyCTA } from "@/components/DesktopStickyCTA";
 
 function NotFoundComponent() {
   return (
@@ -176,6 +178,7 @@ function RootComponent() {
       <JsonLd data={localBusinessSchema} />
       <JsonLd data={websiteSchema} />
       <div className="flex min-h-screen flex-col">
+        <UrgencyBar />
         <Header />
         <main id="main-content" className="flex-1 pb-20 md:pb-0">
           <Outlet />
@@ -184,6 +187,7 @@ function RootComponent() {
       </div>
       <WhatsAppFloat />
       <MobileStickyCTA />
+      <DesktopStickyCTA />
       <BackToTop />
       <CookieConsent />
       <SocialProofToast />
