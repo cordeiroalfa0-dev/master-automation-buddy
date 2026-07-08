@@ -26,6 +26,7 @@ import { SocialProofToast } from "@/components/SocialProofToast";
 import { themeInitScript } from "@/components/ThemeToggle";
 import { UrgencyBar } from "@/components/UrgencyBar";
 import { DesktopStickyCTA } from "@/components/DesktopStickyCTA";
+import { ShareButton } from "@/components/ShareButton";
 
 function NotFoundComponent() {
   return (
@@ -188,6 +189,7 @@ function RootComponent() {
       <WhatsAppFloat />
       <MobileStickyCTA />
       <DesktopStickyCTA />
+      <ShareButton />
       <BackToTop />
       <CookieConsent />
       <SocialProofToast />
