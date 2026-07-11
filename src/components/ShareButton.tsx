@@ -10,7 +10,15 @@ import {
   X as XIcon,
   ChevronLeft,
   ChevronRight,
+  Send,
+  Linkedin,
+  Mail,
+  QrCode,
+  Twitter,
+  Sparkles,
 } from "lucide-react";
+import QRCode from "qrcode";
+import { useEffect, useMemo } from "react";
 import sharePromo from "@/assets/share-promo.jpg";
 import shareStory from "@/assets/share-story.jpg";
 import shareFacebook from "@/assets/share-facebook.jpg";
@@ -21,8 +29,35 @@ import carousel4 from "@/assets/carousel-4.jpg";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackEvent } from "@/lib/analytics";
 
-const SHARE_TEXT = `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}. Automação residencial, predial e industrial em Curitiba.`;
-const SHARE_URL = SITE_CONFIG.url;
+const BASE_URL = SITE_CONFIG.url;
+
+/** Anexa parâmetros UTM para rastrear origem de cada compartilhamento. */
+function buildShareUrl(source: string, medium = "social", campaign = "share_button") {
+  const url = new URL(BASE_URL);
+  url.searchParams.set("utm_source", source);
+  url.searchParams.set("utm_medium", medium);
+  url.searchParams.set("utm_campaign", campaign);
+  return url.toString();
+}
+
+/** Textos prontos para divulgação em diferentes formatos. */
+const COPY_TEMPLATES = [
+  {
+    key: "curto",
+    label: "Curto (WhatsApp)",
+    text: `⚡ ${SITE_CONFIG.name} — Automação residencial, predial e industrial em Curitiba. Orçamento em até 2h úteis: `,
+  },
+  {
+    key: "medio",
+    label: "Médio (Stories / Feed)",
+    text: `Sua casa ou empresa mais inteligente, segura e eficiente. 🏠🔒\n\n${SITE_CONFIG.name} entrega automação residencial, predial e industrial em Curitiba e região — +500 projetos, equipe certificada e garantia em todos os serviços.\n\nOrçamento sem compromisso: `,
+  },
+  {
+    key: "longo",
+    label: "Longo (Legenda de post)",
+    text: `🚀 Automação que transforma seu espaço.\n\nNa ${SITE_CONFIG.name} projetamos e instalamos:\n• Automação residencial (iluminação, cortinas, áudio, climatização)\n• Automação predial e comercial\n• Automação industrial\n• Segurança eletrônica e CFTV\n\n📍 Curitiba e região metropolitana\n✅ +500 projetos entregues\n✅ Equipe certificada\n✅ Garantia em todos os serviços\n\nPeça seu orçamento (resposta em até 2h úteis): `,
+  },
+] as const;
 
 type FormatKey = "instagram" | "carousel" | "story" | "facebook" | "whatsapp";
 
@@ -81,9 +116,26 @@ export function ShareButton() {
   const [copied, setCopied] = useState(false);
   const [format, setFormat] = useState<FormatKey>("instagram");
   const [slide, setSlide] = useState(0);
+  const [tab, setTab] = useState<"imagens" | "texto" | "qr">("imagens");
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
 
   const current = FORMATS.find((f) => f.key === format)!;
   const activeImage = current.images[Math.min(slide, current.images.length - 1)];
+
+  const qrUrl = useMemo(() => buildShareUrl("qrcode", "offline", "qr_share"), []);
+
+  useEffect(() => {
+    if (tab !== "qr" || qrDataUrl) return;
+    QRCode.toDataURL(qrUrl, {
+      width: 512,
+      margin: 2,
+      color: { dark: "#0f172a", light: "#ffffff" },
+      errorCorrectionLevel: "H",
+    })
+      .then(setQrDataUrl)
+      .catch(() => setQrDataUrl(null));
+  }, [tab, qrUrl, qrDataUrl]);
 
   function selectFormat(k: FormatKey) {
     setFormat(k);
@@ -92,6 +144,7 @@ export function ShareButton() {
 
   async function nativeShareCurrent() {
     trackEvent("share_click", { method: "native", format });
+    const shareUrl = buildShareUrl("native_share");
     try {
       const files: File[] = [];
       for (const img of current.images) {
@@ -106,13 +159,13 @@ export function ShareButton() {
         await nav.share({
           files,
           title: SITE_CONFIG.name,
-          text: SHARE_TEXT,
-          url: SHARE_URL,
+          text: COPY_TEMPLATES[0].text,
+          url: shareUrl,
         });
         return true;
       }
       if (navigator.share) {
-        await navigator.share({ title: SITE_CONFIG.name, text: SHARE_TEXT, url: SHARE_URL });
+        await navigator.share({ title: SITE_CONFIG.name, text: COPY_TEMPLATES[0].text, url: shareUrl });
         return true;
       }
     } catch {
@@ -154,7 +207,7 @@ export function ShareButton() {
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(SHARE_URL);
+      await navigator.clipboard.writeText(buildShareUrl("copy_link", "referral"));
       setCopied(true);
       trackEvent("share_click", { method: "copy" });
       setTimeout(() => setCopied(false), 1800);
@@ -163,8 +216,39 @@ export function ShareButton() {
     }
   }
 
-  const encodedText = encodeURIComponent(`${SHARE_TEXT} ${SHARE_URL}`);
-  const encodedUrl = encodeURIComponent(SHARE_URL);
+  async function copyTemplate(key: string, text: string, source: string) {
+    try {
+      const full = `${text}${buildShareUrl(source, "copy_text")}`;
+      await navigator.clipboard.writeText(full);
+      setCopiedKey(key);
+      trackEvent("share_click", { method: "copy_template", template: key });
+      setTimeout(() => setCopiedKey(null), 1800);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  async function downloadQr() {
+    if (!qrDataUrl) return;
+    trackEvent("share_click", { method: "qr_download" });
+    const a = document.createElement("a");
+    a.href = qrDataUrl;
+    a.download = "master-automacao-qrcode.png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  const waText = encodeURIComponent(`${COPY_TEMPLATES[0].text}${buildShareUrl("whatsapp")}`);
+  const tgText = encodeURIComponent(`${COPY_TEMPLATES[0].text}${buildShareUrl("telegram")}`);
+  const xText = encodeURIComponent(`${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`);
+  const fbUrl = encodeURIComponent(buildShareUrl("facebook"));
+  const liUrl = encodeURIComponent(buildShareUrl("linkedin"));
+  const twUrl = encodeURIComponent(buildShareUrl("twitter"));
+  const tgUrl = encodeURIComponent(buildShareUrl("telegram"));
+  const mailSubject = encodeURIComponent(`${SITE_CONFIG.name} — Automação em Curitiba`);
+  const mailBody = encodeURIComponent(`${COPY_TEMPLATES[1].text}${buildShareUrl("email", "email")}`);
+  const smsBody = encodeURIComponent(`${COPY_TEMPLATES[0].text}${buildShareUrl("sms", "sms")}`);
 
   return (
     <>
@@ -191,8 +275,8 @@ export function ShareButton() {
           >
             <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-card/95 px-5 py-3 backdrop-blur">
               <div>
-                <h2 className="font-display text-base font-bold leading-tight">Compartilhar</h2>
-                <p className="text-[11px] text-muted-foreground">Escolha o formato e baixe ou publique</p>
+                <h2 className="font-display text-base font-bold leading-tight">Kit de Divulgação</h2>
+                <p className="text-[11px] text-muted-foreground">Imagens, textos prontos e QR code — tudo rastreado por UTM</p>
               </div>
               <button
                 onClick={() => setOpen(false)}
@@ -203,7 +287,30 @@ export function ShareButton() {
               </button>
             </div>
 
+            <div className="grid grid-cols-3 border-b border-border bg-muted/30 text-xs font-semibold">
+              {([
+                { k: "imagens", label: "Imagens" },
+                { k: "texto", label: "Textos" },
+                { k: "qr", label: "QR Code" },
+              ] as const).map((t) => (
+                <button
+                  key={t.k}
+                  type="button"
+                  onClick={() => setTab(t.k)}
+                  className={`py-2.5 transition-colors ${
+                    tab === t.k
+                      ? "border-b-2 border-primary bg-background text-primary"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
             <div className="p-5">
+            {tab === "imagens" && (
+              <>
               <div className="mb-4 flex flex-wrap gap-1.5">
                 {FORMATS.map((f) => (
                   <button
@@ -293,44 +400,197 @@ export function ShareButton() {
               >
                 <Share2 className="h-4 w-4" /> Compartilhar direto no celular
               </button>
+              </>
+            )}
 
-              <div className="grid grid-cols-3 gap-2">
+            {tab === "texto" && (
+              <div className="space-y-3">
+                <div className="flex items-start gap-2 rounded-xl border border-primary/30 bg-primary/5 p-3 text-xs">
+                  <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <p className="text-muted-foreground">
+                    Textos prontos para colar no WhatsApp, Instagram, Facebook ou grupos. O link
+                    já vem com <strong>UTM</strong> para você medir de onde vieram os cliques.
+                  </p>
+                </div>
+                {COPY_TEMPLATES.map((tpl) => (
+                  <div key={tpl.key} className="rounded-xl border border-border bg-background p-3">
+                    <div className="mb-2 flex items-center justify-between">
+                      <span className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
+                        {tpl.label}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => copyTemplate(tpl.key, tpl.text, `text_${tpl.key}`)}
+                        className="inline-flex items-center gap-1.5 rounded-md bg-primary px-2.5 py-1 text-[11px] font-bold text-primary-foreground hover:opacity-90"
+                      >
+                        {copiedKey === tpl.key ? (
+                          <>
+                            <Check className="h-3 w-3" /> Copiado
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-3 w-3" /> Copiar
+                          </>
+                        )}
+                      </button>
+                    </div>
+                    <p className="whitespace-pre-line text-xs leading-relaxed text-foreground/90">
+                      {tpl.text}
+                      <span className="font-mono text-primary">{BASE_URL}</span>
+                    </p>
+                  </div>
+                ))}
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <a
+                    href={`sms:?&body=${smsBody}`}
+                    onClick={() => trackEvent("share_click", { method: "sms" })}
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-3 py-2.5 text-xs font-semibold hover:bg-accent"
+                  >
+                    <MessageCircle className="h-4 w-4" /> Enviar por SMS
+                  </a>
+                  <a
+                    href={`mailto:?subject=${mailSubject}&body=${mailBody}`}
+                    onClick={() => trackEvent("share_click", { method: "email" })}
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-3 py-2.5 text-xs font-semibold hover:bg-accent"
+                  >
+                    <Mail className="h-4 w-4" /> Enviar por e-mail
+                  </a>
+                </div>
+              </div>
+            )}
+
+            {tab === "qr" && (
+              <div className="space-y-3">
+                <div className="flex items-start gap-2 rounded-xl border border-primary/30 bg-primary/5 p-3 text-xs">
+                  <QrCode className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <p className="text-muted-foreground">
+                    Use este QR code em <strong>cartões de visita, adesivos, faixas, panfletos e uniformes</strong>.
+                    O link já traz UTM offline para você saber que veio do QR.
+                  </p>
+                </div>
+                <div className="mx-auto w-full max-w-xs rounded-xl border border-border bg-white p-4">
+                  {qrDataUrl ? (
+                    <img
+                      src={qrDataUrl}
+                      alt="QR code Master Automação"
+                      className="mx-auto h-auto w-full"
+                    />
+                  ) : (
+                    <div className="grid aspect-square place-items-center text-xs text-muted-foreground">
+                      Gerando QR…
+                    </div>
+                  )}
+                </div>
+                <p className="text-center text-[11px] text-muted-foreground break-all">{qrUrl}</p>
+                <button
+                  type="button"
+                  onClick={downloadQr}
+                  disabled={!qrDataUrl}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-energy px-4 py-3 text-sm font-bold text-energy-foreground shadow-energy hover:opacity-95 disabled:opacity-50"
+                >
+                  <Download className="h-4 w-4" /> Baixar QR code (PNG)
+                </button>
+              </div>
+            )}
+
+              <div className="mt-4 border-t border-border pt-4">
+                <p className="mb-2 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
+                  Compartilhar em
+                </p>
+                <div className="grid grid-cols-4 gap-2">
                 <a
-                  href={`https://api.whatsapp.com/send?text=${encodedText}`}
+                  href={`https://api.whatsapp.com/send?text=${waText}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackEvent("share_click", { method: "whatsapp" })}
-                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-3 text-xs font-semibold hover:bg-accent"
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-2.5 text-[11px] font-semibold hover:bg-accent"
                 >
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-[#25D366] text-white">
-                    <MessageCircle className="h-5 w-5" fill="currentColor" />
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-[#25D366] text-white">
+                    <MessageCircle className="h-4 w-4" fill="currentColor" />
                   </span>
                   WhatsApp
                 </a>
                 <a
-                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${fbUrl}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackEvent("share_click", { method: "facebook" })}
-                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-3 text-xs font-semibold hover:bg-accent"
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-2.5 text-[11px] font-semibold hover:bg-accent"
                 >
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-[#1877F2] text-white">
-                    <Facebook className="h-5 w-5" fill="currentColor" />
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-[#1877F2] text-white">
+                    <Facebook className="h-4 w-4" fill="currentColor" />
                   </span>
                   Facebook
+                </a>
+                <a
+                  href={`https://t.me/share/url?url=${tgUrl}&text=${tgText}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("share_click", { method: "telegram" })}
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-2.5 text-[11px] font-semibold hover:bg-accent"
+                >
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-[#229ED9] text-white">
+                    <Send className="h-4 w-4" fill="currentColor" />
+                  </span>
+                  Telegram
+                </a>
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${liUrl}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("share_click", { method: "linkedin" })}
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-2.5 text-[11px] font-semibold hover:bg-accent"
+                >
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-[#0A66C2] text-white">
+                    <Linkedin className="h-4 w-4" fill="currentColor" />
+                  </span>
+                  LinkedIn
+                </a>
+                <a
+                  href={`https://twitter.com/intent/tweet?url=${twUrl}&text=${xText}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("share_click", { method: "twitter" })}
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-2.5 text-[11px] font-semibold hover:bg-accent"
+                >
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-black text-white">
+                    <Twitter className="h-4 w-4" fill="currentColor" />
+                  </span>
+                  X / Twitter
+                </a>
+                <a
+                  href={`mailto:?subject=${mailSubject}&body=${mailBody}`}
+                  onClick={() => trackEvent("share_click", { method: "email" })}
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-2.5 text-[11px] font-semibold hover:bg-accent"
+                >
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-muted-foreground text-background">
+                    <Mail className="h-4 w-4" />
+                  </span>
+                  E-mail
+                </a>
+                <a
+                  href={`sms:?&body=${smsBody}`}
+                  onClick={() => trackEvent("share_click", { method: "sms" })}
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-2.5 text-[11px] font-semibold hover:bg-accent"
+                >
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground">
+                    <MessageCircle className="h-4 w-4" />
+                  </span>
+                  SMS
                 </a>
                 <a
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackEvent("share_click", { method: "instagram" })}
-                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-3 text-xs font-semibold hover:bg-accent"
+                  className="flex flex-col items-center gap-1.5 rounded-xl border border-border p-2.5 text-[11px] font-semibold hover:bg-accent"
                 >
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-tr from-[#feda75] via-[#d62976] to-[#4f5bd5] text-white">
-                    <Instagram className="h-5 w-5" />
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-tr from-[#feda75] via-[#d62976] to-[#4f5bd5] text-white">
+                    <Instagram className="h-4 w-4" />
                   </span>
                   Instagram
                 </a>
+                </div>
               </div>
 
               <button
@@ -340,17 +600,17 @@ export function ShareButton() {
               >
                 {copied ? (
                   <>
-                    <Check className="h-4 w-4 text-success" /> Link copiado!
+                    <Check className="h-4 w-4 text-success" /> Link copiado (com UTM)!
                   </>
                 ) : (
                   <>
-                    <Copy className="h-4 w-4" /> Copiar link
+                    <Copy className="h-4 w-4" /> Copiar link com UTM
                   </>
                 )}
               </button>
 
               <p className="mt-3 text-center text-[11px] text-muted-foreground">
-                Instagram não aceita upload direto pelo navegador — baixe a imagem e publique pelo app.
+                Todo link inclui UTM para rastrear a origem no Google Analytics.
               </p>
             </div>
           </div>
