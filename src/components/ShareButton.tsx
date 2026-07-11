@@ -172,7 +172,7 @@ export function ShareButton() {
         type="button"
         onClick={onFabClick}
         aria-label="Compartilhar site"
-        className="fixed bottom-24 right-6 z-40 hidden h-12 w-12 place-items-center rounded-full bg-gradient-primary text-primary-foreground shadow-elegant transition-spring hover:scale-110 md:grid"
+        className="fixed right-4 z-40 grid h-12 w-12 place-items-center rounded-full bg-gradient-primary text-primary-foreground shadow-elegant transition-spring hover:scale-110 bottom-40 md:bottom-24 md:right-6"
       >
         <Share2 className="h-5 w-5" />
       </button>
