@@ -2,10 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { buildSeo } from "@/lib/seo";
 import { BLOG_POSTS } from "@/lib/blog";
+import { listPublishedPosts } from "@/lib/blog.functions";
+import type { BlogPostRecord } from "@/lib/blog-types";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
 
 export const Route = createFileRoute("/blog/")({
+  loader: async () => ({ dbPosts: await listPublishedPosts() }),
   head: () =>
     buildSeo({
       title: "Blog — Guias de Automação em Curitiba | Master Automação",
@@ -14,9 +17,20 @@ export const Route = createFileRoute("/blog/")({
       path: "/blog",
     }),
   component: BlogIndex,
+  errorComponent: () => (
+    <section className="mx-auto max-w-2xl px-4 py-20 text-center">
+      <h1 className="font-display text-2xl font-bold">Não foi possível carregar o blog</h1>
+      <p className="mt-2 text-sm text-muted-foreground">Tente atualizar a página.</p>
+    </section>
+  ),
 });
 
 function BlogIndex() {
+  const { dbPosts } = Route.useLoaderData() as { dbPosts: BlogPostRecord[] };
+  const posts: BlogPostRecord[] = [...dbPosts, ...(BLOG_POSTS as BlogPostRecord[])].sort(
+    (a, b) => b.datePublished.localeCompare(a.datePublished),
+  );
+
   return (
     <>
       <JsonLd data={breadcrumbSchema([
@@ -40,14 +54,23 @@ function BlogIndex() {
 
       <section className="mx-auto max-w-5xl px-4 py-16 md:px-6 md:py-20">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {BLOG_POSTS.map((p) => (
+          {posts.map((p) => (
             <Link
               key={p.slug}
               to="/blog/$slug"
               params={{ slug: p.slug }}
               className="group flex flex-col overflow-hidden rounded-2xl border bg-card shadow-card transition-spring hover:-translate-y-1 hover:shadow-card-hover"
             >
-              <div className="aspect-[16/9] bg-gradient-to-br from-primary/20 via-primary/10 to-energy/20" />
+              {p.coverImage ? (
+                <img
+                  src={p.coverImage}
+                  alt={p.title}
+                  loading="lazy"
+                  className="aspect-[16/9] w-full object-cover"
+                />
+              ) : (
+                <div className="aspect-[16/9] bg-gradient-to-br from-primary/20 via-primary/10 to-energy/20" />
+              )}
               <div className="flex flex-1 flex-col p-5">
                 <div className="text-[11px] font-semibold uppercase tracking-widest text-primary">
                   {p.category}
