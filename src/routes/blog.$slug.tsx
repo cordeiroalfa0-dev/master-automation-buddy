@@ -2,15 +2,18 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
 import { buildSeo } from "@/lib/seo";
 import { BLOG_POSTS, findPost } from "@/lib/blog";
-import type { BlogPost } from "@/lib/blog";
+import type { BlogPostRecord } from "@/lib/blog-types";
+import { getPublishedPost } from "@/lib/blog.functions";
 import { JsonLd } from "@/components/JsonLd";
 import { articleSchema, breadcrumbSchema } from "@/lib/schema";
 
 export const Route = createFileRoute("/blog/$slug")({
-  loader: ({ params }) => {
-    const post = findPost(params.slug);
-    if (!post) throw notFound();
-    return { post };
+  loader: async ({ params }) => {
+    const stat = findPost(params.slug);
+    if (stat) return { post: stat as BlogPostRecord };
+    const dbPost = await getPublishedPost({ data: { slug: params.slug } });
+    if (!dbPost) throw notFound();
+    return { post: dbPost };
   },
   head: ({ loaderData, params }) => {
     if (!loaderData) {
@@ -30,6 +33,7 @@ export const Route = createFileRoute("/blog/$slug")({
   },
   component: BlogPostPage,
   notFoundComponent: BlogPostNotFound,
+  errorComponent: BlogPostNotFound,
 });
 
 function BlogPostNotFound() {
@@ -45,7 +49,7 @@ function BlogPostNotFound() {
 }
 
 function BlogPostPage() {
-  const { post } = Route.useLoaderData() as { post: BlogPost };
+  const { post } = Route.useLoaderData() as { post: BlogPostRecord };
   const related = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
@@ -84,6 +88,14 @@ function BlogPostPage() {
             <Clock className="h-3 w-3" /> {post.readingTime} de leitura
           </span>
         </div>
+
+        {post.coverImage && (
+          <img
+            src={post.coverImage}
+            alt={post.title}
+            className="mt-8 aspect-[16/9] w-full rounded-2xl object-cover shadow-card"
+          />
+        )}
 
         <div className="prose-content mt-10 space-y-5 text-[15px] leading-relaxed text-foreground/90">
           {post.content.map((block, i) => {

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { lovable } from "@/integrations/lovable";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { buildSeo } from "@/lib/seo";
 import { toast } from "sonner";
 
@@ -19,6 +20,9 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [emailLoading, setEmailLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
   useEffect(() => {
@@ -56,6 +60,19 @@ function AuthPage() {
     toast.success("Você saiu da conta.");
   }
 
+  async function handleEmailLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setEmailLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    setEmailLoading(false);
+    if (error) {
+      toast.error("E-mail ou senha inválidos.");
+      return;
+    }
+    toast.success("Login realizado!");
+    navigate({ to: "/admin" });
+  }
+
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center px-4 py-16">
       <div className="w-full rounded-2xl border bg-card p-8 shadow-elegant">
@@ -69,6 +86,9 @@ function AuthPage() {
             <p className="text-sm">
               Conectado como <strong>{userEmail}</strong>
             </p>
+            <Button onClick={() => navigate({ to: "/admin" })} variant="secondary" className="w-full">
+              Painel administrativo
+            </Button>
             <Button onClick={() => navigate({ to: "/" })} className="w-full">
               Ir para o site
             </Button>
@@ -77,11 +97,40 @@ function AuthPage() {
             </Button>
           </div>
         ) : (
+          <>
+          <form onSubmit={handleEmailLogin} className="mt-8 space-y-3">
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="E-mail"
+              autoComplete="email"
+              required
+              className="h-11"
+            />
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Senha"
+              autoComplete="current-password"
+              required
+              className="h-11"
+            />
+            <Button type="submit" disabled={emailLoading} className="h-11 w-full">
+              {emailLoading ? "Entrando..." : "Entrar"}
+            </Button>
+          </form>
+
+          <div className="my-5 flex items-center gap-3 text-[11px] uppercase tracking-widest text-muted-foreground">
+            <span className="h-px flex-1 bg-border" /> ou <span className="h-px flex-1 bg-border" />
+          </div>
+
           <Button
             onClick={handleGoogle}
             disabled={loading}
             variant="outline"
-            className="mt-8 w-full h-12 gap-3 border-2"
+            className="w-full h-12 gap-3 border-2"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -91,6 +140,7 @@ function AuthPage() {
             </svg>
             {loading ? "Conectando..." : "Entrar com Google"}
           </Button>
+          </>
         )}
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
