@@ -31,6 +31,7 @@ type Row = {
   reading_time: string;
   published: boolean;
   created_at: string;
+  author?: string | null;
 };
 
 function toRecord(r: Row): BlogPostRecord {
@@ -41,6 +42,7 @@ function toRecord(r: Row): BlogPostRecord {
     excerpt: r.excerpt,
     keyword: r.keyword,
     category: r.category,
+    author: r.author ?? "Emerson Cordeiro",
     coverImage: r.cover_image_url,
     readingTime: r.reading_time,
     published: r.published,
