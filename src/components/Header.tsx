@@ -138,6 +138,14 @@ export function Header() {
                 <Phone className="h-4 w-4 text-primary" />
                 {SITE_CONFIG.contact.phone}
               </a>
+              <Link
+                to="/auth"
+                className="inline-flex items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
+                onClick={() => setOpen(false)}
+              >
+                <User className="h-4 w-4" />
+                Entrar (Admin)
+              </Link>
               <Button
                 asChild
                 className="mt-2 bg-gradient-energy font-semibold text-energy-foreground shadow-energy"

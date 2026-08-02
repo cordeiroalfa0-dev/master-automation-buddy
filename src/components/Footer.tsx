@@ -104,6 +104,7 @@ export function Footer() {
               <li><Link to="/orcamento" className="transition-colors hover:text-primary">Orçamento</Link></li>
               <li><Link to="/politica-privacidade" className="transition-colors hover:text-primary">Privacidade</Link></li>
               <li><Link to="/termos" className="transition-colors hover:text-primary">Termos</Link></li>
+              <li><Link to="/auth" className="transition-colors hover:text-primary">Área Admin</Link></li>
             </ul>
           </div>
 
