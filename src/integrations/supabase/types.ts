@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       blog_posts: {
         Row: {
+          author: string
           category: string
           content: Json
           cover_image_url: string | null
@@ -30,6 +31,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          author?: string
           category?: string
           content?: Json
           cover_image_url?: string | null
@@ -44,6 +46,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          author?: string
           category?: string
           content?: Json
           cover_image_url?: string | null

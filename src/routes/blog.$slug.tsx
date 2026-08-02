@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, ArrowRight, User } from "lucide-react";
 import { buildSeo } from "@/lib/seo";
 import { BLOG_POSTS, findPost } from "@/lib/blog";
 import type { BlogPostRecord } from "@/lib/blog-types";
@@ -64,6 +64,7 @@ function BlogPostPage() {
         description: post.excerpt,
         slug: post.slug,
         datePublished: post.datePublished,
+        author: post.author || "Emerson Cordeiro",
       })} />
 
       <article className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-20">
@@ -78,6 +79,12 @@ function BlogPostPage() {
           {post.title}
         </h1>
         <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
+          <span className="inline-flex items-center gap-1.5 font-semibold text-foreground/90">
+            <span className="grid h-6 w-6 place-items-center rounded-full bg-primary/10 text-primary">
+              <User className="h-3.5 w-3.5" />
+            </span>
+            Por {post.author || "Emerson Cordeiro"}
+          </span>
           <span className="inline-flex items-center gap-1">
             <Calendar className="h-3 w-3" />
             {new Date(post.datePublished).toLocaleDateString("pt-BR", {

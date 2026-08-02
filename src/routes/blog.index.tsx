@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowRight, User } from "lucide-react";
 import { buildSeo } from "@/lib/seo";
 import { BLOG_POSTS } from "@/lib/blog";
 import { listPublishedPosts } from "@/lib/blog.functions";
@@ -79,6 +79,9 @@ function BlogIndex() {
                   {p.title}
                 </h2>
                 <p className="mt-2 flex-1 text-sm text-muted-foreground">{p.excerpt}</p>
+                <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-foreground/80">
+                  <User className="h-3 w-3 text-primary" /> Por {p.author || "Emerson Cordeiro"}
+                </div>
                 <div className="mt-4 flex items-center justify-between border-t pt-3 text-xs text-muted-foreground">
                   <span className="inline-flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
