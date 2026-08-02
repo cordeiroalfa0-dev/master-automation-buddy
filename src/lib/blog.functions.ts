@@ -52,7 +52,7 @@ function toRecord(r: Row): BlogPostRecord {
 }
 
 const SELECT =
-  "id, slug, title, excerpt, keyword, category, cover_image_url, content, reading_time, published, created_at";
+  "id, slug, title, excerpt, keyword, category, cover_image_url, content, reading_time, published, created_at, author";
 
 /** Lista pública de artigos publicados (SSR-safe, sem sessão). */
 export const listPublishedPosts = createServerFn({ method: "GET" }).handler(async () => {
