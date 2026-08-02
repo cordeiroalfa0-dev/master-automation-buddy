@@ -27,6 +27,8 @@ import { themeInitScript } from "@/components/ThemeToggle";
 import { UrgencyBar } from "@/components/UrgencyBar";
 import { DesktopStickyCTA } from "@/components/DesktopStickyCTA";
 import { ShareButton } from "@/components/ShareButton";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
 
 function NotFoundComponent() {
   return (
@@ -167,7 +169,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: { queries: { staleTime: 60_000, retry: 1, refetchOnWindowFocus: false } },
+      })
+  );
   return (
+    <QueryClientProvider client={queryClient}>
     <TrackingProvider>
       <ScrollToTop />
       <a
@@ -197,5 +206,6 @@ function RootComponent() {
       <ScrollDepthTracker />
       <Toaster richColors position="top-right" />
     </TrackingProvider>
+    </QueryClientProvider>
   );
 }
