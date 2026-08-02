@@ -12,6 +12,7 @@ export interface BlogPostRecord {
   readingTime: string;
   category: string;
   keyword?: string | null;
+  author?: string;
   coverImage?: string | null;
   published?: boolean;
   id?: string;
