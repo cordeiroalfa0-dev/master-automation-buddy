@@ -4,6 +4,8 @@ import { LeadForm } from "@/components/LeadForm";
 import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
+import { GoogleBusinessCard } from "@/components/GoogleBusinessCard";
+import { OpenStatus } from "@/components/OpenStatus";
 import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone } from "@/lib/analytics";
@@ -34,6 +36,9 @@ function ContactPage() {
           <p className="mt-4 max-w-2xl text-white/80">
             Entre em contato e transforme seu espaço com automação inteligente. Orçamento sem compromisso.
           </p>
+          <div className="mt-6">
+            <OpenStatus className="border-white/25 bg-white/10 text-white" />
+          </div>
         </div>
       </section>
 
@@ -80,6 +85,10 @@ function ContactPage() {
               <LeadForm source="contato_form" />
             </div>
           </div>
+        </div>
+
+        <div className="mt-12">
+          <GoogleBusinessCard />
         </div>
       </section>
     </>
