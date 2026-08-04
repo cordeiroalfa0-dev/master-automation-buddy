@@ -602,6 +602,11 @@ function HomePage() {
               </Link>
             ))}
           </div>
+
+          {/* Google Meu Negócio — mapa, rota, horários e avaliação */}
+          <div className="mt-12">
+            <GoogleBusinessCard />
+          </div>
         </div>
       </section>
     </>
