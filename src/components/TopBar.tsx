@@ -1,6 +1,7 @@
 import { Phone, Clock, MapPin } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone } from "@/lib/analytics";
+import { OpenStatus } from "@/components/OpenStatus";
 
 /**
  * Barra superior informativa — reforça credibilidade local e canal direto.
