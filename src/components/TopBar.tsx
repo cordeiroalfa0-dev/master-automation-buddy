@@ -1,6 +1,7 @@
 import { Phone, Clock, MapPin } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone } from "@/lib/analytics";
+import { OpenStatus } from "@/components/OpenStatus";
 
 /**
  * Barra superior informativa — reforça credibilidade local e canal direto.
@@ -21,13 +22,7 @@ export function TopBar() {
           </span>
         </div>
         <div className="flex items-center gap-4">
-          <span className="inline-flex items-center gap-1.5">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
-            </span>
-            Atendendo agora
-          </span>
+          <OpenStatus className="border-white/20 bg-white/10 text-white" />
           <a
             href={`tel:${SITE_CONFIG.contact.phoneE164}`}
             onClick={() => trackPhone("topbar")}

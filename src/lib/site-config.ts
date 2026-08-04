@@ -26,6 +26,20 @@ export const SITE_CONFIG = {
     facebook: "https://facebook.com/masterautomacao",
   },
 
+  /**
+   * Google Meu Negócio (Google Business Profile).
+   * Preencha placeId/cid depois de criar/reivindicar o perfil — os links de
+   * rota, mapa e avaliação passam a apontar direto para a ficha da empresa.
+   * Como achar o Place ID: https://developers.google.com/maps/documentation/places/web-service/place-id
+   */
+  googleBusiness: {
+    placeId: "" as string,
+    /** Nome + cidade usados na busca do Maps enquanto não há Place ID. */
+    mapQuery: "Master Automação, Curitiba, PR",
+    /** Perfil público no Maps (opcional). */
+    profileUrl: "" as string,
+  },
+
   bairros: [
     "Batel", "Ecoville", "Champagnat", "Bigorrilho", "Água Verde",
     "Cabral", "Juvevê", "Centro Cívico", "Mercês", "Alto da XV",

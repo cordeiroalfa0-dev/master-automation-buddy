@@ -15,6 +15,7 @@ import { SITE_CONFIG } from "@/lib/site-config";
 import { trackCTA, trackPhone } from "@/lib/analytics";
 import { BAIRROS } from "@/lib/bairros";
 import { InvestmentCalculator } from "@/components/InvestmentCalculator";
+import { GoogleBusinessCard } from "@/components/GoogleBusinessCard";
 import { toast } from "sonner";
 import { Link2 } from "lucide-react";
 import heroImg from "@/assets/hero-automation.jpg";
@@ -600,6 +601,11 @@ function HomePage() {
                 Automação em {b.name}
               </Link>
             ))}
+          </div>
+
+          {/* Google Meu Negócio — mapa, rota, horários e avaliação */}
+          <div className="mt-12">
+            <GoogleBusinessCard />
           </div>
         </div>
       </section>

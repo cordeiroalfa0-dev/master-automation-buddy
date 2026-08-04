@@ -1,15 +1,53 @@
 import { SITE_CONFIG } from "./site-config";
+import { mapsProfileUrl } from "./gmb";
+import { BUSINESS_HOURS } from "./business-hours";
+
+const DAY_SCHEMA = [
+  "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+];
+
+const pad = (m: number) =>
+  `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
 
 export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "ElectricalContractor",
+  additionalType: [
+    "https://schema.org/HomeAndConstructionBusiness",
+    "https://schema.org/SecuritySystemInstallation",
+  ],
   name: SITE_CONFIG.name,
+  legalName: SITE_CONFIG.name,
+  slogan: SITE_CONFIG.tagline,
+  description: SITE_CONFIG.description,
   image: `${SITE_CONFIG.url}/og-image.jpg`,
+  logo: `${SITE_CONFIG.url}/favicon.ico`,
   "@id": SITE_CONFIG.url,
   url: SITE_CONFIG.url,
   telephone: SITE_CONFIG.contact.phoneE164,
   email: SITE_CONFIG.contact.email,
   priceRange: "$$",
+  currenciesAccepted: "BRL",
+  paymentAccepted: "Dinheiro, PIX, Cartão de crédito, Cartão de débito, Transferência",
+  hasMap: mapsProfileUrl,
+  knowsAbout: [
+    "Automação residencial",
+    "Casa inteligente",
+    "Automação predial",
+    "Automação industrial",
+    "CFTV e segurança eletrônica",
+    "Iluminação inteligente",
+    "Controle de acesso",
+  ],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: SITE_CONFIG.contact.phoneE164,
+      contactType: "customer service",
+      areaServed: "BR",
+      availableLanguage: ["Portuguese"],
+    },
+  ],
   address: {
     "@type": "PostalAddress",
     addressLocality: "Curitiba",
@@ -40,26 +78,21 @@ export const localBusinessSchema = {
       name: `${b}, Curitiba`,
     })),
   ],
-  openingHoursSpecification: [
-    {
+  // Gerado a partir de BUSINESS_HOURS — mesma fonte do badge "Aberto agora".
+  // Mantenha idêntico ao horário publicado no Google Meu Negócio.
+  openingHoursSpecification: Object.entries(BUSINESS_HOURS)
+    .filter(([, h]) => h)
+    .map(([day, h]) => ({
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "08:00",
-      closes: "18:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: "Saturday",
-      opens: "08:00",
-      closes: "12:00",
-    },
+      dayOfWeek: DAY_SCHEMA[Number(day)],
+      opens: pad(h!.open),
+      closes: pad(h!.close),
+    })),
+  sameAs: [
+    SITE_CONFIG.social.instagram,
+    SITE_CONFIG.social.facebook,
+    mapsProfileUrl,
   ],
-  sameAs: [SITE_CONFIG.social.instagram, SITE_CONFIG.social.facebook],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5.0",
-    reviewCount: "127",
-  },
 };
 
 export const websiteSchema = {

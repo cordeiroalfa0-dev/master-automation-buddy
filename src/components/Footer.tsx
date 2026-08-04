@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { Phone, Mail, MapPin, Clock, Zap, Instagram, Facebook, ShieldCheck, Award, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Zap, Instagram, Facebook, ShieldCheck, Award, MessageCircle, Star } from "lucide-react";
 import { SITE_CONFIG, whatsappLink } from "@/lib/site-config";
 import { trackPhone, trackWhatsApp } from "@/lib/analytics";
+import { OpenStatus } from "@/components/OpenStatus";
+import { directionsUrl, reviewUrl } from "@/lib/gmb";
 
 const TRUST = [
   { icon: ShieldCheck, label: "Equipe certificada" },
@@ -129,13 +131,36 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span>{SITE_CONFIG.contact.address}</span>
+                <span>
+                  {SITE_CONFIG.contact.address}
+                  <br />
+                  <a
+                    href={directionsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-xs font-medium text-primary hover:underline"
+                  >
+                    Como chegar no Google Maps →
+                  </a>
+                </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span>{SITE_CONFIG.contact.hours}</span>
+                <span className="space-y-2">
+                  <span className="block">{SITE_CONFIG.contact.hours}</span>
+                  <OpenStatus />
+                </span>
               </li>
             </ul>
+
+            <a
+              href={reviewUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-5 inline-flex items-center gap-2 rounded-lg border border-primary/30 bg-background px-3.5 py-2 text-xs font-semibold text-primary transition-colors hover:bg-primary/5"
+            >
+              <Star className="h-3.5 w-3.5" /> Avalie-nos no Google
+            </a>
           </div>
         </div>
 
