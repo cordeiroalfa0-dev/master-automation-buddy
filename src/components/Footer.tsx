@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Phone, Mail, MapPin, Clock, Zap, Instagram, Facebook, ShieldCheck, Award, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Zap, Instagram, Facebook, ShieldCheck, Award, MessageCircle, Star } from "lucide-react";
 import { SITE_CONFIG, whatsappLink } from "@/lib/site-config";
 import { trackPhone, trackWhatsApp } from "@/lib/analytics";
 import { OpenStatus } from "@/components/OpenStatus";
