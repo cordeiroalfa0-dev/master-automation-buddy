@@ -38,6 +38,21 @@ function AuthPage() {
   async function handleGoogle() {
     setLoading(true);
     try {
+      // O OAuth gerenciado (/~oauth/*) só existe nos domínios lovable.app.
+      // Em outros hosts (ex.: Vercel) usamos o OAuth do Supabase direto.
+      const host = window.location.hostname;
+      const isLovableHost = host.endsWith("lovable.app") || host === "localhost" || host === "127.0.0.1";
+      if (!isLovableHost) {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: { redirectTo: window.location.origin + "/auth" },
+        });
+        if (error) {
+          toast.error("Erro ao entrar com Google. Tente novamente.");
+          setLoading(false);
+        }
+        return;
+      }
       const result = await lovable.auth.signInWithOAuth("google", {
         redirect_uri: window.location.origin + "/auth",
       });
