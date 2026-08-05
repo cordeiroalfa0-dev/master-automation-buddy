@@ -11,7 +11,12 @@ export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
     const stat = findPost(params.slug);
     if (stat) return { post: stat as BlogPostRecord };
-    const dbPost = await getPublishedPost({ data: { slug: params.slug } });
+    let dbPost: BlogPostRecord | null = null;
+    try {
+      dbPost = (await getPublishedPost({ data: { slug: params.slug } })) as BlogPostRecord | null;
+    } catch {
+      dbPost = null;
+    }
     if (!dbPost) throw notFound();
     return { post: dbPost };
   },
