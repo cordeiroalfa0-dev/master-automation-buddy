@@ -8,7 +8,13 @@ import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
 
 export const Route = createFileRoute("/blog/")({
-  loader: async () => ({ dbPosts: await listPublishedPosts() }),
+  loader: async () => {
+    try {
+      return { dbPosts: await listPublishedPosts() };
+    } catch {
+      return { dbPosts: [] as BlogPostRecord[] };
+    }
+  },
   head: () =>
     buildSeo({
       title: "Blog — Guias de Automação em Curitiba | Master Automação",
