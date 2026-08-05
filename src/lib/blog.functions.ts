@@ -5,8 +5,13 @@ import type { Database } from "@/integrations/supabase/types";
 import type { BlogBlock, BlogPostRecord } from "./blog-types";
 
 function publicClient() {
-  const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
-  return createClient<Database>(process.env["SUPABASE_URL"]!, key, {
+  const key =
+    process.env["SUPABASE_PUBLISHABLE_KEY"] ||
+    process.env["SUPABASE_ANON_KEY"] ||
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  const url = process.env["SUPABASE_URL"] || import.meta.env.VITE_SUPABASE_URL;
+  if (!url || !key) return null;
+  return createClient<Database>(url, key, {
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
     global: {
       fetch: (input, init) => {
@@ -56,26 +61,38 @@ const SELECT =
 
 /** Lista pública de artigos publicados (SSR-safe, sem sessão). */
 export const listPublishedPosts = createServerFn({ method: "GET" }).handler(async () => {
-  const { data, error } = await publicClient()
-    .from("blog_posts")
-    .select(SELECT)
-    .eq("published", true)
-    .order("created_at", { ascending: false });
-  if (error) return [] as BlogPostRecord[];
-  return (data as Row[]).map(toRecord);
+  try {
+    const client = publicClient();
+    if (!client) return [] as BlogPostRecord[];
+    const { data, error } = await client
+      .from("blog_posts")
+      .select(SELECT)
+      .eq("published", true)
+      .order("created_at", { ascending: false });
+    if (error || !data) return [] as BlogPostRecord[];
+    return (data as Row[]).map(toRecord);
+  } catch {
+    return [] as BlogPostRecord[];
+  }
 });
 
 export const getPublishedPost = createServerFn({ method: "GET" })
   .inputValidator((d: { slug: string }) => d)
   .handler(async ({ data }) => {
-    const { data: row, error } = await publicClient()
-      .from("blog_posts")
-      .select(SELECT)
-      .eq("slug", data.slug)
-      .eq("published", true)
-      .maybeSingle();
-    if (error || !row) return null;
-    return toRecord(row as Row);
+    try {
+      const client = publicClient();
+      if (!client) return null;
+      const { data: row, error } = await client
+        .from("blog_posts")
+        .select(SELECT)
+        .eq("slug", data.slug)
+        .eq("published", true)
+        .maybeSingle();
+      if (error || !row) return null;
+      return toRecord(row as Row);
+    } catch {
+      return null;
+    }
   });
 
 async function assertAdmin(ctx: { supabase: any; userId: string }) {
