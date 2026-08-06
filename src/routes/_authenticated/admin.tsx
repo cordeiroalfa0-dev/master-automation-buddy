@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { buildSeo } from "@/lib/seo";
+import { SocialKit } from "@/components/SocialKit";
+import type { BlogPostRecord } from "@/lib/blog-types";
 import {
   checkAdmin,
   deletePost,
@@ -40,6 +42,8 @@ function AdminPage() {
   const queryClient = useQueryClient();
   const [keyword, setKeyword] = useState("");
   const [category, setCategory] = useState("");
+  const [kitFor, setKitFor] = useState<string | null>(null);
+  const [lastPost, setLastPost] = useState<BlogPostRecord | null>(null);
 
   const fnCheckAdmin = useServerFn(checkAdmin);
   const fnList = useServerFn(listAllPosts);
@@ -59,6 +63,8 @@ function AdminPage() {
     onSuccess: (post) => {
       toast.success(`Artigo criado: ${post.title}`);
       setKeyword("");
+      setLastPost(post as BlogPostRecord);
+      setKitFor(post.slug);
       queryClient.invalidateQueries({ queryKey: ["admin-posts"] });
     },
     onError: (e: Error) => toast.error(e.message || "Erro ao gerar o artigo."),
