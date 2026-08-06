@@ -12,12 +12,16 @@ import {
 } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackEvent } from "@/lib/analytics";
+import { SocialKit } from "@/components/SocialKit";
+import type { BlogBlock } from "@/lib/blog-types";
 
 interface BlogShareProps {
   title: string;
   excerpt: string;
   slug: string;
   coverImage?: string | null;
+  category?: string;
+  content?: BlogBlock[];
 }
 
 function postUrl(slug: string, source: string, medium = "social") {
@@ -34,7 +38,7 @@ function postUrl(slug: string, source: string, medium = "social") {
  * Instagram não permite postar por link — por isso oferecemos
  * "copiar legenda" + "baixar imagem de capa" (colar no app).
  */
-export function BlogShare({ title, excerpt, slug, coverImage }: BlogShareProps) {
+export function BlogShare({ title, excerpt, slug, coverImage, category, content }: BlogShareProps) {
   const [copied, setCopied] = useState<string | null>(null);
 
   const igCaption = `${title}\n\n${excerpt}\n\n📖 Leia o artigo completo no link da bio 👉 ${postUrl(slug, "instagram")}\n\n#automacaoresidencial #casainteligente #curitiba #smarthome #automacao #masterautomacao`;
@@ -108,6 +112,7 @@ export function BlogShare({ title, excerpt, slug, coverImage }: BlogShareProps) 
   }
 
   return (
+    <>
     <div className="mt-12 rounded-2xl border bg-card p-5 md:p-6">
       <div className="flex items-center gap-2">
         <Share2 className="h-4 w-4 text-primary" />
@@ -188,5 +193,9 @@ export function BlogShare({ title, excerpt, slug, coverImage }: BlogShareProps) 
         </div>
       </div>
     </div>
+    <div className="mt-4">
+      <SocialKit source={{ title, excerpt, slug, coverImage, category, content }} />
+    </div>
+    </>
   );
 }

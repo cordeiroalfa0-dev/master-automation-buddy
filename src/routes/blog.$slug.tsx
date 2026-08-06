@@ -139,6 +139,8 @@ function BlogPostPage() {
           excerpt={post.excerpt}
           slug={post.slug}
           coverImage={post.coverImage}
+          category={post.category}
+          content={post.content}
         />
 
         <div className="mt-14 rounded-2xl border bg-gradient-to-br from-primary/5 to-energy/10 p-6 text-center md:p-8">

@@ -3,11 +3,13 @@ import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Loader2, Sparkles, Trash2, Eye, EyeOff, ExternalLink, LogOut } from "lucide-react";
+import { Loader2, Sparkles, Trash2, Eye, EyeOff, ExternalLink, LogOut, ImageDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { buildSeo } from "@/lib/seo";
+import { SocialKit } from "@/components/SocialKit";
+import type { BlogPostRecord } from "@/lib/blog-types";
 import {
   checkAdmin,
   deletePost,
@@ -40,6 +42,8 @@ function AdminPage() {
   const queryClient = useQueryClient();
   const [keyword, setKeyword] = useState("");
   const [category, setCategory] = useState("");
+  const [kitFor, setKitFor] = useState<string | null>(null);
+  const [lastPost, setLastPost] = useState<BlogPostRecord | null>(null);
 
   const fnCheckAdmin = useServerFn(checkAdmin);
   const fnList = useServerFn(listAllPosts);
@@ -59,6 +63,8 @@ function AdminPage() {
     onSuccess: (post) => {
       toast.success(`Artigo criado: ${post.title}`);
       setKeyword("");
+      setLastPost(post as BlogPostRecord);
+      setKitFor(post.slug);
       queryClient.invalidateQueries({ queryKey: ["admin-posts"] });
     },
     onError: (e: Error) => toast.error(e.message || "Erro ao gerar o artigo."),
@@ -171,6 +177,24 @@ function AdminPage() {
         )}
       </form>
 
+      {lastPost && (
+        <div className="mt-6">
+          <p className="mb-2 text-sm font-semibold text-primary">
+            Artigo pronto: {lastPost.title} — já pode compartilhar 👇
+          </p>
+          <SocialKit
+            source={{
+              title: lastPost.title,
+              excerpt: lastPost.excerpt,
+              slug: lastPost.slug,
+              coverImage: lastPost.coverImage,
+              category: lastPost.category,
+              content: lastPost.content,
+            }}
+          />
+        </div>
+      )}
+
       <div className="mt-10">
         <h2 className="font-display text-xl font-bold">
           Artigos ({postsQ.data?.length ?? 0})
@@ -184,9 +208,9 @@ function AdminPage() {
 
         <div className="mt-4 space-y-3">
           {postsQ.data?.map((p) => (
+            <div key={p.id} className="rounded-xl border bg-card">
             <div
-              key={p.id}
-              className="flex flex-col gap-3 rounded-xl border bg-card p-4 sm:flex-row sm:items-center"
+              className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center"
             >
               {p.coverImage ? (
                 <img
@@ -208,6 +232,15 @@ function AdminPage() {
                 </div>
               </div>
               <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  aria-label="Material de divulgação"
+                  title="Material de divulgação"
+                  className="rounded-md p-2 text-muted-foreground hover:text-primary"
+                  onClick={() => setKitFor(kitFor === p.slug ? null : p.slug)}
+                >
+                  <ImageDown className="h-4 w-4" />
+                </button>
                 <Link
                   to="/blog/$slug"
                   params={{ slug: p.slug }}
@@ -241,6 +274,21 @@ function AdminPage() {
                   <Trash2 className="h-4 w-4" />
                 </button>
               </div>
+            </div>
+            {kitFor === p.slug && (
+              <div className="border-t p-4">
+                <SocialKit
+                  source={{
+                    title: p.title,
+                    excerpt: p.excerpt,
+                    slug: p.slug,
+                    coverImage: p.coverImage,
+                    category: p.category,
+                    content: p.content,
+                  }}
+                />
+              </div>
+            )}
             </div>
           ))}
 
