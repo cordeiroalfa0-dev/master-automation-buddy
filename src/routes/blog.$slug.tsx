@@ -6,6 +6,7 @@ import type { BlogPostRecord } from "@/lib/blog-types";
 import { getPublishedPost } from "@/lib/blog.functions";
 import { JsonLd } from "@/components/JsonLd";
 import { articleSchema, breadcrumbSchema } from "@/lib/schema";
+import { BlogShare } from "@/components/BlogShare";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
@@ -34,6 +35,7 @@ export const Route = createFileRoute("/blog/$slug")({
       description: loaderData.post.excerpt,
       path: `/blog/${params.slug}`,
       type: "article",
+      image: loaderData.post.coverImage ?? undefined,
     });
   },
   component: BlogPostPage,
@@ -131,6 +133,13 @@ function BlogPostPage() {
             return <p key={i}>{block.text}</p>;
           })}
         </div>
+
+        <BlogShare
+          title={post.title}
+          excerpt={post.excerpt}
+          slug={post.slug}
+          coverImage={post.coverImage}
+        />
 
         <div className="mt-14 rounded-2xl border bg-gradient-to-br from-primary/5 to-energy/10 p-6 text-center md:p-8">
           <h3 className="font-display text-xl font-bold">Quer aplicar isso no seu projeto?</h3>
