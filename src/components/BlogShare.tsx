@@ -44,6 +44,21 @@ function postUrl(slug: string, source: string, medium = "social") {
 export function BlogShare({ title, excerpt, slug, coverImage, category, content }: BlogShareProps) {
   const [copied, setCopied] = useState<string | null>(null);
 
+  const fnCheckAdmin = useServerFn(checkAdmin);
+  const adminQ = useQuery({
+    queryKey: ["is-admin"],
+    queryFn: async () => {
+      try {
+        return await fnCheckAdmin({});
+      } catch {
+        return { isAdmin: false };
+      }
+    },
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
+  const isAdmin = adminQ.data?.isAdmin === true;
+
   const igCaption = `${title}\n\n${excerpt}\n\n📖 Leia o artigo completo no link da bio 👉 ${postUrl(slug, "instagram")}\n\n#automacaoresidencial #casainteligente #curitiba #smarthome #automacao #masterautomacao`;
 
   const links = [
