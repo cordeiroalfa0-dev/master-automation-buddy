@@ -13,6 +13,9 @@ import {
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackEvent } from "@/lib/analytics";
 import { SocialKit } from "@/components/SocialKit";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { checkAdmin } from "@/lib/blog.functions";
 import type { BlogBlock } from "@/lib/blog-types";
 
 interface BlogShareProps {
@@ -193,9 +196,11 @@ export function BlogShare({ title, excerpt, slug, coverImage, category, content 
         </div>
       </div>
     </div>
-    <div className="mt-4">
-      <SocialKit source={{ title, excerpt, slug, coverImage, category, content }} />
-    </div>
+    {isAdmin && (
+      <div className="mt-4">
+        <SocialKit source={{ title, excerpt, slug, coverImage, category, content }} />
+      </div>
+    )}
     </>
   );
 }
