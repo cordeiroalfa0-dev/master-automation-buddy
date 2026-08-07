@@ -13,6 +13,9 @@ import {
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackEvent } from "@/lib/analytics";
 import { SocialKit } from "@/components/SocialKit";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { checkAdmin } from "@/lib/blog.functions";
 import type { BlogBlock } from "@/lib/blog-types";
 
 interface BlogShareProps {
@@ -40,6 +43,21 @@ function postUrl(slug: string, source: string, medium = "social") {
  */
 export function BlogShare({ title, excerpt, slug, coverImage, category, content }: BlogShareProps) {
   const [copied, setCopied] = useState<string | null>(null);
+
+  const fnCheckAdmin = useServerFn(checkAdmin);
+  const adminQ = useQuery({
+    queryKey: ["is-admin"],
+    queryFn: async () => {
+      try {
+        return await fnCheckAdmin({});
+      } catch {
+        return { isAdmin: false };
+      }
+    },
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
+  const isAdmin = adminQ.data?.isAdmin === true;
 
   const igCaption = `${title}\n\n${excerpt}\n\n📖 Leia o artigo completo no link da bio 👉 ${postUrl(slug, "instagram")}\n\n#automacaoresidencial #casainteligente #curitiba #smarthome #automacao #masterautomacao`;
 
@@ -193,9 +211,11 @@ export function BlogShare({ title, excerpt, slug, coverImage, category, content 
         </div>
       </div>
     </div>
-    <div className="mt-4">
-      <SocialKit source={{ title, excerpt, slug, coverImage, category, content }} />
-    </div>
+    {isAdmin && (
+      <div className="mt-4">
+        <SocialKit source={{ title, excerpt, slug, coverImage, category, content }} />
+      </div>
+    )}
     </>
   );
 }
