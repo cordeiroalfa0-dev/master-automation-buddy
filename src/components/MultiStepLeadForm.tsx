@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { Loader2, ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
@@ -53,6 +53,10 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  useEffect(() => {
+    trackEvent("form_start", { source, form_type: "quote_multistep" });
+  }, [source]);
+
   function update<K extends keyof typeof data>(key: K, value: (typeof data)[K]) {
     setData((d) => ({ ...d, [key]: value }));
     setErrors((e) => ({ ...e, [key]: "" }));
@@ -63,11 +67,22 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
       setErrors({ servico: "Escolha uma opção" });
       return;
     }
-    trackEvent("form_step_advance", { source, from: step, to: step + 1 });
+    trackEvent("form_step_advance", {
+      source,
+      form_type: "quote_multistep",
+      from: step,
+      to: step + 1,
+      service: data.servico || undefined,
+    });
     setStep(step + 1);
   }
 
   async function submit() {
+    trackEvent("form_submit_attempt", {
+      source,
+      form_type: "quote_multistep",
+      service: data.servico,
+    });
     setServerError(null);
     const parsed = schema.safeParse(data);
     if (!parsed.success) {
@@ -92,8 +107,7 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
       gclid: utm.gclid ?? null,
       fbclid: utm.fbclid ?? null,
       ttclid: utm.ttclid ?? null,
-      pagina_origem:
-        typeof window !== "undefined" ? window.location.pathname : null,
+      pagina_origem: typeof window !== "undefined" ? window.location.pathname : null,
       referrer: utm.referrer ?? (typeof document !== "undefined" ? document.referrer : null),
       user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
     });
@@ -103,7 +117,7 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
       setServerError("Não foi possível enviar agora. Tente pelo WhatsApp.");
       return;
     }
-    trackLead(parsed.data.servico);
+    trackLead(parsed.data.servico, source);
     navigate({ to: "/obrigado" });
   }
 
@@ -127,15 +141,20 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
 
       {step === 1 && (
         <div className="space-y-4">
-          <h3 className="font-display text-lg font-bold">
-            Qual serviço você precisa?
-          </h3>
+          <h3 className="font-display text-lg font-bold">Qual serviço você precisa?</h3>
           <div className="grid gap-2.5">
             {SITE_CONFIG.services.map((s) => (
               <button
                 key={s.slug}
                 type="button"
-                onClick={() => update("servico", s.title)}
+                onClick={() => {
+                  update("servico", s.title);
+                  trackEvent("form_service_select", {
+                    source,
+                    form_type: "quote_multistep",
+                    service: s.title,
+                  });
+                }}
                 className={cn(
                   "flex items-center justify-between rounded-xl border-2 p-4 text-left text-sm font-semibold transition-smooth",
                   data.servico === s.title
@@ -144,14 +163,19 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
                 )}
               >
                 {s.title}
-                {data.servico === s.title && (
-                  <CheckCircle2 className="h-5 w-5 text-primary" />
-                )}
+                {data.servico === s.title && <CheckCircle2 className="h-5 w-5 text-primary" />}
               </button>
             ))}
             <button
               type="button"
-              onClick={() => update("servico", "Outro")}
+              onClick={() => {
+                update("servico", "Outro");
+                trackEvent("form_service_select", {
+                  source,
+                  form_type: "quote_multistep",
+                  service: "Outro",
+                });
+              }}
               className={cn(
                 "flex items-center justify-between rounded-xl border-2 p-4 text-left text-sm font-semibold transition-smooth",
                 data.servico === "Outro"
@@ -160,14 +184,10 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
               )}
             >
               Outro / Não tenho certeza
-              {data.servico === "Outro" && (
-                <CheckCircle2 className="h-5 w-5 text-primary" />
-              )}
+              {data.servico === "Outro" && <CheckCircle2 className="h-5 w-5 text-primary" />}
             </button>
           </div>
-          {errors.servico && (
-            <p className="text-xs text-destructive">{errors.servico}</p>
-          )}
+          {errors.servico && <p className="text-xs text-destructive">{errors.servico}</p>}
           <Button
             type="button"
             onClick={next}
@@ -181,9 +201,7 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
 
       {step === 2 && (
         <div className="space-y-4">
-          <h3 className="font-display text-lg font-bold">
-            Conte um pouco sobre seu projeto
-          </h3>
+          <h3 className="font-display text-lg font-bold">Conte um pouco sobre seu projeto</h3>
           <div>
             <Label htmlFor="ms-mensagem">Detalhes (opcional)</Label>
             <Textarea
@@ -200,12 +218,7 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setStep(step - 1)}
-              size="lg"
-            >
+            <Button type="button" variant="outline" onClick={() => setStep(step - 1)} size="lg">
               <ArrowLeft className="mr-1 h-4 w-4" /> Voltar
             </Button>
             <Button
@@ -222,9 +235,7 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
 
       {step === 3 && (
         <div className="space-y-4">
-          <h3 className="font-display text-lg font-bold">
-            Quase lá! Onde te encontramos?
-          </h3>
+          <h3 className="font-display text-lg font-bold">Quase lá! Onde te encontramos?</h3>
           <div>
             <Label htmlFor="ms-nome">Nome *</Label>
             <Input
@@ -235,9 +246,7 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
               value={data.nome}
               onChange={(e) => update("nome", e.target.value)}
             />
-            {errors.nome && (
-              <p className="mt-1 text-xs text-destructive">{errors.nome}</p>
-            )}
+            {errors.nome && <p className="mt-1 text-xs text-destructive">{errors.nome}</p>}
           </div>
           <div>
             <Label htmlFor="ms-telefone">WhatsApp / Telefone *</Label>
@@ -250,9 +259,7 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
               value={data.telefone}
               onChange={(e) => update("telefone", e.target.value)}
             />
-            {errors.telefone && (
-              <p className="mt-1 text-xs text-destructive">{errors.telefone}</p>
-            )}
+            {errors.telefone && <p className="mt-1 text-xs text-destructive">{errors.telefone}</p>}
           </div>
           <div>
             <Label htmlFor="ms-email">Email (opcional)</Label>
@@ -264,9 +271,7 @@ export function MultiStepLeadForm({ source = "multistep" }: Props) {
               value={data.email}
               onChange={(e) => update("email", e.target.value)}
             />
-            {errors.email && (
-              <p className="mt-1 text-xs text-destructive">{errors.email}</p>
-            )}
+            {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
           </div>
 
           {serverError && (

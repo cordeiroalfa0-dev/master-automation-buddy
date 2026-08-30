@@ -13,40 +13,66 @@ declare global {
   }
 }
 
-export function trackEvent(
-  event: string,
-  params: Record<string, unknown> = {},
-) {
+export function trackEvent(event: string, params: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
+
+  const enrichedParams = { ...getAttributionContext(), ...params };
 
   // GTM dataLayer
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event, ...params });
+  window.dataLayer.push({ event, ...enrichedParams });
 
   // GA4 direto
-  window.gtag?.("event", event, params);
+  window.gtag?.("event", event, enrichedParams);
 
   // Meta Pixel (mapeia eventos comuns)
   if (window.fbq) {
     if (event === "lead_submitted" || event === "form_submit") {
-      window.fbq("track", "Lead", params);
+      window.fbq("track", "Lead", enrichedParams);
     } else if (event === "whatsapp_click" || event === "phone_click") {
-      window.fbq("track", "Contact", params);
+      window.fbq("track", "Contact", enrichedParams);
     } else if (event === "cta_click") {
-      window.fbq("trackCustom", "CTAClick", params);
+      window.fbq("trackCustom", "CTAClick", enrichedParams);
     }
   }
 
   // TikTok
   if (window.ttq) {
-    if (event === "lead_submitted") window.ttq.track("SubmitForm", params);
+    if (event === "lead_submitted") window.ttq.track("SubmitForm", enrichedParams);
     else if (event === "whatsapp_click" || event === "phone_click")
-      window.ttq.track("Contact", params);
+      window.ttq.track("Contact", enrichedParams);
+  }
+}
+
+function getAttributionContext(): Record<string, unknown> {
+  if (typeof window === "undefined") return {};
+
+  try {
+    const raw = sessionStorage.getItem("me_utm_attribution");
+    const attribution = raw ? JSON.parse(raw) : {};
+    return {
+      utm_source: attribution.utm_source,
+      utm_medium: attribution.utm_medium,
+      utm_campaign: attribution.utm_campaign,
+      utm_content: attribution.utm_content,
+      utm_term: attribution.utm_term,
+      gclid: attribution.gclid,
+      fbclid: attribution.fbclid,
+      ttclid: attribution.ttclid,
+      landing_page: attribution.pagina_origem,
+      referrer: attribution.referrer || document.referrer || undefined,
+    };
+  } catch {
+    return { referrer: document.referrer || undefined };
   }
 }
 
 export function trackPageView(path: string) {
-  trackEvent("page_view", { page_path: path });
+  trackEvent("page_view", {
+    page_path: path,
+    page_title: typeof document !== "undefined" ? document.title : undefined,
+    ...getAttributionContext(),
+  });
 }
 
 export function trackWhatsApp(source: string) {
@@ -61,6 +87,12 @@ export function trackCTA(label: string, location: string) {
   trackEvent("cta_click", { label, location });
 }
 
-export function trackLead(servico?: string) {
-  trackEvent("lead_submitted", { servico, value: 1, currency: "BRL" });
+export function trackLead(servico?: string, source = "form") {
+  trackEvent("lead_submitted", {
+    servico,
+    source,
+    value: 1,
+    currency: "BRL",
+    ...getAttributionContext(),
+  });
 }
