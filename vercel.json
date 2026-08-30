@@ -3,7 +3,6 @@
   "buildCommand": "bun run build",
   "installCommand": "bun install",
   "devCommand": "bun run dev",
-  "bunVersion": "1.3.3",
   "headers": [
     {
       "source": "/(.*)",
