@@ -101,7 +101,7 @@ export const Route = createRootRoute({
       {
         name: "keywords",
         content:
-          "automação residencial Curitiba, automação predial Curitiba, automação industrial Curitiba, casa inteligente Curitiba, CFTV Curitiba, segurança eletrônica Curitiba, automação Batel, automação Ecoville, automação Champagnat, automação Bigorrilho, Água Verde, Cabral, Juvevê, eletricista automação Curitiba PR",
+          "automação residencial Curitiba, automatização de casas Curitiba, empresa de automação residencial Curitiba, home cinema Curitiba, som ambiente Curitiba, aspiração central Curitiba, automação predial Curitiba, automação corporativa Curitiba, cabeamento estruturado Curitiba, vídeo wall Curitiba, combate a incêndio Curitiba, automação industrial Curitiba, programação de CLP Curitiba, retrofit industrial Curitiba, montagem de painéis elétricos Curitiba, instrumentação e comissionamento Curitiba, adequação NR10 NR12 Curitiba, controle de acesso Curitiba, casa inteligente Curitiba, CFTV Curitiba, segurança eletrônica Curitiba, automação Batel, automação Ecoville, automação Champagnat, automação Bigorrilho, Água Verde, Cabral, Juvevê, automação São José dos Pinhais, automação Araucária, automação Colombo, automação Pinhais, eletricista automação Curitiba PR",
       },
       // Site-wide defaults — child routes override these
       { name: "twitter:card", content: "summary_large_image" },
@@ -116,6 +116,8 @@ export const Route = createRootRoute({
       { property: "og:description", content: SITE_CONFIG.description },
       { name: "twitter:description", content: SITE_CONFIG.description },
       { property: "og:image", content: `${SITE_CONFIG.url}/assets/og-default.jpg` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:image", content: `${SITE_CONFIG.url}/assets/og-default.jpg` },
     ],
     links: [

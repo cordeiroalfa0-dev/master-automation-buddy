@@ -1,6 +1,6 @@
-import { Phone, Clock, MapPin } from "lucide-react";
+import { Phone, Clock, MapPin, Instagram, Facebook } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/site-config";
-import { trackPhone } from "@/lib/analytics";
+import { trackPhone, trackSocialClick } from "@/lib/analytics";
 import { OpenStatus } from "@/components/OpenStatus";
 
 /**
@@ -22,6 +22,28 @@ export function TopBar() {
           </span>
         </div>
         <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2.5">
+            <a
+              href={SITE_CONFIG.social.instagram}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+              onClick={() => trackSocialClick("instagram", "topbar")}
+              className="text-white/70 transition-colors hover:text-energy"
+            >
+              <Instagram className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href={SITE_CONFIG.social.facebook}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook"
+              onClick={() => trackSocialClick("facebook", "topbar")}
+              className="text-white/70 transition-colors hover:text-energy"
+            >
+              <Facebook className="h-3.5 w-3.5" />
+            </a>
+          </div>
           <OpenStatus className="border-white/20 bg-white/10 text-white" />
           <a
             href={`tel:${SITE_CONFIG.contact.phoneE164}`}

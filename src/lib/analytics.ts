@@ -33,6 +33,8 @@ export function trackEvent(event: string, params: Record<string, unknown> = {}) 
       window.fbq("track", "Contact", enrichedParams);
     } else if (event === "cta_click") {
       window.fbq("trackCustom", "CTAClick", enrichedParams);
+    } else if (event === "social_click") {
+      window.fbq("trackCustom", "SocialClick", enrichedParams);
     }
   }
 
@@ -85,6 +87,11 @@ export function trackPhone(source: string) {
 
 export function trackCTA(label: string, location: string) {
   trackEvent("cta_click", { label, location });
+}
+
+/** Clique em ícone/botão de Instagram ou Facebook — mede quanto tráfego migra pro social. */
+export function trackSocialClick(network: "instagram" | "facebook", source: string) {
+  trackEvent("social_click", { network, source });
 }
 
 export function trackLead(servico?: string, source = "form") {

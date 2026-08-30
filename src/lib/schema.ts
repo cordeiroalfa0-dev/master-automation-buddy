@@ -163,8 +163,14 @@ export function faqSchema(items: Array<{ question: string; answer: string }>) {
 }
 
 /**
- * Schema de avaliação individual (Review) — usado em depoimentos.
- * Combinado com aggregateRating no LocalBusiness, melhora rich snippets.
+ * Schema de avaliação individual (Review) — NÃO USAR para depoimentos no próprio site.
+ * Desde 2019 o Google não exibe rich snippet de estrelas para reviews "self-serving"
+ * (quando a entidade avaliada — LocalBusiness/Organization — controla os próprios
+ * depoimentos, como testemunhos no seu site). Isso não gera penalização, mas também
+ * não gera nenhum benefício — é markup morto e pode ser sinalizado como não-conforme.
+ * Fonte: https://developers.google.com/search/blog/2019/09/making-review-rich-results-more-helpful
+ * Só use esta função se as avaliações vierem de uma fonte de terceiros verificável
+ * (ex.: import real do Google Meu Negócio) e estiverem visíveis na própria página.
  */
 export function reviewSchema(items: Array<{ author: string; rating: number; text: string; date?: string }>) {
   return items.map((r) => ({

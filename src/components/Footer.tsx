@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Clock, Zap, Instagram, Facebook, ShieldCheck, Award, MessageCircle, Star } from "lucide-react";
 import { SITE_CONFIG, whatsappLink } from "@/lib/site-config";
-import { trackPhone, trackWhatsApp } from "@/lib/analytics";
+import { trackPhone, trackWhatsApp, trackSocialClick } from "@/lib/analytics";
 import { OpenStatus } from "@/components/OpenStatus";
 import { directionsUrl, reviewUrl } from "@/lib/gmb";
 
@@ -62,6 +62,7 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
+                onClick={() => trackSocialClick("instagram", "footer_social")}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-lg border bg-card text-muted-foreground transition-spring hover:scale-110 hover:border-primary hover:text-primary"
               >
                 <Instagram className="h-4 w-4" />
@@ -71,6 +72,7 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Facebook"
+                onClick={() => trackSocialClick("facebook", "footer_social")}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-lg border bg-card text-muted-foreground transition-spring hover:scale-110 hover:border-primary hover:text-primary"
               >
                 <Facebook className="h-4 w-4" />

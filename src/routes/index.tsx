@@ -9,13 +9,14 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { LeadForm } from "@/components/LeadForm";
 import { WhatsAppButton } from "@/components/WhatsAppFloat";
 import { JsonLd } from "@/components/JsonLd";
-import { breadcrumbSchema, faqSchema, reviewSchema, howToSchema, serviceSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema, howToSchema, serviceSchema } from "@/lib/schema";
 import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackCTA, trackPhone } from "@/lib/analytics";
 import { BAIRROS } from "@/lib/bairros";
 import { InvestmentCalculator } from "@/components/InvestmentCalculator";
 import { GoogleBusinessCard } from "@/components/GoogleBusinessCard";
+import { SocialFollow } from "@/components/SocialFollow";
 import { toast } from "sonner";
 import { Link2 } from "lucide-react";
 import heroImg from "@/assets/hero-automation.jpg";
@@ -100,11 +101,6 @@ function HomePage() {
       {SERVICES.map((s) => (
         <JsonLd key={s.slug} data={serviceSchema({ name: s.title, description: s.desc, slug: s.slug })} />
       ))}
-      <JsonLd
-        data={reviewSchema(
-          TESTIMONIALS.map((t) => ({ author: t.name, rating: 5, text: t.text })),
-        )}
-      />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-gradient-hero text-white">
@@ -165,6 +161,9 @@ function HomePage() {
               alt="Sala de estar com automação inteligente em Curitiba"
               width={1920}
               height={1080}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
               className="relative rounded-2xl shadow-glow ring-1 ring-white/10"
             />
             {/* Floating credibility card */}
@@ -201,6 +200,9 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* SIGA A GENTE — Instagram e Facebook */}
+      <SocialFollow />
 
       {/* STATS */}
       <section className="bg-surface">

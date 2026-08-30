@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, Phone, Zap, User } from "lucide-react";
+import { Menu, X, Phone, Zap, User, Instagram, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SITE_CONFIG } from "@/lib/site-config";
-import { trackPhone, trackCTA } from "@/lib/analytics";
+import { trackPhone, trackCTA, trackSocialClick } from "@/lib/analytics";
 import { TopBar } from "@/components/TopBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -146,6 +146,28 @@ export function Header() {
                 <User className="h-4 w-4" />
                 Entrar (Admin)
               </Link>
+              <div className="mt-1 flex items-center gap-2 px-3">
+                <a
+                  href={SITE_CONFIG.social.instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                  onClick={() => trackSocialClick("instagram", "header_mobile")}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg border bg-card text-muted-foreground transition-spring hover:border-primary hover:text-primary"
+                >
+                  <Instagram className="h-4 w-4" />
+                </a>
+                <a
+                  href={SITE_CONFIG.social.facebook}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Facebook"
+                  onClick={() => trackSocialClick("facebook", "header_mobile")}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg border bg-card text-muted-foreground transition-spring hover:border-primary hover:text-primary"
+                >
+                  <Facebook className="h-4 w-4" />
+                </a>
+              </div>
               <Button
                 asChild
                 className="mt-2 bg-gradient-energy font-semibold text-energy-foreground shadow-energy"
