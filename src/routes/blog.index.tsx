@@ -17,7 +17,7 @@ export const Route = createFileRoute("/blog/")({
   },
   head: () =>
     buildSeo({
-      title: "Blog — Guias de Automação em Curitiba | Master Automação",
+      title: "Blog — Guias de Automação em Curitiba | Abael Automação",
       description:
         "Guias práticos sobre automação residencial, predial e industrial em Curitiba: quanto custa, KNX vs Zigbee, condomínios inteligentes e mais.",
       path: "/blog",

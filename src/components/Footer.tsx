@@ -36,7 +36,7 @@ export function Footer() {
                 <Zap className="h-5 w-5" strokeWidth={2.5} />
               </span>
               <span className="flex flex-col leading-tight">
-                <span className="text-base">Master Automação</span>
+                <span className="text-base">Abael Automação</span>
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
                   Automatizada
                 </span>

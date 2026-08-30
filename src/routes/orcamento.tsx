@@ -11,7 +11,7 @@ import { trackPhone } from "@/lib/analytics";
 export const Route = createFileRoute("/orcamento")({
   head: () =>
     buildSeo({
-      title: "Orçamento Grátis de Automação em Curitiba — Master Automação",
+      title: "Orçamento Grátis de Automação em Curitiba — Abael Automação",
       description:
         "Solicite seu orçamento gratuito de automação residencial, predial ou industrial em Curitiba. Resposta em 2h. +500 projetos entregues.",
       path: "/orcamento",

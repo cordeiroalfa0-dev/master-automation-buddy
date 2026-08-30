@@ -26,7 +26,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readingTime: "6 min",
     category: "Automação Residencial",
     content: [
-      { type: "p", text: "A pergunta que mais recebemos: quanto custa? Depende do escopo. Este guia traz faixas reais praticadas em Curitiba em 2026, com base em mais de 500 projetos entregues pela Master Automação." },
+      { type: "p", text: "A pergunta que mais recebemos: quanto custa? Depende do escopo. Este guia traz faixas reais praticadas em Curitiba em 2026, com base em mais de 500 projetos entregues pela Abael Automação." },
       { type: "h2", text: "Faixas por escopo (apartamento de 100–150 m²)" },
       { type: "ul", items: [
         "Iluminação inteligente (10–15 pontos): R$ 5.000 a R$ 12.000",

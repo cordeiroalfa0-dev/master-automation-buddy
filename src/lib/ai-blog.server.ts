@@ -28,7 +28,7 @@ export interface GeneratedArticle {
 }
 
 export async function generateArticle(keyword: string, category?: string): Promise<GeneratedArticle> {
-  const prompt = `Escreva um artigo de blog em português do Brasil, otimizado para SEO local, para a empresa "Master Automação", especialista em automação residencial, predial e industrial em Curitiba e região metropolitana.
+  const prompt = `Escreva um artigo de blog em português do Brasil, otimizado para SEO local, para a empresa "Abael Automação", especialista em automação residencial, predial e industrial em Curitiba e região metropolitana.
 
 PALAVRA-CHAVE PRINCIPAL: "${keyword}"
 ${category ? `CATEGORIA SUGERIDA: ${category}` : ""}

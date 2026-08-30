@@ -25,13 +25,13 @@ export const Route = createFileRoute("/blog/$slug")({
     if (!loaderData) {
       return {
         meta: [
-          { title: "Artigo não encontrado — Master Automação" },
+          { title: "Artigo não encontrado — Abael Automação" },
           { name: "robots", content: "noindex" },
         ],
       };
     }
     return buildSeo({
-      title: `${loaderData.post.title} — Master Automação`,
+      title: `${loaderData.post.title} — Abael Automação`,
       description: loaderData.post.excerpt,
       path: `/blog/${params.slug}`,
       type: "article",

@@ -48,7 +48,7 @@ export function Header() {
               <span className="absolute -inset-px rounded-xl bg-gradient-primary opacity-0 blur transition-opacity group-hover:opacity-60" />
             </span>
             <span className="hidden flex-col leading-tight sm:flex">
-              <span className="text-base font-bold tracking-tight">Master Automação</span>
+              <span className="text-base font-bold tracking-tight">Abael Automação</span>
               <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
                 Curitiba · PR
               </span>

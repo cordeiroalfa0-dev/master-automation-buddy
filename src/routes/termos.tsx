@@ -5,8 +5,8 @@ import { SITE_CONFIG } from "@/lib/site-config";
 export const Route = createFileRoute("/termos")({
   head: () =>
     buildSeo({
-      title: "Termos de Uso — Master Automação",
-      description: "Termos de uso do site Master Automação.",
+      title: "Termos de Uso — Abael Automação",
+      description: "Termos de uso do site Abael Automação.",
       path: "/termos",
     }),
   component: TermsPage,

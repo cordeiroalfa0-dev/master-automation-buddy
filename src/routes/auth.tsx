@@ -9,8 +9,8 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
   head: () => buildSeo({
-    title: "Entrar — Master Automação",
-    description: "Acesse sua área de cliente Master Automação com sua conta Google.",
+    title: "Entrar — Abael Automação",
+    description: "Acesse sua área de cliente Abael Automação com sua conta Google.",
     path: "/auth",
     noindex: true,
   }),

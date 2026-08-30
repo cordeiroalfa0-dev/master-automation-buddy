@@ -85,7 +85,7 @@ export const Route = createFileRoute("/servicos/$slug")({
     if (!loaderData) return {};
     const { service, slug } = loaderData;
     return buildSeo({
-      title: `${service.title} — Master Automação`,
+      title: `${service.title} — Abael Automação`,
       description: service.longDesc.slice(0, 158),
       path: `/servicos/${slug}`,
       image: `/og-servico-${slug}.jpg`,

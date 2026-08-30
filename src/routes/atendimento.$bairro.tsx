@@ -19,7 +19,7 @@ export const Route = createFileRoute("/atendimento/$bairro")({
   head: ({ loaderData }) => {
     const name = loaderData?.bairro.name ?? "Curitiba";
     return buildSeo({
-      title: `Automação Residencial e Predial em ${name}, Curitiba — Master Automação`,
+      title: `Automação Residencial e Predial em ${name}, Curitiba — Abael Automação`,
       description: `Automação residencial, predial e segurança eletrônica em ${name}, Curitiba. Equipe local, orçamento grátis em 2h e atendimento em até 24h. +500 projetos entregues no Paraná.`,
       path: `/atendimento/${loaderData?.bairro.slug ?? ""}`,
     });

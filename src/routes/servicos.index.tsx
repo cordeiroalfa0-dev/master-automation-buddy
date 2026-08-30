@@ -11,7 +11,7 @@ import secImg from "@/assets/service-security.jpg";
 export const Route = createFileRoute("/servicos/")({
   head: () =>
     buildSeo({
-      title: "Serviços de Automação em Curitiba — Master Automação",
+      title: "Serviços de Automação em Curitiba — Abael Automação",
       description:
         "Serviços de automação residencial, predial, industrial e segurança eletrônica em Curitiba. Orçamento grátis e atendimento técnico especializado.",
       path: "/servicos",

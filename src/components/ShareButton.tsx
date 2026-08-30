@@ -472,7 +472,7 @@ export function ShareButton() {
                   {qrDataUrl ? (
                     <img
                       src={qrDataUrl}
-                      alt="QR code Master Automação"
+                      alt="QR code Abael Automação"
                       className="mx-auto h-auto w-full"
                     />
                   ) : (

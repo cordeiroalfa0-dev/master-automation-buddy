@@ -9,7 +9,7 @@ import { SITE_CONFIG } from "@/lib/site-config";
 export const Route = createFileRoute("/atendimento/")({
   head: () => ({
     ...buildSeo({
-      title: "Áreas Atendidas em Curitiba — Master Automação",
+      title: "Áreas Atendidas em Curitiba — Abael Automação",
       description:
         "Atendemos automação residencial, predial e industrial em todos os bairros de Curitiba: Batel, Ecoville, Champagnat, Bigorrilho, Água Verde, Cabral e mais.",
       path: "/atendimento",

@@ -1,14 +1,14 @@
 /**
- * Configurações estáticas do site Master Automação.
+ * Configurações estáticas do site Abael Automação.
  * IDs de tracking dinâmicos vêm de site_settings (DB).
  */
 export const SITE_CONFIG = {
-  name: "Master Automação",
-  shortName: "Master Automação",
+  name: "Abael Automação",
+  shortName: "Abael Automação",
   tagline: "Automação que transforma seu espaço",
   description:
     "Soluções completas em automação residencial, predial e industrial em Curitiba e região metropolitana. Mais de 500 projetos entregues.",
-  url: "https://master-automation-buddy.lovable.app",
+  url: "https://abaelautomação.com.br",
   locale: "pt-BR",
   region: "Curitiba, PR",
 
@@ -35,7 +35,7 @@ export const SITE_CONFIG = {
   googleBusiness: {
     placeId: "" as string,
     /** Nome + cidade usados na busca do Maps enquanto não há Place ID. */
-    mapQuery: "Master Automação, Curitiba, PR",
+    mapQuery: "Abael Automação, Curitiba, PR",
     /** Perfil público no Maps (opcional). */
     profileUrl: "" as string,
   },

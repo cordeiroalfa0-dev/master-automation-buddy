@@ -115,8 +115,8 @@ export const Route = createRootRoute({
       { name: "description", content: SITE_CONFIG.description },
       { property: "og:description", content: SITE_CONFIG.description },
       { name: "twitter:description", content: SITE_CONFIG.description },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a66a4b39-a5e7-46bf-9797-ed5adc1a57bf/id-preview-ed860b12--fc7af72d-3fd4-48b8-9219-bb73a4afa520.lovable.app-1780439134357.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a66a4b39-a5e7-46bf-9797-ed5adc1a57bf/id-preview-ed860b12--fc7af72d-3fd4-48b8-9219-bb73a4afa520.lovable.app-1780439134357.png" },
+      { property: "og:image", content: `${SITE_CONFIG.url}/assets/og-default.jpg` },
+      { name: "twitter:image", content: `${SITE_CONFIG.url}/assets/og-default.jpg` },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

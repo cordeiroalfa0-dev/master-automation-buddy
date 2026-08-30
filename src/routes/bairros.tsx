@@ -8,7 +8,7 @@ import { breadcrumbSchema } from "@/lib/schema";
 export const Route = createFileRoute("/bairros")({
   head: () =>
     buildSeo({
-      title: "Automação em Curitiba por bairro — Master Automação",
+      title: "Automação em Curitiba por bairro — Abael Automação",
       description:
         "Atendemos mais de 30 bairros de Curitiba: Batel, Ecoville, Champagnat, Bigorrilho, Água Verde, Cabral, Juvevê, CIC e outros. Encontre seu bairro.",
       path: "/bairros",

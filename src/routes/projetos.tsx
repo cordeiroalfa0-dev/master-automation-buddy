@@ -49,7 +49,7 @@ import imgGalpao from "@/assets/projetos/galpao-logistico.jpg";
 export const Route = createFileRoute("/projetos")({
   head: () =>
     buildSeo({
-      title: "Projetos de Automação em Curitiba — Portfólio Master Automação",
+      title: "Projetos de Automação em Curitiba — Portfólio Abael Automação",
       description:
         "Veja nossos projetos entregues em Batel, Ecoville, Champagnat, CIC, Bigorrilho e outros bairros de Curitiba. Automação residencial, predial e industrial.",
       path: "/projetos",
@@ -188,7 +188,7 @@ function ProjectsPage() {
   const handleShare = async (p: (typeof PROJECTS)[number]) => {
     const url = typeof window !== "undefined" ? window.location.href : "";
     const shareData = {
-      title: `${p.title} — Master Automação`,
+      title: `${p.title} — Abael Automação`,
       text: `${p.title} em ${p.local}: ${p.desc}`,
       url,
     };
@@ -434,7 +434,7 @@ function ProjectsPage() {
             Conte com a experiência de quem já entregou mais de 500 projetos em Curitiba. Orçamento gratuito e visita técnica sem compromisso.
           </p>
           <div className="mt-8 flex justify-center">
-            <WhatsAppButton message="Olá! Gostaria de solicitar um projeto personalizado da Master Automação." source="projetos">
+            <WhatsAppButton message="Olá! Gostaria de solicitar um projeto personalizado da Abael Automação." source="projetos">
               Solicitar projeto personalizado
             </WhatsAppButton>
           </div>

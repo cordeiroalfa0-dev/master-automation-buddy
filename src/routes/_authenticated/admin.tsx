@@ -21,7 +21,7 @@ import {
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () =>
     buildSeo({
-      title: "Painel Admin — Master Automação",
+      title: "Painel Admin — Abael Automação",
       description: "Área restrita de administração do blog.",
       path: "/admin",
       noindex: true,

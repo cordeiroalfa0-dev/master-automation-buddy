@@ -13,9 +13,9 @@ import { trackPhone } from "@/lib/analytics";
 export const Route = createFileRoute("/contato")({
   head: () =>
     buildSeo({
-      title: "Contato — Master Automação Curitiba",
+      title: "Contato — Abael Automação Curitiba",
       description:
-        "Fale com a Master Automação: (41) 99753-9084. Atendimento em Curitiba e região metropolitana. Orçamento gratuito em até 2h.",
+        "Fale com a Abael Automação: (41) 99753-9084. Atendimento em Curitiba e região metropolitana. Orçamento gratuito em até 2h.",
       path: "/contato",
       image: "/og-contato.jpg",
     }),
