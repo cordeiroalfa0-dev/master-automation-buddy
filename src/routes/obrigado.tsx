@@ -109,7 +109,7 @@ function ThankYouPage() {
         rel="noreferrer"
         className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
       >
-        <Instagram className="h-4 w-4" /> Siga @masterautomacao no Instagram
+        <Instagram className="h-4 w-4" /> Siga @abaelautomacao no Instagram
       </a>
 
       <div className="mt-12 grid gap-4 sm:grid-cols-3">

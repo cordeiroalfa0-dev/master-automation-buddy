@@ -140,5 +140,5 @@ INSERT INTO public.site_settings (key, value, description) VALUES
   ('clarity_id', '', 'Microsoft Clarity Project ID'),
   ('whatsapp_number', '351900000000', 'Número de WhatsApp (formato internacional sem +)'),
   ('whatsapp_message', 'Olá! Gostaria de pedir um orçamento.', 'Mensagem padrão do WhatsApp'),
-  ('contact_email', 'geral@masterautomacao.pt', 'Email principal de contato'),
+  ('contact_email', 'abaelautomacao@gmail.com', 'Email principal de contato'),
   ('contact_phone', '+351 900 000 000', 'Telefone principal');

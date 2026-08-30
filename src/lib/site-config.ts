@@ -16,14 +16,14 @@ export const SITE_CONFIG = {
     phone: "(41) 99753-9084",
     phoneE164: "+5541997539084",
     whatsappNumber: "5541997539084",
-    email: "contato@masterautomacao.com.br",
+    email: "abaelautomacao@gmail.com",
     address: "Curitiba e Região Metropolitana - PR",
     hours: "Seg a Sex: 8h às 18h | Sáb: 8h às 12h",
   },
 
   social: {
-    instagram: "https://instagram.com/masterautomacao",
-    facebook: "https://facebook.com/masterautomacao",
+    instagram: "https://instagram.com/abaelautomacao",
+    facebook: "https://facebook.com/abaelautomacao",
   },
 
   /**

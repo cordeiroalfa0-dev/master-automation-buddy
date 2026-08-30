@@ -365,7 +365,7 @@ export function postUrlWithUtm(slug: string, source: string, medium = "social") 
 }
 
 const HASHTAGS =
-  "#automacaoresidencial #casainteligente #curitiba #smarthome #automacao #masterautomacao #automacaopredial #segurancaeletronica";
+  "#automacaoresidencial #casainteligente #curitiba #smarthome #automacao #abaelautomacao #automacaopredial #segurancaeletronica";
 
 export interface CaptionOption {
   id: string;

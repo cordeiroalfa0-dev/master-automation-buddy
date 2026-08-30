@@ -73,17 +73,17 @@ const FORMATS: FormatDef[] = [
     key: "instagram",
     label: "Instagram Feed",
     size: "1080 × 1080 · quadrado",
-    images: [{ src: sharePromo, filename: "master-automacao-instagram.jpg" }],
+    images: [{ src: sharePromo, filename: "abael-automacao-instagram.jpg" }],
   },
   {
     key: "carousel",
     label: "Carrossel (4 slides)",
     size: "1080 × 1350 · 4:5",
     images: [
-      { src: carousel1, filename: "master-carrossel-1.jpg" },
-      { src: carousel2, filename: "master-carrossel-2.jpg" },
-      { src: carousel3, filename: "master-carrossel-3.jpg" },
-      { src: carousel4, filename: "master-carrossel-4.jpg" },
+      { src: carousel1, filename: "abael-carrossel-1.jpg" },
+      { src: carousel2, filename: "abael-carrossel-2.jpg" },
+      { src: carousel3, filename: "abael-carrossel-3.jpg" },
+      { src: carousel4, filename: "abael-carrossel-4.jpg" },
     ],
   },
   {
@@ -233,7 +233,7 @@ export function ShareButton() {
     trackEvent("share_click", { method: "qr_download" });
     const a = document.createElement("a");
     a.href = qrDataUrl;
-    a.download = "master-automacao-qrcode.png";
+    a.download = "abael-automacao-qrcode.png";
     document.body.appendChild(a);
     a.click();
     a.remove();

@@ -12,7 +12,7 @@ function saveContact() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "master-automacao.vcf";
+  a.download = "abael-automacao.vcf";
   a.click();
   URL.revokeObjectURL(url);
   trackCTA("salvar_contato", "google_business");

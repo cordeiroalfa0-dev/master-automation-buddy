@@ -59,7 +59,7 @@ export function BlogShare({ title, excerpt, slug, coverImage, category, content 
   });
   const isAdmin = adminQ.data?.isAdmin === true;
 
-  const igCaption = `${title}\n\n${excerpt}\n\n📖 Leia o artigo completo no link da bio 👉 ${postUrl(slug, "instagram")}\n\n#automacaoresidencial #casainteligente #curitiba #smarthome #automacao #masterautomacao`;
+  const igCaption = `${title}\n\n${excerpt}\n\n📖 Leia o artigo completo no link da bio 👉 ${postUrl(slug, "instagram")}\n\n#automacaoresidencial #casainteligente #curitiba #smarthome #automacao #abaelautomacao`;
 
   const links = [
     {
