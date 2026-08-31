@@ -90,19 +90,19 @@ const FORMATS: FormatDef[] = [
     key: "story",
     label: "Story / Status",
     size: "1080 × 1920 · 9:16",
-    images: [{ src: shareStory, filename: "master-story.jpg" }],
+    images: [{ src: shareStory, filename: "abael-story.jpg" }],
   },
   {
     key: "facebook",
     label: "Facebook",
     size: "1200 × 630 · 1.91:1",
-    images: [{ src: shareFacebook, filename: "master-facebook.jpg" }],
+    images: [{ src: shareFacebook, filename: "abael-facebook.jpg" }],
   },
   {
     key: "whatsapp",
     label: "WhatsApp",
     size: "1080 × 1080 · quadrado",
-    images: [{ src: sharePromo, filename: "master-whatsapp.jpg" }],
+    images: [{ src: sharePromo, filename: "abael-whatsapp.jpg" }],
   },
 ];
 
