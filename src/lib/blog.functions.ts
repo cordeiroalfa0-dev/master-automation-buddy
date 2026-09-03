@@ -127,7 +127,7 @@ export const listAllPosts = createServerFn({ method: "GET" })
 
 export const setPostPublished = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .validator((d: { id: string; published: boolean }) => d)
+  .inputValidator((d: { id: string; published: boolean }) => d)
   .handler(async ({ data, context }) => {
     await assertAdmin(context as any);
     const { error } = await context.supabase
@@ -140,7 +140,7 @@ export const setPostPublished = createServerFn({ method: "POST" })
 
 export const deletePost = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .validator((d: { id: string }) => d)
+  .inputValidator((d: { id: string }) => d)
   .handler(async ({ data, context }) => {
     await assertAdmin(context as any);
     const { error } = await context.supabase.from("blog_posts").delete().eq("id", data.id);
@@ -150,7 +150,7 @@ export const deletePost = createServerFn({ method: "POST" })
 
 export const generatePostFromKeyword = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .validator((d: { keyword: string; category?: string }) => {
+  .inputValidator((d: { keyword: string; category?: string }) => {
     const keyword = (d.keyword ?? "").trim();
     if (keyword.length < 3 || keyword.length > 120) throw new Error("Palavra-chave inválida (3 a 120 caracteres).");
     return { keyword, category: (d.category ?? "").trim().slice(0, 60) };
