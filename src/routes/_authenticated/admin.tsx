@@ -60,10 +60,11 @@ function AdminPage() {
 
   const generate = useMutation({
     mutationFn: (vars: { keyword: string; category?: string }) => fnGenerate({ data: vars }),
-    onSuccess: (post) => {
+    onSuccess: (raw) => {
+      const post = raw as BlogPostRecord;
       toast.success(`Artigo criado: ${post.title}`);
       setKeyword("");
-      setLastPost(post as BlogPostRecord);
+      setLastPost(post);
       setKitFor(post.slug);
       queryClient.invalidateQueries({ queryKey: ["admin-posts"] });
     },
