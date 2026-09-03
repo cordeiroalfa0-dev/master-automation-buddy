@@ -77,7 +77,7 @@ export const listPublishedPosts = createServerFn({ method: "GET" }).handler(asyn
 });
 
 export const getPublishedPost = createServerFn({ method: "GET" })
-  .validator((d: { slug: string }) => d)
+  .inputValidator((d: { slug: string }) => d)
   .handler(async ({ data }) => {
     try {
       const client = publicClient();
