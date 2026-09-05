@@ -9,7 +9,11 @@ const UTM_KEYS = [
   "gclid",
   "fbclid",
   "ttclid",
+  "msclkid",
+  "gbraid",
+  "wbraid",
 ] as const;
+
 
 export type UTMData = Partial<Record<(typeof UTM_KEYS)[number], string>> & {
   pagina_origem?: string;
