@@ -15,6 +15,8 @@ const STATIC_ROUTES = [
   { path: "/orcamento", priority: "0.9", changefreq: "monthly" },
   { path: "/atendimento", priority: "0.8", changefreq: "monthly" },
   { path: "/bairros", priority: "0.7", changefreq: "monthly" },
+  { path: "/links", priority: "0.6", changefreq: "monthly" },
+
   { path: "/blog", priority: "0.8", changefreq: "weekly" },
   { path: "/blog/quanto-custa-automatizar-uma-casa-em-curitiba", priority: "0.7", changefreq: "monthly" },
   { path: "/blog/knx-vs-zigbee-qual-escolher", priority: "0.7", changefreq: "monthly" },

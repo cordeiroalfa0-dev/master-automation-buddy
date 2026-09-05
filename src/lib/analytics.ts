@@ -61,6 +61,10 @@ function getAttributionContext(): Record<string, unknown> {
       gclid: attribution.gclid,
       fbclid: attribution.fbclid,
       ttclid: attribution.ttclid,
+      msclkid: attribution.msclkid,
+      gbraid: attribution.gbraid,
+      wbraid: attribution.wbraid,
+
       landing_page: attribution.pagina_origem,
       referrer: attribution.referrer || document.referrer || undefined,
     };
