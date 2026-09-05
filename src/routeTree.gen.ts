@@ -17,6 +17,7 @@ import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as PoliticaPrivacidadeRouteImport } from './routes/politica-privacidade'
 import { Route as OrcamentoRouteImport } from './routes/orcamento'
 import { Route as ObrigadoRouteImport } from './routes/obrigado'
+import { Route as LinksRouteImport } from './routes/links'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BairrosRouteImport } from './routes/bairros'
@@ -29,6 +30,7 @@ import { Route as AtendimentoIndexRouteImport } from './routes/atendimento.index
 import { Route as ServicosSlugRouteImport } from './routes/servicos.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AtendimentoBairroRouteImport } from './routes/atendimento.$bairro'
+import { Route as AuthenticatedDivulgacaoRouteImport } from './routes/_authenticated/divulgacao'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const TermosRoute = TermosRouteImport.update({
@@ -69,6 +71,11 @@ const OrcamentoRoute = OrcamentoRouteImport.update({
 const ObrigadoRoute = ObrigadoRouteImport.update({
   id: '/obrigado',
   path: '/obrigado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LinksRoute = LinksRouteImport.update({
+  id: '/links',
+  path: '/links',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContatoRoute = ContatoRouteImport.update({
@@ -130,6 +137,11 @@ const AtendimentoBairroRoute = AtendimentoBairroRouteImport.update({
   path: '/atendimento/$bairro',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDivulgacaoRoute = AuthenticatedDivulgacaoRouteImport.update({
+  id: '/divulgacao',
+  path: '/divulgacao',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -142,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/bairros': typeof BairrosRoute
   '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
+  '/links': typeof LinksRoute
   '/obrigado': typeof ObrigadoRoute
   '/orcamento': typeof OrcamentoRoute
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
@@ -151,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/divulgacao': typeof AuthenticatedDivulgacaoRoute
   '/atendimento/$bairro': typeof AtendimentoBairroRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/servicos/$slug': typeof ServicosSlugRoute
@@ -163,6 +177,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/bairros': typeof BairrosRoute
   '/contato': typeof ContatoRoute
+  '/links': typeof LinksRoute
   '/obrigado': typeof ObrigadoRoute
   '/orcamento': typeof OrcamentoRoute
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
@@ -172,6 +187,7 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/divulgacao': typeof AuthenticatedDivulgacaoRoute
   '/atendimento/$bairro': typeof AtendimentoBairroRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/servicos/$slug': typeof ServicosSlugRoute
@@ -187,6 +203,7 @@ export interface FileRoutesById {
   '/bairros': typeof BairrosRoute
   '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
+  '/links': typeof LinksRoute
   '/obrigado': typeof ObrigadoRoute
   '/orcamento': typeof OrcamentoRoute
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
@@ -196,6 +213,7 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/divulgacao': typeof AuthenticatedDivulgacaoRoute
   '/atendimento/$bairro': typeof AtendimentoBairroRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/servicos/$slug': typeof ServicosSlugRoute
@@ -211,6 +229,7 @@ export interface FileRouteTypes {
     | '/bairros'
     | '/blog'
     | '/contato'
+    | '/links'
     | '/obrigado'
     | '/orcamento'
     | '/politica-privacidade'
@@ -220,6 +239,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/admin'
+    | '/divulgacao'
     | '/atendimento/$bairro'
     | '/blog/$slug'
     | '/servicos/$slug'
@@ -232,6 +252,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bairros'
     | '/contato'
+    | '/links'
     | '/obrigado'
     | '/orcamento'
     | '/politica-privacidade'
@@ -241,6 +262,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/admin'
+    | '/divulgacao'
     | '/atendimento/$bairro'
     | '/blog/$slug'
     | '/servicos/$slug'
@@ -255,6 +277,7 @@ export interface FileRouteTypes {
     | '/bairros'
     | '/blog'
     | '/contato'
+    | '/links'
     | '/obrigado'
     | '/orcamento'
     | '/politica-privacidade'
@@ -264,6 +287,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/_authenticated/admin'
+    | '/_authenticated/divulgacao'
     | '/atendimento/$bairro'
     | '/blog/$slug'
     | '/servicos/$slug'
@@ -279,6 +303,7 @@ export interface RootRouteChildren {
   BairrosRoute: typeof BairrosRoute
   BlogRoute: typeof BlogRouteWithChildren
   ContatoRoute: typeof ContatoRoute
+  LinksRoute: typeof LinksRoute
   ObrigadoRoute: typeof ObrigadoRoute
   OrcamentoRoute: typeof OrcamentoRoute
   PoliticaPrivacidadeRoute: typeof PoliticaPrivacidadeRoute
@@ -349,6 +374,13 @@ declare module '@tanstack/react-router' {
       path: '/obrigado'
       fullPath: '/obrigado'
       preLoaderRoute: typeof ObrigadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/links': {
+      id: '/links'
+      path: '/links'
+      fullPath: '/links'
+      preLoaderRoute: typeof LinksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contato': {
@@ -435,6 +467,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AtendimentoBairroRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/divulgacao': {
+      id: '/_authenticated/divulgacao'
+      path: '/divulgacao'
+      fullPath: '/divulgacao'
+      preLoaderRoute: typeof AuthenticatedDivulgacaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -447,10 +486,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedDivulgacaoRoute: typeof AuthenticatedDivulgacaoRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedDivulgacaoRoute: AuthenticatedDivulgacaoRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -475,6 +516,7 @@ const rootRouteChildren: RootRouteChildren = {
   BairrosRoute: BairrosRoute,
   BlogRoute: BlogRouteWithChildren,
   ContatoRoute: ContatoRoute,
+  LinksRoute: LinksRoute,
   ObrigadoRoute: ObrigadoRoute,
   OrcamentoRoute: OrcamentoRoute,
   PoliticaPrivacidadeRoute: PoliticaPrivacidadeRoute,
