@@ -112,9 +112,17 @@ function AdminPage() {
             Digite a palavra-chave e a IA escreve o artigo e cria a imagem de capa.
           </p>
         </div>
-        <Button variant="outline" size="sm" onClick={signOut} className="gap-2">
-          <LogOut className="h-4 w-4" /> Sair
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button asChild variant="default" size="sm" className="gap-2">
+            <Link to="/divulgacao">
+              <Megaphone className="h-4 w-4" /> Central de Divulgação
+            </Link>
+          </Button>
+          <Button variant="outline" size="sm" onClick={signOut} className="gap-2">
+            <LogOut className="h-4 w-4" /> Sair
+          </Button>
+        </div>
+
       </div>
 
       <form
