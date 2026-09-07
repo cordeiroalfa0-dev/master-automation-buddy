@@ -39,7 +39,17 @@ const ITEMS = [
   { label: "Blog e dicas de automação", href: utm("/blog", "blog"), icon: FileText },
 ];
 
+const SOCIAL_ICONS: { id: SocialNetwork; icon: typeof Instagram; label: string }[] = [
+  { id: "instagram", icon: Instagram, label: "Instagram" },
+  { id: "facebook", icon: Facebook, label: "Facebook" },
+  { id: "tiktok", icon: Music2, label: "TikTok" },
+  { id: "youtube", icon: Youtube, label: "YouTube" },
+  { id: "linkedin", icon: Linkedin, label: "LinkedIn" },
+  { id: "googleBusiness", icon: MapPin, label: "Google Meu Negócio" },
+];
+
 function LinksPage() {
+  const social = useSocialLinks();
   const wa = `https://wa.me/${SITE_CONFIG.contact.whatsappNumber}?text=${encodeURIComponent(
     "Olá! Vim pelo link da bio e quero um orçamento. [ref: link-na-bio]",
   )}`;
