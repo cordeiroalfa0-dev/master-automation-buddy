@@ -16,9 +16,9 @@ import { trackCTA, trackWhatsApp, trackPhone, trackSocialClick } from "@/lib/ana
 export const Route = createFileRoute("/links")({
   head: () =>
     buildSeo({
-      title: "Links | Master Automação — Curitiba",
+      title: "Links | Abael Automação — Curitiba",
       description:
-        "Todos os canais da Master Automação em um só lugar: orçamento, WhatsApp, projetos, blog e redes sociais.",
+        "Todos os canais da Abael Automação em um só lugar: orçamento, WhatsApp, projetos, blog e redes sociais.",
       path: "/links",
     }),
   component: LinksPage,

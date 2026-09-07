@@ -3,11 +3,12 @@ import { Megaphone, ArrowLeft } from "lucide-react";
 import { buildSeo } from "@/lib/seo";
 import { UtmLinkBuilder } from "@/components/UtmLinkBuilder";
 import { AdCopyLibrary } from "@/components/AdCopyLibrary";
+import { SocialLinksManager } from "@/components/SocialLinksManager";
 
 export const Route = createFileRoute("/_authenticated/divulgacao")({
   head: () =>
     buildSeo({
-      title: "Central de Divulgação — Master Automação",
+      title: "Central de Divulgação — Abael Automação",
       description: "Ferramentas internas de campanha, links rastreáveis e textos de anúncio.",
       path: "/divulgacao",
       noindex: true,
@@ -38,6 +39,7 @@ function DivulgacaoPage() {
       </div>
 
       <div className="mt-8 space-y-8">
+        <SocialLinksManager />
         <UtmLinkBuilder />
         <AdCopyLibrary />
       </div>
