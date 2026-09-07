@@ -8,7 +8,11 @@ import {
   Calculator,
   FileText,
   Wrench,
+  Youtube,
+  Linkedin,
+  Music2,
 } from "lucide-react";
+import { useSocialLinks, type SocialNetwork } from "@/hooks/useSocialLinks";
 import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackCTA, trackWhatsApp, trackPhone, trackSocialClick } from "@/lib/analytics";
