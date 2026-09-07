@@ -2,12 +2,14 @@ import { Phone, Clock, MapPin, Instagram, Facebook } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone, trackSocialClick } from "@/lib/analytics";
 import { OpenStatus } from "@/components/OpenStatus";
+import { useSocialLinks } from "@/hooks/useSocialLinks";
 
 /**
  * Barra superior informativa — reforça credibilidade local e canal direto.
  * Esconde em telas pequenas para não competir com o header principal.
  */
 export function TopBar() {
+  const social = useSocialLinks();
   return (
     <div className="hidden border-b border-white/10 bg-[oklch(0.14_0.04_252)] text-white/85 lg:block">
       <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-6 text-xs">
@@ -24,7 +26,7 @@ export function TopBar() {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2.5">
             <a
-              href={SITE_CONFIG.social.instagram}
+              href={social.instagram}
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
@@ -34,7 +36,7 @@ export function TopBar() {
               <Instagram className="h-3.5 w-3.5" />
             </a>
             <a
-              href={SITE_CONFIG.social.facebook}
+              href={social.facebook}
               target="_blank"
               rel="noreferrer"
               aria-label="Facebook"

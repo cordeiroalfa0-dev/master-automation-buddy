@@ -94,7 +94,7 @@ export function trackCTA(label: string, location: string) {
 }
 
 /** Clique em ícone/botão de Instagram ou Facebook — mede quanto tráfego migra pro social. */
-export function trackSocialClick(network: "instagram" | "facebook", source: string) {
+export function trackSocialClick(network: string, source: string) {
   trackEvent("social_click", { network, source });
 }
 

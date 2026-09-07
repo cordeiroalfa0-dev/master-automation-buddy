@@ -1,6 +1,7 @@
 import { Instagram, Facebook, ArrowUpRight } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackSocialClick } from "@/lib/analytics";
+import { useSocialLinks } from "@/hooks/useSocialLinks";
 import carousel1 from "@/assets/carousel-1.jpg";
 import carousel2 from "@/assets/carousel-2.jpg";
 import carousel3 from "@/assets/carousel-3.jpg";
@@ -15,6 +16,7 @@ const PREVIEW_IMAGES = [carousel1, carousel2, carousel3, carousel4];
  * no build e não expõe nenhuma credencial.
  */
 export function SocialFollow() {
+  const social = useSocialLinks();
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
       <div className="grid gap-6 md:grid-cols-2">
@@ -44,7 +46,7 @@ export function SocialFollow() {
               </p>
             </div>
             <a
-              href={SITE_CONFIG.social.instagram}
+              href={social.instagram}
               target="_blank"
               rel="noreferrer"
               onClick={() => trackSocialClick("instagram", "home_follow_section")}
@@ -76,7 +78,7 @@ export function SocialFollow() {
             </div>
           </div>
           <a
-            href={SITE_CONFIG.social.facebook}
+            href={social.facebook}
             target="_blank"
             rel="noreferrer"
             onClick={() => trackSocialClick("facebook", "home_follow_section")}

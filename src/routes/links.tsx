@@ -8,7 +8,11 @@ import {
   Calculator,
   FileText,
   Wrench,
+  Youtube,
+  Linkedin,
+  Music2,
 } from "lucide-react";
+import { useSocialLinks, type SocialNetwork } from "@/hooks/useSocialLinks";
 import { buildSeo } from "@/lib/seo";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { trackCTA, trackWhatsApp, trackPhone, trackSocialClick } from "@/lib/analytics";
@@ -16,9 +20,9 @@ import { trackCTA, trackWhatsApp, trackPhone, trackSocialClick } from "@/lib/ana
 export const Route = createFileRoute("/links")({
   head: () =>
     buildSeo({
-      title: "Links | Master Automação — Curitiba",
+      title: "Links | Abael Automação — Curitiba",
       description:
-        "Todos os canais da Master Automação em um só lugar: orçamento, WhatsApp, projetos, blog e redes sociais.",
+        "Todos os canais da Abael Automação em um só lugar: orçamento, WhatsApp, projetos, blog e redes sociais.",
       path: "/links",
     }),
   component: LinksPage,
@@ -35,7 +39,17 @@ const ITEMS = [
   { label: "Blog e dicas de automação", href: utm("/blog", "blog"), icon: FileText },
 ];
 
+const SOCIAL_ICONS: { id: SocialNetwork; icon: typeof Instagram; label: string }[] = [
+  { id: "instagram", icon: Instagram, label: "Instagram" },
+  { id: "facebook", icon: Facebook, label: "Facebook" },
+  { id: "tiktok", icon: Music2, label: "TikTok" },
+  { id: "youtube", icon: Youtube, label: "YouTube" },
+  { id: "linkedin", icon: Linkedin, label: "LinkedIn" },
+  { id: "googleBusiness", icon: MapPin, label: "Google Meu Negócio" },
+];
+
 function LinksPage() {
+  const social = useSocialLinks();
   const wa = `https://wa.me/${SITE_CONFIG.contact.whatsappNumber}?text=${encodeURIComponent(
     "Olá! Vim pelo link da bio e quero um orçamento. [ref: link-na-bio]",
   )}`;
@@ -43,7 +57,7 @@ function LinksPage() {
   return (
     <main className="mx-auto flex min-h-[80vh] max-w-lg flex-col items-center px-4 py-12">
       <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-2xl font-black text-primary">
-        MA
+        AA
       </div>
       <h1 className="mt-4 text-center font-display text-2xl font-bold">{SITE_CONFIG.name}</h1>
       <p className="mt-1 text-center text-sm text-muted-foreground">
@@ -82,27 +96,20 @@ function LinksPage() {
         </a>
       </div>
 
-      <div className="mt-6 flex gap-3">
-        <a
-          href={SITE_CONFIG.social.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-          onClick={() => trackSocialClick("instagram", "link-na-bio")}
-          className="rounded-full border bg-card p-3 transition-colors hover:border-primary/60"
-        >
-          <Instagram className="h-5 w-5 text-primary" />
-        </a>
-        <a
-          href={SITE_CONFIG.social.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Facebook"
-          onClick={() => trackSocialClick("facebook", "link-na-bio")}
-          className="rounded-full border bg-card p-3 transition-colors hover:border-primary/60"
-        >
-          <Facebook className="h-5 w-5 text-primary" />
-        </a>
+      <div className="mt-6 flex flex-wrap justify-center gap-3">
+        {SOCIAL_ICONS.filter(({ id }) => social[id]?.trim()).map(({ id, icon: Icon, label }) => (
+          <a
+            key={id}
+            href={social[id]}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={label}
+            onClick={() => trackSocialClick(id, "link-na-bio")}
+            className="rounded-full border bg-card p-3 transition-colors hover:border-primary/60"
+          >
+            <Icon className="h-5 w-5 text-primary" />
+          </a>
+        ))}
       </div>
 
       <p className="mt-8 text-center text-xs text-muted-foreground">
