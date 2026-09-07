@@ -4,6 +4,7 @@ import { SITE_CONFIG, whatsappLink } from "@/lib/site-config";
 import { trackPhone, trackWhatsApp, trackSocialClick } from "@/lib/analytics";
 import { OpenStatus } from "@/components/OpenStatus";
 import { directionsUrl, reviewUrl } from "@/lib/gmb";
+import { useSocialLinks } from "@/hooks/useSocialLinks";
 
 const TRUST = [
   { icon: ShieldCheck, label: "Equipe certificada" },
@@ -12,6 +13,7 @@ const TRUST = [
 ];
 
 export function Footer() {
+  const social = useSocialLinks();
   return (
     <footer className="relative border-t bg-surface">
       {/* Faixa superior de credibilidade */}
@@ -58,7 +60,7 @@ export function Footer() {
                 <MessageCircle className="h-4 w-4" fill="currentColor" />
               </a>
               <a
-                href={SITE_CONFIG.social.instagram}
+                href={social.instagram}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
@@ -68,7 +70,7 @@ export function Footer() {
                 <Instagram className="h-4 w-4" />
               </a>
               <a
-                href={SITE_CONFIG.social.facebook}
+                href={social.facebook}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Facebook"
