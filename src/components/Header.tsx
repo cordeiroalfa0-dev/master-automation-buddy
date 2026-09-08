@@ -19,6 +19,7 @@ const NAV = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [logado, setLogado] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -26,6 +27,21 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    let ativo = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (ativo) setLogado(Boolean(data.session));
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) =>
+      setLogado(Boolean(session)),
+    );
+    return () => {
+      ativo = false;
+      sub.subscription.unsubscribe();
+    };
+  }, []);
+
 
   return (
     <div className="sticky top-0 z-40 w-full">
