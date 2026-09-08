@@ -101,13 +101,14 @@ export function Header() {
               <span className="hidden lg:inline">{SITE_CONFIG.contact.phone}</span>
             </a>
             <Link
-              to="/auth"
+              to={logado ? "/admin" : "/auth"}
               className="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              aria-label="Entrar"
+              aria-label={logado ? "Painel" : "Entrar"}
             >
               <User className="h-4 w-4" />
-              <span className="hidden lg:inline">Entrar</span>
+              <span className="hidden lg:inline">{logado ? "Painel" : "Entrar"}</span>
             </Link>
+
             <Button
               asChild
               size="sm"
