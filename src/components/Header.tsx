@@ -32,9 +32,10 @@ export function Header() {
 
   useEffect(() => {
     let ativo = true;
-    supabase.auth.getSession().then(({ data }) => {
-      if (ativo) setLogado(Boolean(data.session));
+    supabase.auth.getUser().then(({ data }) => {
+      if (ativo) setLogado(Boolean(data.user));
     });
+
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) =>
       setLogado(Boolean(session)),
     );
