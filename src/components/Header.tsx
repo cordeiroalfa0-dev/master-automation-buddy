@@ -6,6 +6,8 @@ import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone, trackCTA, trackSocialClick } from "@/lib/analytics";
 import { TopBar } from "@/components/TopBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { supabase } from "@/integrations/supabase/client";
+
 
 const NAV = [
   { to: "/", label: "Início" },
