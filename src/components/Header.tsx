@@ -6,6 +6,8 @@ import { SITE_CONFIG } from "@/lib/site-config";
 import { trackPhone, trackCTA, trackSocialClick } from "@/lib/analytics";
 import { TopBar } from "@/components/TopBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { supabase } from "@/integrations/supabase/client";
+
 
 const NAV = [
   { to: "/", label: "Início" },
@@ -19,6 +21,7 @@ const NAV = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [logado, setLogado] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -26,6 +29,22 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    let ativo = true;
+    supabase.auth.getUser().then(({ data }) => {
+      if (ativo) setLogado(Boolean(data.user));
+    });
+
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) =>
+      setLogado(Boolean(session)),
+    );
+    return () => {
+      ativo = false;
+      sub.subscription.unsubscribe();
+    };
+  }, []);
+
 
   return (
     <div className="sticky top-0 z-40 w-full">
@@ -83,13 +102,14 @@ export function Header() {
               <span className="hidden lg:inline">{SITE_CONFIG.contact.phone}</span>
             </a>
             <Link
-              to="/auth"
+              to={logado ? "/admin" : "/auth"}
               className="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              aria-label="Entrar"
+              aria-label={logado ? "Painel" : "Entrar"}
             >
               <User className="h-4 w-4" />
-              <span className="hidden lg:inline">Entrar</span>
+              <span className="hidden lg:inline">{logado ? "Painel" : "Entrar"}</span>
             </Link>
+
             <Button
               asChild
               size="sm"
