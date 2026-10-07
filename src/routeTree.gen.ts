@@ -21,6 +21,7 @@ import { Route as LinksRouteImport } from './routes/links'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BairrosRouteImport } from './routes/bairros'
+import { Route as AvaliarRouteImport } from './routes/avaliar'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -93,6 +94,11 @@ const BairrosRoute = BairrosRouteImport.update({
   path: '/bairros',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AvaliarRoute = AvaliarRouteImport.update({
+  id: '/avaliar',
+  path: '/avaliar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -151,6 +157,7 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/avaliar': typeof AvaliarRoute
   '/bairros': typeof BairrosRoute
   '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/avaliar': typeof AvaliarRoute
   '/bairros': typeof BairrosRoute
   '/contato': typeof ContatoRoute
   '/links': typeof LinksRoute
@@ -200,6 +208,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/avaliar': typeof AvaliarRoute
   '/bairros': typeof BairrosRoute
   '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
@@ -226,6 +235,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/avaliar'
     | '/bairros'
     | '/blog'
     | '/contato'
@@ -250,6 +260,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/avaliar'
     | '/bairros'
     | '/contato'
     | '/links'
@@ -274,6 +285,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/avaliar'
     | '/bairros'
     | '/blog'
     | '/contato'
@@ -300,6 +312,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  AvaliarRoute: typeof AvaliarRoute
   BairrosRoute: typeof BairrosRoute
   BlogRoute: typeof BlogRouteWithChildren
   ContatoRoute: typeof ContatoRoute
@@ -402,6 +415,13 @@ declare module '@tanstack/react-router' {
       path: '/bairros'
       fullPath: '/bairros'
       preLoaderRoute: typeof BairrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/avaliar': {
+      id: '/avaliar'
+      path: '/avaliar'
+      fullPath: '/avaliar'
+      preLoaderRoute: typeof AvaliarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -513,6 +533,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  AvaliarRoute: AvaliarRoute,
   BairrosRoute: BairrosRoute,
   BlogRoute: BlogRouteWithChildren,
   ContatoRoute: ContatoRoute,
