@@ -37,6 +37,7 @@ const ITEMS = [
   { label: "Ver projetos entregues", href: utm("/projetos", "projetos"), icon: Wrench },
   { label: "Onde atendemos em Curitiba", href: utm("/bairros", "bairros"), icon: MapPin },
   { label: "Blog e dicas de automação", href: utm("/blog", "blog"), icon: FileText },
+  { label: "Avaliar no Google ⭐", href: "/avaliar", icon: MapPin },
 ];
 
 const SOCIAL_ICONS: { id: SocialNetwork; icon: typeof Instagram; label: string }[] = [

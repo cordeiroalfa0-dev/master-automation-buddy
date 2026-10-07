@@ -33,11 +33,11 @@ export const SITE_CONFIG = {
    * Como achar o Place ID: https://developers.google.com/maps/documentation/places/web-service/place-id
    */
   googleBusiness: {
-    placeId: "" as string,
-    /** Nome + cidade usados na busca do Maps enquanto não há Place ID. */
+    placeId: "ChIJBcjjEJwb8wgRbODTTVc5N7M" as string,
+    /** Nome + cidade usados na busca do Maps. */
     mapQuery: "Abael Automação, Curitiba, PR",
-    /** Perfil público no Maps (opcional). */
-    profileUrl: "" as string,
+    /** Perfil público verificado no Maps. */
+    profileUrl: "https://maps.google.com/maps?cid=12913853503638855788" as string,
   },
 
   bairros: [
