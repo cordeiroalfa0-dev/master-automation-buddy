@@ -106,6 +106,7 @@ export const Route = createRootRoute({
       // Site-wide defaults — child routes override these
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@abaelautomacao" },
+      { name: "google-site-verification", content: "0c6tQqUrnbQ7qY40sk08EKM79MQRTc3YyUKJxy7GEOI" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "pt_BR" },
       { property: "og:site_name", content: SITE_CONFIG.name },
