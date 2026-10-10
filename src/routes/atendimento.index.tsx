@@ -5,6 +5,7 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { buildSeo } from "@/lib/seo";
 import { BAIRROS } from "@/lib/bairros";
 import { SITE_CONFIG } from "@/lib/site-config";
+import { KEYWORD_PAGES } from "@/lib/keyword-pages";
 
 export const Route = createFileRoute("/atendimento/")({
   head: () => ({
@@ -57,6 +58,15 @@ function AtendimentoIndex() {
                 <p className="mt-1 text-sm text-muted-foreground">Curitiba — PR</p>
               </div>
               <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+            </Link>
+          ))}
+        </div>
+
+        <h2 className="mt-16 font-display text-2xl font-bold">Nossas soluções em Curitiba</h2>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {KEYWORD_PAGES.map((k) => (
+            <Link key={k.slug} to="/solucoes/$slug" params={{ slug: k.slug }} className="rounded-full border border-border px-3 py-1 text-sm hover:border-primary hover:text-primary">
+              {k.h1}
             </Link>
           ))}
         </div>
