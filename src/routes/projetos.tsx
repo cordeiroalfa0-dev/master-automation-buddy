@@ -49,7 +49,7 @@ import imgGalpao from "@/assets/projetos/galpao-logistico.jpg";
 export const Route = createFileRoute("/projetos")({
   head: () =>
     buildSeo({
-      title: "Projetos de Automação em Curitiba — Portfólio Abael Automação",
+      title: "Projetos de Automação em Curitiba — Abael Automação",
       description:
         "Veja nossos projetos entregues em Batel, Ecoville, Champagnat, CIC, Bigorrilho e outros bairros de Curitiba. Automação residencial, predial e industrial.",
       path: "/projetos",

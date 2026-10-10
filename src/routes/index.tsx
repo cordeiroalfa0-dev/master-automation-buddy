@@ -29,7 +29,7 @@ import secImg from "@/assets/service-security.jpg";
 export const Route = createFileRoute("/")({
   head: () => {
     const seo = buildSeo({
-      title: "Abael Automação — Automação Residencial, Predial e Industrial em Curitiba",
+      title: "Abael Automação — Automação Residencial em Curitiba",
       description:
         "Especialistas em automação residencial, predial e industrial em Curitiba. +500 projetos entregues. Orçamento grátis em 2h. Atendimento Batel, Ecoville, Champagnat e toda região.",
       path: "/",
