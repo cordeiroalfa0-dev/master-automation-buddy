@@ -338,6 +338,7 @@ function ProjectsPage() {
           </p>
         </div>
 
+        <h2 className="sr-only">Nossos projetos realizados em Curitiba</h2>
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed py-20 text-center">
             <div className="mb-4 rounded-full bg-muted p-4">
