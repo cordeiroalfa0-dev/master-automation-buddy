@@ -38,7 +38,7 @@ function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <span className="text-xs font-semibold uppercase tracking-widest text-energy">Sobre nós</span>
           <h1 className="mt-3 max-w-3xl font-display text-4xl font-bold text-balance md:text-6xl">
-            Abael Automação
+            Sobre a Abael Automação — automação em Curitiba
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-white/80">
             Com vasta experiência em projetos residenciais, prediais e industriais, somos referência em automação inteligente em <strong>Curitiba e região metropolitana</strong>.

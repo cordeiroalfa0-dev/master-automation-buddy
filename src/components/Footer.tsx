@@ -5,6 +5,7 @@ import { trackPhone, trackWhatsApp, trackSocialClick } from "@/lib/analytics";
 import { OpenStatus } from "@/components/OpenStatus";
 import { directionsUrl, reviewUrl } from "@/lib/gmb";
 import { useSocialLinks } from "@/hooks/useSocialLinks";
+import { KEYWORD_PAGES } from "@/lib/keyword-pages";
 
 const TRUST = [
   { icon: ShieldCheck, label: "Equipe certificada" },
@@ -182,6 +183,24 @@ export function Footer() {
                 className="rounded-full border bg-background px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
                 {b}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8">
+          <h4 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            Soluções em Curitiba
+          </h4>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {KEYWORD_PAGES.map((k) => (
+              <Link
+                key={k.slug}
+                to="/solucoes/$slug"
+                params={{ slug: k.slug }}
+                className="rounded-full border bg-background px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                {k.h1}
               </Link>
             ))}
           </div>
